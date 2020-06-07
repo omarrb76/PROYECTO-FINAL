@@ -1,0 +1,58 @@
+<div class="container p-5">
+    <div class="row mb-5">
+        <div class="col text-center" fxShow.xs="false" fxShow.sm="false" fxShow="true">
+            <img src="./assets/img/titulo.png" alt="Logo de Simple" class="img-fluid puntero" (click)="regresarLOGIN()">
+        </div>
+        <div class="col text-center" fxShow.xs="true" fxShow.sm="true" fxShow="false">
+            <img src="./assets/img/icono.png" alt="Logo de Simple" class="img-fluid icono puntero"
+                (click)="regresarLOGIN()">
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col text-center">
+            <h2>Acerca De</h2>
+        </div>
+    </div>
+    <hr>
+    <div class="row my-3">
+        <div class="col-12 col-md-6">
+            <img src="./assets/img/acerca_de_1.png" alt="Acerca de" class="img-fluid">
+        </div>
+        <div class="col-12 col-md-6">
+            <h3><strong>Misión:</strong></h3>
+            <p>
+                Nuestra misión es hacer una red social muy sencilla y fácil de usar, de manera que todas las personas
+                puedan entender su funcionamiento y se unan más usuarios a esta plataforma. También sera muy minimalista
+                de manera que no desviemos nuestra atención de las cosas que nos interesan.
+                <br><br>
+                Además con esta red social nosotros podremos reforzar nuestros conocimientos adquiridos durante el ciclo
+                escolar y nos calificarán el proyecto final.
+            </p>
+        </div>
+    </div>
+    <hr>
+    <div class="row my-3">
+        <div class="col text-center">
+            <h3><strong>¿Quiénes somos?</strong></h3>
+            <!-- AQUI VAN 4 CARDS -->
+            <div fxLayout="row"  fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap>
+                <mat-card class="m-3" fxFlex *ngFor="let integrante of equipo">
+                    <mat-card-header>
+                        <mat-card-title>{{integrante.name}}</mat-card-title>
+                        <mat-card-subtitle>{{integrante.nickname}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="{{integrante.imagen}}"
+                        alt="Imagen del integrante del equipo" class="img-fluid mx-auto">
+                    <mat-card-content>
+                        <p>
+                            {{integrante.description}}
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions align="right">
+                        <button mat-raised-button color="primary"><a href="{{integrante.facebook}}" style="text-decoration: none; color: white;">Facebook</a></button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

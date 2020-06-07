@@ -1,1 +1,33 @@
-<p>faq works!</p>
+<div class="container p-5">
+    <div class="row mb-5">
+        <div class="col text-center" fxShow.xs="false" fxShow.sm="false" fxShow="true">
+            <img src="./assets/img/titulo.png" alt="Logo de Simple" class="img-fluid puntero" (click)="regresarLOGIN()">
+        </div>
+        <div class="col text-center" fxShow.xs="true" fxShow.sm="true" fxShow="false">
+            <img src="./assets/img/icono.png" alt="Logo de Simple" class="img-fluid icono puntero"
+                (click)="regresarLOGIN()">
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col text-center">
+            <h2>Preguntas Frecuentes</h2>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col">
+            <mat-accordion multi="true">
+                <mat-expansion-panel *ngFor="let pregunta of frecuentes">
+                    <mat-expansion-panel-header class="right-aligned-header">
+                        <mat-panel-title>
+                            {{pregunta.titulo}}
+                        </mat-panel-title>
+                        <mat-panel-description fxShow.xs="false" fxShow.sm="false" fxShow="true">
+                            {{pregunta.info}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>{{pregunta.contenido}}</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 enum State {
-  INICIO,
-  LOGIN,
-  SIGNUP
+  INICIO, // Se muestran los dos botones para iniciar y crear sesion
+  LOGIN, // Form de Login
+  SIGNUP, // Form de signup
+  CARGANDO // Se muestra el progress Spinner
 }
 
 @Component({
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.signupForm = formBuilder.group({
+      name: ['', Validators.required],
       username: ['', Validators.compose([Validators.required, this.nameValidator])],
       password: ['', Validators.required],
       password2: ['', Validators.required],
@@ -56,9 +58,18 @@ export class LoginComponent implements OnInit {
     this.estado = State.SIGNUP;
   }
 
+  // Para mostrar el progress spinner
+  estadoCARGANDO() {
+    this.estado = State.CARGANDO;
+  }
+
   // Para hacer el submit del iniciar sesion
   submitLogin() {
     if (this.loginForm.valid) {
+      this.estado = State.CARGANDO;
+      setTimeout(() => {
+        this.estado = State.INICIO;
+      }, 5000);
       console.log(this.loginForm.value); // El formulario funciona
     } else {
       this.openSnackBar('Error llenando los datos del formulario', 'Aceptar');
@@ -68,6 +79,10 @@ export class LoginComponent implements OnInit {
   // Para hacer el submit de crear usuario
   submitSignup() {
     if (this.signupForm.valid) {
+      this.estado = State.CARGANDO;
+      setTimeout(() => {
+        this.estado = State.INICIO;
+      }, 5000);
       console.log(this.signupForm.value);
     } else {
       if (this.signupForm.value.password !== this.signupForm.value.password2) {

@@ -67,6 +67,11 @@
                         <div class="col text-center" *ngSwitchCase="2">
                             <form id="signupForm" [formGroup]="signupForm" (ngSubmit)="submitSignup()">
                                 <mat-form-field appearance="outline" floatLabel="auto">
+                                    <mat-label>Nombre y apellido</mat-label>
+                                    <input type="text" matInput placeholder="Nombre y apellido" name="name" formControlName="name">
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field appearance="outline" floatLabel="auto">
                                     <mat-label>Nombre de usuario</mat-label>
                                     <input type="text" matInput placeholder="Nombre de usuario" name="username" formControlName="username">
                                     <span style="color: red;" *ngIf="signupForm.controls['username'].hasError('res')">El nombre de usuario ya esta en uso</span>
@@ -92,6 +97,9 @@
                                 <button id="btnSubmitLogin" mat-raised-button type="submit" color="negro" class="mx-3">Crear sesión</button>
                                 <button mat-raised-button color="rojo" class="mx-3" (click)="estadoINICIO()">Cancelar</button>
                             </form>
+                        </div>
+                        <div class="col" *ngSwitchCase="3">
+                            <mat-spinner class="mx-auto"></mat-spinner>
                         </div>
                     </ng-container>
                 </div>

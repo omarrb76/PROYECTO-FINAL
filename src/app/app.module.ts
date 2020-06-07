@@ -9,13 +9,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FaqComponent } from './components/faq/faq.component';
+import { AboutComponent } from './components/about/about.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     FooterComponent,
-    FaqComponent
+    FaqComponent,
+    AboutComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

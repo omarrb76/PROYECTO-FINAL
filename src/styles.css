@@ -1,13 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.icono { max-width: 200px; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.icono {
+  max-width: 200px;
+}
 .mat-negro {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
 }
 .mat-rojo {
-    background-color: red;
-    color: white;
+  background-color: red;
+  color: white;
+}
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: rgba(7, 7, 7, 0.801) !important;
+}
+.puntero {
+  cursor: pointer;
+}
+.basic-container {
+  padding: 5px;
+}
+
+.version-info {
+  font-size: 8pt;
+  float: right;
+}
+
+.right-aligned-header > .mat-content {
+  justify-content: space-between;
+}
+
+.mat-content > mat-panel-title,
+.mat-content > mat-panel-description {
+  flex: 0 0 auto;
 }
