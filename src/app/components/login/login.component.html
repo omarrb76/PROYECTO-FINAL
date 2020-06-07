@@ -9,7 +9,93 @@
     <div class="item item-5" fxFlex="200px">Item 5</div>
 </div> -->
 
-<div fxLayout fxLayoutAlign="center">
-    <div fxFlex="50%"><img src="./assets/img/slogan.png" alt="Titulo de la pagina"></div>
-    <div fxFlex="50%"><p>Hola</p></div>
+
+<!-- <img src="./assets/img/slogan.png" alt="Titulo de la pagina"> -->
+
+<!-- fxLayout.xs="column" -->
+
+<!-- <div fxLayout="row">
+    <div fxFlex="100" fxFlex.xs="33" class="border">Div 1</div>
+    <div fxFlex="50" class="border">Div 2</div>
+</div> -->
+
+<div class="container py-5">
+    <div class="row my-auto">
+        <div class="col my-auto" fxShow.xs="false" fxShow.sm="false" fxShow="true">
+            <img src="./assets/img/slogan.png" alt="Titulo de la pagina" class="img-fluid">
+        </div>
+        <div class="col text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <img src="./assets/img/icono.png" alt="Logo de la pagina" class="img-fluid icono">
+                        <hr>
+                        <h3>Inicia sesión o crea una cuenta</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <ng-container [ngSwitch]="estado">
+                        <!-- PANTALLA NORMAL BOTONES -->
+                        <ng-container *ngSwitchCase="0">
+                            <div class="col">
+                                <button mat-raised-button (click)="estadoLOGIN()">Inicia sesión</button>
+                            </div>
+                            <br>
+                            <div class="col">
+                                <button mat-raised-button (click)="estadoSIGNUP()">Crear una cuenta</button>
+                            </div>
+                        </ng-container>
+                        <!-- PARA INICIAR SESION -->
+                        <div class="col text-center" *ngSwitchCase="1">
+                            <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+                                <mat-form-field appearance="outline" floatLabel="auto">
+                                    <mat-label>Nombre de usuario</mat-label>
+                                    <input type="text" matInput placeholder="Nombre de usuario" name="username" formControlName="username">
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field appearance="outline" floatLabel="auto">
+                                    <mat-label>Contraseña</mat-label>
+                                    <input type="password" matInput placeholder="Contraseña" name="password" formControlName="password">
+                                    <mat-hint>Mínimo 4 caracteres</mat-hint>
+                                </mat-form-field>
+                                <hr>
+                                <button id="btnSubmitLogin" mat-raised-button type="submit" color="negro" class="mx-3">Iniciar sesión</button>
+                                <button mat-raised-button color="rojo" class="mx-3" (click)="estadoINICIO()">Cancelar</button>
+                            </form>
+                        </div>
+                        <!-- PARA CREAR UNA CUENTA -->
+                        <div class="col text-center" *ngSwitchCase="2">
+                            <form id="signupForm" [formGroup]="signupForm" (ngSubmit)="submitSignup()">
+                                <mat-form-field appearance="outline" floatLabel="auto">
+                                    <mat-label>Nombre de usuario</mat-label>
+                                    <input type="text" matInput placeholder="Nombre de usuario" name="username" formControlName="username">
+                                    <span style="color: red;" *ngIf="signupForm.controls['username'].hasError('res')">El nombre de usuario ya esta en uso</span>
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field appearance="outline" floatLabel="auto">
+                                    <mat-label>Contraseña</mat-label>
+                                    <input type="password" matInput placeholder="Contraseña" name="password" formControlName="password">
+                                    <mat-hint>Mínimo 4 caracteres</mat-hint>
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field appearance="outline" floatLabel="auto">
+                                    <mat-label>Ingrese de nuevo la contraseña</mat-label>
+                                    <input type="password" matInput placeholder="Ingrese de nuevo la contraseña" name="password2" formControlName="password2">
+                                    <mat-hint>Mínimo 4 caracteres</mat-hint>
+                                </mat-form-field>
+                                <br><br>
+                                <mat-radio-group formControlName="sexo" class="pt-5">
+                                    <mat-radio-button value="hombre" class="mx-2" color="primary">Hombre</mat-radio-button>
+                                    <mat-radio-button value="mujer" class="mx-2" color="accent">Mujer</mat-radio-button>
+                                </mat-radio-group>
+                                <hr>
+                                <button id="btnSubmitLogin" mat-raised-button type="submit" color="negro" class="mx-3">Crear sesión</button>
+                                <button mat-raised-button color="rojo" class="mx-3" (click)="estadoINICIO()">Cancelar</button>
+                            </form>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

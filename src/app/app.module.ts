@@ -7,11 +7,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { FaqComponent } from './components/faq/faq.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
