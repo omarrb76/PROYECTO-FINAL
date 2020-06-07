@@ -1,6 +1,6 @@
+import { SnackbarService } from './../../services/snackbar.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 enum State {
   INICIO, // Se muestran los dos botones para iniciar y crear sesion
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   // Formulario de creacion de cuenta
   signupForm;
 
-  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
+  constructor(private formBuilder: FormBuilder, private snackBarService: SnackbarService) {
     this.loginForm = formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(4)]]
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
       }, 5000);
       console.log(this.loginForm.value); // El formulario funciona
     } else {
-      this.openSnackBar('Error llenando los datos del formulario', 'Aceptar');
+      this.snackBarService.openSnackBar('Error llenando los datos del formulario', 'Aceptar');
     }
   }
 
@@ -86,9 +86,9 @@ export class LoginComponent implements OnInit {
       console.log(this.signupForm.value);
     } else {
       if (this.signupForm.value.password !== this.signupForm.value.password2) {
-        this.openSnackBar('Las contraseñas no coinciden', 'Aceptar');
+        this.snackBarService.openSnackBar('Las contraseñas no coinciden', 'Aceptar');
       } else {
-        this.openSnackBar('Error llenando los datos del formulario', 'Aceptar');
+        this.snackBarService.openSnackBar('Error llenando los datos del formulario', 'Aceptar');
       }
     }
   }
@@ -126,19 +126,6 @@ export class LoginComponent implements OnInit {
       }
       return null;
     };
-  }
-
-  // Para mostrar un aviso de cual fue el error en el llenado de formulario
-  openSnackBar(params: string, action: string) {
-    const snackBarRef = this.snackBar.open(params, action, { duration: 5000 });
-
-    snackBarRef.afterDismissed().subscribe(() => {
-      console.log('The snackbar was dismissed');
-    });
-
-    snackBarRef.onAction().subscribe(() => {
-      console.log('The snackbar action was triggered');
-    });
   }
 
 }
