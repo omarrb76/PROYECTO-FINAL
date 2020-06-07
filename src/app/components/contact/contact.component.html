@@ -8,12 +8,46 @@
                 (click)="regresarLOGIN()">
         </div>
     </div>
-    <div class="my-2" fxLayout="row">
+    <div class="my-2" fxLayout="row" fxFlex>
         <div class="text-center" fxFlex>
             <h2>Contáctanos</h2>
         </div>
     </div>
-    <div class="my-3" fxFlex>
-        
+    <div class="my-3" fxFlex fxLayout="column" *ngIf="!enviado; else cargando">
+        <div fxFlex>
+            <h4>Escribe tus dudas llenando este formulario:</h4>
+        </div>
+        <form fxLayout="column" id="contactForm" [formGroup]="contactForm" (ngSubmit)="submitContactForm()">
+            <div fxLayout="row" fxFlex fxLayout.sm="column" fxLayout.xs="column">
+                <mat-form-field appearance="outline" fxFlex class="mx-4">
+                    <mat-label>Nombre</mat-label>
+                    <input type="text" matInput formControlName="name">
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex class="mx-4">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input type="email" matInput formControlName="email">
+                </mat-form-field>
+            </div>
+            <div fxFlex>
+                <mat-form-field appearance="outline" fxFlex class="mx-4">
+                    <mat-label>Escribe tu comentatio...</mat-label>
+                    <textarea matInput formControlName="comentario"></textarea>
+                </mat-form-field>
+            </div>
+            <div fxFlex fxLayoutAlign="space-around" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
+                class="text-center">
+                <mat-checkbox class="m-3" required formControlName="condicion">
+                    Acepta recibir la respuesta en su correo electrónico
+                </mat-checkbox>
+                <button mat-button color="negro" class="m-3" type="submit">Enviar</button>
+            </div>
+        </form>
     </div>
+
+    <ng-template #cargando>
+        <div class="my-3" fxFlex fxLayout="column">
+            <h3 class="mx-auto">Enviando</h3>
+            <mat-spinner class="mx-auto"></mat-spinner>
+        </div>
+    </ng-template>
 </div>
