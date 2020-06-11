@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 interface Pregunta {
   titulo: string;
@@ -51,13 +50,9 @@ export class FaqComponent implements OnInit {
 
   frecuentes = PREGUNTAS;
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  regresarLOGIN() {
-    this.router.navigate(['/home']);
   }
 
 }

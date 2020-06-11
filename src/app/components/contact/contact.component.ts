@@ -1,6 +1,5 @@
 import { SnackbarService } from './../../services/snackbar.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -13,7 +12,7 @@ export class ContactComponent implements OnInit {
   contactForm;
   enviado = false;
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private snackBarService: SnackbarService) {
+  constructor(private formBuilder: FormBuilder, private snackBarService: SnackbarService) {
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -23,10 +22,6 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  regresarLOGIN() {
-    this.router.navigate(['/home']);
   }
 
   submitContactForm() {

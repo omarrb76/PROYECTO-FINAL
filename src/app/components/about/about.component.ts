@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 interface Carta {
   name: string;
@@ -49,13 +48,9 @@ export class AboutComponent implements OnInit {
 
   equipo = INFORMACION;
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  regresarLOGIN(){
-    this.router.navigate(['/home']);
   }
 
 }
