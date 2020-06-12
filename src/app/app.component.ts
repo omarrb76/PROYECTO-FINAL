@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Simple';
+
+  constructor(){
+    speechSynthesis.getVoices()
+  }
+
+  onActivate(event) {
+    window.scroll(0, 0);
+  }
 }

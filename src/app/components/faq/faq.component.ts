@@ -11,7 +11,7 @@ const PREGUNTAS: Pregunta[] = [
     titulo: '¿Qué es Simple?',
     info: 'La pregunta más importante de todas',
     contenido: `Simple es una red social creada como proyecto final, que tiene como objetivo conectar 
-    a laspersonas de la manera mas sencilla posible. Simple es una red social fácil de usar ya que no 
+    a las personas de la manera mas sencilla posible. Simple es una red social fácil de usar ya que no 
     tiene muchas opciones como las demás, esto la hace perfecta para que cualquiera pueda aprender a usar la red.`
   },
   {

@@ -109,23 +109,11 @@ export class LoginComponent implements OnInit {
 
   // Funcion que valida que el username no este en la base de datos
   nameValidator(control: AbstractControl): { [key: string]: boolean } | null {
-
     if (control.value === 'miguel') {
       console.log('Nombre invalido');
       return { res: true };
     }
     return null;
-  }
-
-  // No se porque funciona esto, ni como funciona pero no lo borren
-  ageLimitValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      if (control.value === 'miguel') {
-        console.log('Nombre invalido');
-        return { res: true };
-      }
-      return null;
-    };
   }
 
 }
