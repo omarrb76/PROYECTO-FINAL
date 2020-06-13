@@ -1,9 +1,12 @@
 <header class="mb-5" fxFlex>
     <div class="col text-center" fxShow.xs="false" fxShow.sm="false" fxShow="true">
-        <img src="./assets/img/titulo.png" alt="Logo de Simple" class="img-fluid puntero" (click)="regresarLOGIN()">
+        <img src="./assets/img/titulo.png" alt="Logo de Simple" class="img-fluid puntero" (click)="regresarLOGIN()"
+            [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Logo de Simple, regresar a inicio')"
+            (keydown.enter)="regresarLOGIN()">
     </div>
     <div class="col text-center" fxShow.xs="true" fxShow.sm="true" fxShow="false">
-        <img src="./assets/img/icono.png" alt="Logo de Simple" class="img-fluid icono puntero"
-            (click)="regresarLOGIN()">
+        <img src="./assets/img/icono.png" alt="Logo de Simple" class="img-fluid icono puntero" (click)="regresarLOGIN()"
+            [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Logo de Simple, regresar a inicio')"
+            (keydown.enter)="regresarLOGIN()">
     </div>
 </header>

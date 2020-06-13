@@ -1,0 +1,29 @@
+<!-- <h2 mat-dialog-title>Session timeout</h2>
+<mat-dialog-content>Hi. You will be logged out due to incativity</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close mat-dialog-close="true">Keep me logged in</button>
+    <button mat-button mat-dialog-close mat-dialog-close="false">Log out</button>
+</mat-dialog-actions>
+ -->
+<h1 mat-dialog-title>
+    <mat-slide-toggle color="primary" #access [(checked)]="activo" (click)="actualizarValor(!access.checked)"
+        [tabindex]="this.tts.getEnabled()" (keyup.space)="actualizarValor(!access.checked)">Accesibilidad - Lector de
+        pantalla</mat-slide-toggle>
+</h1>
+<mat-dialog-content>
+    <p (focus)="this.tts.play('Seleccione el idioma a utilizar')">Seleccione el idioma a utilizar</p>
+    <mat-form-field>
+        <mat-label (focus)="this.tts.play('Idiomas disponibles')">Idiomas disponibles</mat-label>
+        <mat-select #seleccion [value]="selectedIndex">
+            <mat-option *ngFor="let opcion of opciones" [value]="opcion.value"
+                (focus)="this.tts.play('opcion.innerHTML')">
+                {{opcion.innerHTML}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="seleccion.value" color="negro"
+        (focus)="this.tts.play('Aceptar')">Aceptar</button>
+    <button mat-button [mat-dialog-close]="undefined" color="rojo" (focus)="this.tts.play('Cancelar')">Cancelar</button>
+</mat-dialog-actions>

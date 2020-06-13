@@ -1,3 +1,4 @@
+import { TexttospeechService } from './../../services/texttospeech.service';
 import { Component, OnInit } from '@angular/core';
 
 interface Carta {
@@ -34,7 +35,7 @@ const INFORMACION: Carta[] = [
     name: 'Omar Ruiz',
     nickname: 'Niño',
     imagen: 'https://scontent.fntr5-1.fna.fbcdn.net/v/t1.0-9/98002600_124982945858866_4784001077005516800_n.jpg?_nc_cat=100&_nc_sid=85a577&_nc_eui2=AeFj_jw9JC8Yabtpt9tMaeBTn_ZPAUqNp-Cf9k8BSo2n4CHKB4Sz9lRSiW102KaGvP26EPCCMNSizLoVd4cxglWD&_nc_ohc=zchnE575MCoAX90csWp&_nc_ht=scontent.fntr5-1.fna&oh=e230069694d8917c2b37a6ce93965bd3&oe=5F011C23',
-    description: 'Omar es un chico que le gustan los superhéroes y la programación, siempre busca como resolver los problemas en Internet. Omar es responsable del uso de Angular Material en el proyecto.',
+    description: 'Omar es un chico que le gustan los superhéroes y la programación, siempre busca como resolver los problemas en Internet. Omar es responsable del uso de Angular Material y el lector de pantalla en el proyecto.',
     facebook: 'https://www.facebook.com/profile.php?id=100050414831990'
   },
 ];
@@ -48,7 +49,7 @@ export class AboutComponent implements OnInit {
 
   equipo = INFORMACION;
 
-  constructor() { }
+  constructor(public tts: TexttospeechService) { }
 
   ngOnInit(): void {
   }

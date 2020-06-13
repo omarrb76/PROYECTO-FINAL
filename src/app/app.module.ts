@@ -12,6 +12,8 @@ import { FaqComponent } from './components/faq/faq.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HeaderComponent } from './components/header/header.component';
+import { TexttospeechComponent } from './components/texttospeech/texttospeech.component';
+import { TtsdialogComponent } from './components/ttsdialog/ttsdialog.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { HeaderComponent } from './components/header/header.component';
     FaqComponent,
     AboutComponent,
     ContactComponent,
-    HeaderComponent
+    HeaderComponent,
+    TexttospeechComponent,
+    TtsdialogComponent
   ],
   imports: [
     BrowserModule,

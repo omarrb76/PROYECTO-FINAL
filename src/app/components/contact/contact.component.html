@@ -2,43 +2,46 @@
     <app-header></app-header>
     <div class="my-2" fxLayout="row" fxFlex>
         <div class="text-center" fxFlex>
-            <h2>Contáctanos</h2>
+            <h2 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Contáctanos')">Contáctanos</h2>
         </div>
     </div>
     <div class="my-3" fxFlex fxLayout="column" *ngIf="!enviado; else cargando">
         <div fxFlex>
-            <h4>Escribe tus dudas llenando este formulario:</h4>
+            <h4 [tabindex]="this.tts.getEnabled()"
+                (focus)="this.tts.play('Escribe tus dudas llenando este formulario:')">Escribe tus dudas llenando este
+                formulario:</h4>
         </div>
         <form fxLayout="column" id="contactForm" [formGroup]="contactForm" (ngSubmit)="submitContactForm()">
             <div fxLayout="row" fxFlex fxLayout.sm="column" fxLayout.xs="column">
                 <mat-form-field appearance="outline" fxFlex class="mx-4">
                     <mat-label>Nombre</mat-label>
-                    <input type="text" matInput formControlName="name">
+                    <input type="text" matInput formControlName="name" (focus)="this.tts.play('Nombre')">
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex class="mx-4">
                     <mat-label>Correo electrónico</mat-label>
-                    <input type="email" matInput formControlName="email">
+                    <input type="email" matInput formControlName="email" (focus)="this.tts.play('Correo electrónico')">
                 </mat-form-field>
             </div>
             <div fxFlex>
                 <mat-form-field appearance="outline" fxFlex class="mx-4">
                     <mat-label>Escribe tu comentatio...</mat-label>
-                    <textarea matInput formControlName="comentario"></textarea>
+                    <textarea matInput formControlName="comentario" (focus)="this.tts.play('Escribe tu comentario')"></textarea>
                 </mat-form-field>
             </div>
             <div fxFlex fxLayoutAlign="space-around" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
                 class="text-center">
-                <mat-checkbox class="m-3" required formControlName="condicion">
+                <mat-checkbox class="m-3" required formControlName="condicion"
+                    (change)="this.tts.play('Acepta recibir la respuesta en su correo electrónico')">
                     Acepta recibir la respuesta en su correo electrónico
                 </mat-checkbox>
-                <button mat-button color="negro" class="m-3" type="submit">Enviar</button>
+                <button mat-button color="negro" class="m-3" type="submit" (focus)="this.tts.play('Enviar')">Enviar</button>
             </div>
         </form>
     </div>
 
     <ng-template #cargando>
-        <div class="my-3" fxFlex fxLayout="column">
-            <h3 class="mx-auto">Enviando</h3>
+        <div class="my-3" fxFlex fxLayout="column" (focus)="this.tts.play('Enviando')">
+            <h3 class="mx-auto" >Enviando</h3>
             <mat-spinner class="mx-auto"></mat-spinner>
         </div>
     </ng-template>
