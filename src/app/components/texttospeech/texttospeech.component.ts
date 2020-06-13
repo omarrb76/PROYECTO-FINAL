@@ -28,7 +28,11 @@ export class TexttospeechComponent implements OnInit {
       if (result !== undefined) {
 
         this.tts.setIdioma(result);
-        this.tts.play('Hola soy omar y estas viendo disney channel');
+        if (this.tts.getActivo()){
+          this.tts.play('El lector de pantalla ha sido activado');
+        } else {
+          this.tts.play('El lector de pantalla esta desactivado');
+        }
 
       } else { // Se salio o le dio a cancelar
 

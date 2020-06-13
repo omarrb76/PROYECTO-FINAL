@@ -4,7 +4,7 @@
     
     <div class="my-2" fxFlex>
         <div class="text-center">
-            <h2>Preguntas Frecuentes</h2>
+            <h2 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Preguntas frecuentes')">Preguntas Frecuentes</h2>
         </div>
     </div>
     <div class="row my-3">
@@ -12,14 +12,14 @@
             <mat-accordion multi="true">
                 <mat-expansion-panel *ngFor="let pregunta of frecuentes">
                     <mat-expansion-panel-header class="right-aligned-header">
-                        <mat-panel-title>
+                        <mat-panel-title [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(pregunta.titulo)">
                             {{pregunta.titulo}}
                         </mat-panel-title>
-                        <mat-panel-description fxShow.xs="false" fxShow.sm="false" fxShow="true">
+                        <mat-panel-description fxShow.xs="false" fxShow.sm="false" fxShow="true" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(pregunta.info)">
                             {{pregunta.info}}
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <p>{{pregunta.contenido}}</p>
+                    <p [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(pregunta.contenido)">{{pregunta.contenido}}</p>
                 </mat-expansion-panel>
             </mat-accordion>
         </div>

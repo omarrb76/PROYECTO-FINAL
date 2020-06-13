@@ -1,3 +1,4 @@
+import { TexttospeechService } from './../../services/texttospeech.service';
 import { Component, OnInit } from '@angular/core';
 
 interface Pregunta {
@@ -50,7 +51,7 @@ export class FaqComponent implements OnInit {
 
   frecuentes = PREGUNTAS;
 
-  constructor() { }
+  constructor(public tts: TexttospeechService) { }
 
   ngOnInit(): void {
   }

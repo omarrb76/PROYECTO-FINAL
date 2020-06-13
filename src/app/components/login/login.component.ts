@@ -1,3 +1,4 @@
+import { TexttospeechService } from './../../services/texttospeech.service';
 import { SnackbarService } from './../../services/snackbar.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   // Formulario de creacion de cuenta
   signupForm;
 
-  constructor(private formBuilder: FormBuilder, private snackBarService: SnackbarService) {
+  constructor(private formBuilder: FormBuilder, private snackBarService: SnackbarService, public tts: TexttospeechService) {
     this.loginForm = formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(4)]]
@@ -66,6 +67,7 @@ export class LoginComponent implements OnInit {
   // Para hacer el submit del iniciar sesion
   submitLogin() {
     if (this.loginForm.valid) {
+      this.tts.play('Iniciando sesión');
       this.estado = State.CARGANDO;
       setTimeout(() => {
         this.estado = State.INICIO;
@@ -73,12 +75,14 @@ export class LoginComponent implements OnInit {
       console.log(this.loginForm.value); // El formulario funciona
     } else {
       this.snackBarService.openSnackBar('Error llenando los datos del formulario', 'Aceptar');
+      this.tts.play('Error llenando los datos del formulario');
     }
   }
 
   // Para hacer el submit de crear usuario
   submitSignup() {
     if (this.signupForm.valid) {
+      this.tts.play('Creando nuevo usuario. ¡QUÉ EMOCIÓN!');
       this.estado = State.CARGANDO;
       setTimeout(() => {
         this.estado = State.INICIO;
@@ -87,8 +91,10 @@ export class LoginComponent implements OnInit {
     } else {
       if (this.signupForm.value.password !== this.signupForm.value.password2) {
         this.snackBarService.openSnackBar('Las contraseñas no coinciden', 'Aceptar');
+        this.tts.play('Las contraseñas no coinciden');
       } else {
         this.snackBarService.openSnackBar('Error llenando los datos del formulario', 'Aceptar');
+        this.tts.play('Error llenando los datos del formulario');
       }
     }
   }

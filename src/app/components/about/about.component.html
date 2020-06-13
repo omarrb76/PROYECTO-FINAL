@@ -2,7 +2,7 @@
     <app-header></app-header>
     <div class="row my-2">
         <div class="col text-center">
-            <h2>Acerca De</h2>
+            <h2 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Acerca de')">Acerca De</h2>
         </div>
     </div>
     <hr>
@@ -11,8 +11,9 @@
             <img src="./assets/img/acerca_de_1.png" alt="Acerca de" class="img-fluid">
         </div>
         <div class="col-12 col-md-6">
-            <h3><strong>Misión:</strong></h3>
-            <p>
+            <h3><strong [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Misión')">Misión:</strong></h3>
+            <p [tabindex]="this.tts.getEnabled()" #desc
+            (focus)="this.tts.play(desc.innerHTML)">
                 Nuestra misión es hacer una red social muy sencilla y fácil de usar, de manera que todas las personas
                 puedan entender su funcionamiento y se unan más usuarios a esta plataforma. También sera muy minimalista
                 de manera que no desviemos nuestra atención de las cosas que nos interesan.
@@ -25,23 +26,24 @@
     <hr>
     <div class="row my-3">
         <div class="col text-center">
-            <h3><strong>¿Quiénes somos?</strong></h3>
+            <h3><strong [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('¿Quiénes somos?')">¿Quiénes somos?</strong></h3>
             <!-- AQUI VAN 4 CARDS -->
-            <div fxLayout="row"  fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap>
+            <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap>
                 <mat-card class="m-3" fxFlex *ngFor="let integrante of equipo">
                     <mat-card-header>
-                        <mat-card-title>{{integrante.name}}</mat-card-title>
-                        <mat-card-subtitle>{{integrante.nickname}}</mat-card-subtitle>
+                        <mat-card-title [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(integrante.name)">{{integrante.name}}</mat-card-title>
+                        <mat-card-subtitle [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(integrante.nickname)">{{integrante.nickname}}</mat-card-subtitle>
                     </mat-card-header>
-                    <img mat-card-image src="{{integrante.imagen}}"
-                        alt="Imagen del integrante del equipo" class="img-fluid mx-auto">
+                    <img mat-card-image src="{{integrante.imagen}}" alt="Imagen del integrante del equipo"
+                        class="img-fluid mx-auto">
                     <mat-card-content>
-                        <p>
+                        <p [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(integrante.description)">
                             {{integrante.description}}
                         </p>
                     </mat-card-content>
                     <mat-card-actions align="right">
-                        <button mat-raised-button color="primary"><a href="{{integrante.facebook}}" style="text-decoration: none; color: white;" target="_blank">Facebook</a></button>
+                        <button mat-raised-button color="primary"><a href="{{integrante.facebook}}" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Facebook de ' + integrante.name)"
+                                style="text-decoration: none; color: white;" target="_blank">Facebook</a></button>
                     </mat-card-actions>
                 </mat-card>
             </div>

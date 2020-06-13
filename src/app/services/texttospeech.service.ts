@@ -92,11 +92,29 @@ export class TexttospeechService {
     return this.selectedIndex;
   }
 
-  play(message: string) {
-    console.log(message);
+  play(message: any) {
+    // console.log(message.target.innerHTML);
+
+    // Es un mensaje en especifico que yo mando, y quiero que se reproduzca aunque el active este en falso por que quiero que suene
+    if (message === 'El lector de pantalla esta desactivado') {
+      speechSynthesis.cancel();
+
+      const mensaje = new SpeechSynthesisUtterance();
+      mensaje.voice = this.idioma;
+      mensaje.volume = 1;
+      mensaje.rate = 1;
+      mensaje.text = message;
+      mensaje.pitch = 1;
+
+      speechSynthesis.speak(mensaje);
+      return;
+    }
 
     // Solo si esta la opcion activa hara el sonido
     if (this.active) {
+
+      speechSynthesis.cancel();
+
       const mensaje = new SpeechSynthesisUtterance();
       mensaje.voice = this.idioma;
       mensaje.volume = 1;
@@ -109,17 +127,24 @@ export class TexttospeechService {
   }
 
   // Para guardar las opciones antes de que se editaran sin guardar
-  guardarEstado(){
+  guardarEstado() {
     this.idiomaCache = this.idioma;
     this.activeCache = this.active;
     this.selectedIndexCache = this.selectedIndex;
   }
 
   // Recuperar los valores anteriores en caso de que no se hayan guardado
-  recuperarEstado(){
+  recuperarEstado() {
     this.idioma = this.idiomaCache;
     this.active = this.activeCache;
     this.selectedIndex = this.selectedIndexCache;
+  }
+
+  getEnabled() {
+    if (this.active) {
+      return 1;
+    }
+    return -1;
   }
 
 }

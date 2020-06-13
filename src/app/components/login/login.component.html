@@ -8,18 +8,21 @@
                 <div fxFlex class="p-2">
                     <img src="./assets/img/icono.png" alt="Logo de la pagina" class="img-fluid icono">
                     <hr>
-                    <h3 tabindex="0">Inicia sesión o crea una cuenta</h3>
+                    <h3 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Inicia sesión o crea una cuenta')">
+                        Inicia sesión o crea una cuenta</h3>
                 </div>
                 <div fxFlex fxLayout="row" fxLayout.xs="column">
                     <ng-container [ngSwitch]="estado">
                         <!-- PANTALLA NORMAL BOTONES -->
                         <ng-container *ngSwitchCase="0">
                             <div class="m-3" fxFlex>
-                                <button mat-raised-button (click)="estadoLOGIN()">Inicia sesión</button>
+                                <button mat-raised-button (click)="estadoLOGIN()"
+                                    (focus)="this.tts.play('Inicia sesión')">Inicia sesión</button>
                             </div>
                             <br>
                             <div class="m-3" fxFlex>
-                                <button mat-raised-button (click)="estadoSIGNUP()">Crear una cuenta</button>
+                                <button mat-raised-button (click)="estadoSIGNUP()"
+                                    (focus)="this.tts.play('Crea una cuenta')">Crear una cuenta</button>
                             </div>
                         </ng-container>
                         <!-- PARA INICIAR SESION -->
@@ -28,20 +31,20 @@
                                 <mat-form-field appearance="outline" floatLabel="auto">
                                     <mat-label>Nombre de usuario</mat-label>
                                     <input type="text" matInput placeholder="Nombre de usuario" name="username"
-                                        formControlName="username">
+                                        formControlName="username" (focus)="this.tts.play('Nombre de usuario')">
                                 </mat-form-field>
                                 <br>
                                 <mat-form-field appearance="outline" floatLabel="auto">
                                     <mat-label>Contraseña</mat-label>
                                     <input type="password" matInput placeholder="Contraseña" name="password"
-                                        formControlName="password">
+                                        formControlName="password" (focus)="this.tts.play('Contraseña')">
                                     <mat-hint>Mínimo 4 caracteres</mat-hint>
                                 </mat-form-field>
                                 <hr>
-                                <button id="btnSubmitLogin" mat-raised-button type="submit" color="negro"
-                                    class="mx-3">Iniciar sesión</button>
-                                <button mat-raised-button color="rojo" class="mx-3"
-                                    (click)="estadoINICIO()">Cancelar</button>
+                                <button id="btnSubmitLogin" mat-raised-button type="submit" color="negro" class="mx-3"
+                                    (focus)="this.tts.play('Inicia sesión')">Iniciar sesión</button>
+                                <button mat-raised-button color="rojo" class="mx-3" (click)="estadoINICIO()"
+                                    (focus)="this.tts.play('Cancelar')">Cancelar</button>
                             </form>
                         </div>
                         <!-- PARA CREAR UNA CUENTA -->
@@ -50,41 +53,42 @@
                                 <mat-form-field appearance="outline" floatLabel="auto">
                                     <mat-label>Nombre y apellido</mat-label>
                                     <input type="text" matInput placeholder="Nombre y apellido" name="name"
-                                        formControlName="name">
+                                        formControlName="name" (focus)="this.tts.play('Nombre y apellido')">
                                 </mat-form-field>
                                 <br>
                                 <mat-form-field appearance="outline" floatLabel="auto">
                                     <mat-label>Nombre de usuario</mat-label>
                                     <input type="text" matInput placeholder="Nombre de usuario" name="username"
-                                        formControlName="username">
-                                    <span style="color: red;" *ngIf="signupForm.controls['username'].hasError('res')">El
+                                        formControlName="username" (focus)="this.tts.play('Nombre de usuario')">
+                                    <span style="color: red;" *ngIf="signupForm.controls['username'].hasError('res')"
+                                        (focus)="this.tts.play('El nombre de usuario ya esta en uso')">El
                                         nombre de usuario ya esta en uso</span>
                                 </mat-form-field>
                                 <br>
                                 <mat-form-field appearance="outline" floatLabel="auto">
                                     <mat-label>Contraseña</mat-label>
                                     <input type="password" matInput placeholder="Contraseña" name="password"
-                                        formControlName="password">
+                                        formControlName="password" (focus)="this.tts.play('Contraseña')">
                                     <mat-hint>Mínimo 4 caracteres</mat-hint>
                                 </mat-form-field>
                                 <br>
                                 <mat-form-field appearance="outline" floatLabel="auto">
                                     <mat-label>Ingrese de nuevo la contraseña</mat-label>
                                     <input type="password" matInput placeholder="Ingrese de nuevo la contraseña"
-                                        name="password2" formControlName="password2">
+                                        name="password2" formControlName="password2" (focus)="this.tts.play('Confirme contraseña')">
                                     <mat-hint>Mínimo 4 caracteres</mat-hint>
                                 </mat-form-field>
                                 <br><br>
                                 <mat-radio-group formControlName="sexo" class="pt-5">
-                                    <mat-radio-button value="hombre" class="mx-2" color="primary">Hombre
+                                    <mat-radio-button value="hombre" class="mx-2" color="primary" (change)="this.tts.play('Hombre')">Hombre
                                     </mat-radio-button>
-                                    <mat-radio-button value="mujer" class="mx-2" color="accent">Mujer</mat-radio-button>
+                                    <mat-radio-button value="mujer" class="mx-2" color="accent" (change)="this.tts.play('Mujer')">Mujer</mat-radio-button>
                                 </mat-radio-group>
                                 <hr>
                                 <button id="btnSubmitLogin" mat-raised-button type="submit" color="negro"
-                                    class="mx-3">Crear sesión</button>
+                                    class="mx-3" (focus)="this.tts.play('Crear sesion')">Crear sesión</button>
                                 <button mat-raised-button color="rojo" class="mx-3"
-                                    (click)="estadoINICIO()">Cancelar</button>
+                                    (click)="estadoINICIO()" (focus)="this.tts.play('Cancelar')">Cancelar</button>
                             </form>
                         </div>
                         <div class="col" *ngSwitchCase="3" fxFlex>
