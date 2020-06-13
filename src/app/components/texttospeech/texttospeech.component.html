@@ -1,3 +1,4 @@
-<button mat-fab color="gris" aria-label="Boton para abrir accesibilidad" id="botonAccess" (click)="openDialog()">
+<button mat-fab color="gris" aria-label="Boton para abrir accesibilidad" id="botonAccess" (click)="openDialog()"
+    (focus)="this.tts.play('Accesibilidad')">
     <mat-icon>accessibility</mat-icon>
 </button>

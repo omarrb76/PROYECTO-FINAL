@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
   // Para hacer el submit de crear usuario
   submitSignup() {
     if (this.signupForm.valid) {
-      this.tts.play('Creando nuevo usuario. ¡QUÉ EMOCIÓN!');
+      this.tts.play('Creando nuevo usuario');
       this.estado = State.CARGANDO;
       setTimeout(() => {
         this.estado = State.INICIO;

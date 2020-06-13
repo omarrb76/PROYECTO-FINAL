@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class TexttospeechComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private tts: TexttospeechService) { }
+  constructor(public dialog: MatDialog, public tts: TexttospeechService) { }
 
   ngOnInit(): void {
   }

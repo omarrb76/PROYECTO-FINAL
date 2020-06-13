@@ -1,3 +1,4 @@
+import { TexttospeechService } from './services/texttospeech.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -9,7 +10,7 @@ export class AppComponent {
   title = 'Simple';
 
   constructor(){
-    speechSynthesis.getVoices()
+    speechSynthesis.getVoices();
   }
 
   onActivate(event) {

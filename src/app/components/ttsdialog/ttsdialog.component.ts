@@ -12,7 +12,7 @@ export class TtsdialogComponent implements OnInit {
   activo: boolean;
   selectedIndex: number;
 
-  constructor(private tts: TexttospeechService) {
+  constructor(public tts: TexttospeechService) {
     this.tts.cargarVoces();
 
     this.tts.cargarVoces();
