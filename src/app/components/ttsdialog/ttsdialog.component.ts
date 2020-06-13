@@ -9,20 +9,23 @@ import { Component, OnInit } from '@angular/core';
 export class TtsdialogComponent implements OnInit {
 
   opciones: Opcion[];
-  activo = false; // Por default el lector de pantalla esta inactivo
+  activo: boolean;
+  selectedIndex: number;
 
   constructor(private tts: TexttospeechService) {
     this.tts.cargarVoces();
 
     this.tts.cargarVoces();
     this.opciones = this.tts.getOpciones();
+
+    this.activo = this.tts.getActivo();
+    this.selectedIndex = this.tts.getSelectedIndex();
   }
 
   ngOnInit() {}
 
   actualizarValor(param: boolean){
-    this.activo = param;
-    // console.log(this.activo);
+    this.tts.setActivo(param);
   }
 
 }

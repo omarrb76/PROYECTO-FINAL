@@ -17,8 +17,15 @@ export class TexttospeechService {
   posibleIndice = 0;
   vocesDisponibles = [];
   opciones = [];
-  primeraVez = true;
+  primeraVez = true; // Para cargar las voces
   idioma: any;
+  active = false; // Por defecto el accesibilidad viene descativado
+  selectedIndex = 0; // Para que se seleccione automaticamente en el select del dialog
+
+  // Para guardar el estado anterior, por si el usuario no dio aceptar en el dialog
+  idiomaCache: any;
+  activeCache = false;
+  selectedIndexCache = 0;
 
   constructor() { }
 
@@ -64,6 +71,7 @@ export class TexttospeechService {
   }
 
   setIdioma(indice: number) {
+    this.selectedIndex = indice;
     this.idioma = this.vocesDisponibles[indice];
   }
 
@@ -71,17 +79,47 @@ export class TexttospeechService {
     return this.idioma;
   }
 
+  // Para cambiar el valor y saber si se va a reproducir el sonido o no
+  setActivo(valor: boolean) {
+    this.active = valor;
+  }
+
+  getActivo() {
+    return this.active;
+  }
+
+  getSelectedIndex() {
+    return this.selectedIndex;
+  }
+
   play(message: string) {
     console.log(message);
 
-    const mensaje = new SpeechSynthesisUtterance();
-    mensaje.voice = this.idioma;
-    mensaje.volume = 1;
-    mensaje.rate = 1;
-    mensaje.text = message;
-    mensaje.pitch = 1;
+    // Solo si esta la opcion activa hara el sonido
+    if (this.active) {
+      const mensaje = new SpeechSynthesisUtterance();
+      mensaje.voice = this.idioma;
+      mensaje.volume = 1;
+      mensaje.rate = 1;
+      mensaje.text = message;
+      mensaje.pitch = 1;
 
-    speechSynthesis.speak(mensaje);
+      speechSynthesis.speak(mensaje);
+    }
+  }
+
+  // Para guardar las opciones antes de que se editaran sin guardar
+  guardarEstado(){
+    this.idiomaCache = this.idioma;
+    this.activeCache = this.active;
+    this.selectedIndexCache = this.selectedIndex;
+  }
+
+  // Recuperar los valores anteriores en caso de que no se hayan guardado
+  recuperarEstado(){
+    this.idioma = this.idiomaCache;
+    this.active = this.activeCache;
+    this.selectedIndex = this.selectedIndexCache;
   }
 
 }

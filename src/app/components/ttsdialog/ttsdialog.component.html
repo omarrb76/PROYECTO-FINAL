@@ -6,14 +6,14 @@
 </mat-dialog-actions>
  -->
 <h1 mat-dialog-title>
-    <mat-slide-toggle color="primary" #access (click)="actualizarValor(!access.checked)">Accesibilidad - Lector de
+    <mat-slide-toggle color="primary" #access [(checked)]="activo" (click)="actualizarValor(!access.checked)">Accesibilidad - Lector de
         pantalla</mat-slide-toggle>
 </h1>
 <mat-dialog-content>
     <p>Seleccione el idioma a utilizar</p>
     <mat-form-field>
         <mat-label>Idiomas disponibles</mat-label>
-        <mat-select #seleccion>
+        <mat-select #seleccion [value]="selectedIndex">
             <mat-option *ngFor="let opcion of opciones" [value]="opcion.value">
                 {{opcion.innerHTML}}
             </mat-option>
