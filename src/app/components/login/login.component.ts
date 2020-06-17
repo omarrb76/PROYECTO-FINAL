@@ -26,6 +26,9 @@ export class LoginComponent implements OnInit {
   // Formulario de creacion de cuenta
   signupForm;
 
+  // Para saber si el usuario esta logeado, me sirve para cambiar la clase del login y que no se vea amontonado
+  active = true;
+
   constructor(private formBuilder: FormBuilder, private snackBarService: SnackbarService, public tts: TexttospeechService) {
     this.loginForm = formBuilder.group({
       username: ['', Validators.required],

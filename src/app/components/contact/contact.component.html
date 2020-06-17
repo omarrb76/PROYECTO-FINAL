@@ -24,7 +24,7 @@
             </div>
             <div fxFlex>
                 <mat-form-field appearance="outline" fxFlex class="mx-4">
-                    <mat-label>Escribe tu comentatio...</mat-label>
+                    <mat-label>Escribe tu comentario...</mat-label>
                     <textarea matInput formControlName="comentario" (focus)="this.tts.play('Escribe tu comentario')"></textarea>
                 </mat-form-field>
             </div>
@@ -32,7 +32,7 @@
                 class="text-center">
                 <mat-checkbox class="m-3" required formControlName="condicion"
                     (change)="this.tts.play('Acepta recibir la respuesta en su correo electrónico')">
-                    Acepta recibir la respuesta en su correo electrónico
+                    Recibiré respuesta en e-mail
                 </mat-checkbox>
                 <button mat-button color="negro" class="m-3" type="submit" (focus)="this.tts.play('Enviar')">Enviar</button>
             </div>

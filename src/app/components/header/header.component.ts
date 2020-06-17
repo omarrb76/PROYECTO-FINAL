@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  active = true;
+
   constructor(private router: Router, public tts: TexttospeechService) { }
 
   ngOnInit(): void {

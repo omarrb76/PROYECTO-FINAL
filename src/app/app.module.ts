@@ -14,6 +14,8 @@ import { ContactComponent } from './components/contact/contact.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TexttospeechComponent } from './components/texttospeech/texttospeech.component';
 import { TtsdialogComponent } from './components/ttsdialog/ttsdialog.component';
+import { FeedComponent } from './components/feed/feed.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { TtsdialogComponent } from './components/ttsdialog/ttsdialog.component';
     ContactComponent,
     HeaderComponent,
     TexttospeechComponent,
-    TtsdialogComponent
+    TtsdialogComponent,
+    FeedComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

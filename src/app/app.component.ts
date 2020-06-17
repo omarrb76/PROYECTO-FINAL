@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Simple';
 
-  constructor(){
+  constructor() {
     speechSynthesis.getVoices();
   }
 

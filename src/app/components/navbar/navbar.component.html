@@ -1,0 +1,112 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav fixedInViewport="true">
+        <div fxLayout="column" class="container" class="text-center">
+            <div fxFlex>
+                <img src="./assets/img/slogan.png" alt="Slogan" class="img-fluid mx-auto p-3 slogan">
+            </div>
+            <div class="px-2">
+                <hr>
+            </div>
+            <div fxFlex>
+                <img src="https://eloutput.com/app/uploads-eloutput.com/2020/04/Batman.jpg" alt="Foto de perfil"
+                    class="profile-sidenav rounded-circle">
+            </div>
+            <div fxFlex class="mt-2">
+                <h3><strong>Batman</strong></h3>
+            </div>
+            <div class="px-2">
+                <hr>
+            </div>
+            <div fxFlex>
+                <button mat-flat-button [routerLink]="['home']" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Inicio')" class="mb-3" (click)="sidenav.toggle()">Inicio
+                    <mat-icon>home</mat-icon></button>
+            </div>
+            <div fxFlex>
+                <button mat-flat-button [routerLink]="['home']" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Mi perfil')" class="my-3" (click)="sidenav.toggle()">Mi Perfil
+                    <mat-icon>account_circle</mat-icon></button>
+            </div>
+            <div fxFlex>
+                <button mat-flat-button [routerLink]="['home']" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Configuración de la cuenta')" class="my-3" (click)="sidenav.toggle()">Configuración
+                    <mat-icon>settings</mat-icon></button>
+            </div>
+            <div fxFlex>
+                <button mat-flat-button [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Cerrar barra lateral')" class="my-3" (click)="sidenav.toggle()"
+                    color="rojo">Volver
+                    <mat-icon>close</mat-icon></button>
+            </div>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+
+        <mat-toolbar color="primary" class="fixed-top border-dark border-bottom" fxLayout="row" fxShow.sm="false"
+            fxShow.xs="false">
+            <div fxFlex align="start">
+                <img src="https://eloutput.com/app/uploads-eloutput.com/2020/04/Batman.jpg" alt="Foto de perfil"
+                    class="profile-navbar puntero rounded-circle ml-5" [routerLink]="['faq']">
+                <img src="./assets/img/titulo.png" alt="Simple" class="logo-navbar ml-5 puntero" [routerLink]="['faq']">
+            </div>
+            <div fxFlex align="center">
+                <form>
+                    <mat-form-field appearance="legacy" floatLabel="never">
+                        <input type="text" placeholder="Buscar" aria-label="Text" matInput [formControl]="myControl"
+                            [matAutocomplete]="auto" (ngModelChange)="updatedVal($event)">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
+                                (click)="userPage(option)" fxLayout="row" [class.d-none]="!show">
+                                <div fxFlex>{{option}}</div>
+                                <div fxFlex>
+                                    <img class="profile-search"
+                                        src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg">
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div fxFlex align="end">
+                <span matBadge="4" matBadgeSize="small" matBadgeColor="warn" class="my-auto mx-4 puntero">
+                    <mat-icon style="transform: scale(1.4)">notifications</mat-icon>
+                </span>
+                <span class="my-auto mx-4 puntero" [routerLink]="['faq']">
+                    <mat-icon style="transform: scale(1.4)">settings</mat-icon>
+                </span>
+            </div>
+        </mat-toolbar>
+
+        <mat-toolbar color="primary" class="fixed-top border-dark border-bottom" fxLayout="row" fxShow="false"
+            fxShow.sm="true" fxShow.xs="true">
+            <div fxFlex align="start">
+                <span class="my-auto mx-4 puntero" (click)="sidenav.toggle()">
+                    <mat-icon style="transform: scale(1.4)">menu</mat-icon>
+                </span>
+            </div>
+            <div fxFlex align="center">
+                <form>
+                    <mat-form-field appearance="legacy" floatLabel="never">
+                        <input type="text" placeholder="Buscar" aria-label="Text" matInput [formControl]="myControl"
+                            [matAutocomplete]="auto" (ngModelChange)="updatedVal($event)">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
+                                (click)="userPage(option)" fxLayout="row" [class.d-none]="!show">
+                                <div fxFlex>{{option}}</div>
+                                <div fxFlex>
+                                    <img class="profile-search"
+                                        src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg">
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div fxFlex align="end">
+                <span matBadge="4" matBadgeSize="small" matBadgeColor="warn" class="my-auto mx-4 puntero">
+                    <mat-icon style="transform: scale(1.4)">notifications</mat-icon>
+                </span>
+            </div>
+        </mat-toolbar>
+    </mat-sidenav-content>
+</mat-sidenav-container>
