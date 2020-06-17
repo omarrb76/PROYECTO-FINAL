@@ -1,3 +1,5 @@
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationsdialogComponent } from './../notificationsdialog/notificationsdialog.component';
 import { SnackbarService } from './../../services/snackbar.service';
 import { Observable } from 'rxjs';
 import { TexttospeechService } from './../../services/texttospeech.service';
@@ -17,8 +19,9 @@ export class NavbarComponent implements OnInit {
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<any>;
   show = false;
+  notifications = 5;
 
-  constructor(public tts: TexttospeechService, private snackBarService: SnackbarService) {}
+  constructor(public tts: TexttospeechService, private snackBarService: SnackbarService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.filteredOptions = this.myControl.valueChanges
@@ -51,4 +54,13 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(NotificationsdialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+
+      // Una vez que el usuario cierre el panel, nosotros borramos las notificaciones
+      console.log(result);
+
+    });
+  }
 }

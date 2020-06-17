@@ -86,3 +86,12 @@ body {
   height: 70px !important;
   line-height: 70px !important;
 }
+
+.text-none {
+  color: inherit;
+  text-decoration: none;
+}
+
+.text-none:hover{
+  color: rgb(141, 141, 141);
+}

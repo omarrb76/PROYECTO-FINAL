@@ -1,4 +1,6 @@
 <mat-sidenav-container>
+
+    <!-- Contenido de sidenav -->
     <mat-sidenav #sidenav fixedInViewport="true">
         <div fxLayout="column" class="container" class="text-center">
             <div fxFlex>
@@ -12,7 +14,7 @@
                     class="profile-sidenav rounded-circle">
             </div>
             <div fxFlex class="mt-2">
-                <h3><strong>Batman</strong></h3>
+                <h3><strong [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Batman')">Batman</strong></h3>
             </div>
             <div class="px-2">
                 <hr>
@@ -29,7 +31,8 @@
             </div>
             <div fxFlex>
                 <button mat-flat-button [routerLink]="['home']" [tabindex]="this.tts.getEnabled()"
-                    (focus)="this.tts.play('Configuración de la cuenta')" class="my-3" (click)="sidenav.toggle()">Configuración
+                    (focus)="this.tts.play('Configuración de la cuenta')" class="my-3"
+                    (click)="sidenav.toggle()">Configuración
                     <mat-icon>settings</mat-icon></button>
             </div>
             <div fxFlex>
@@ -40,23 +43,39 @@
             </div>
         </div>
     </mat-sidenav>
+
+
+
+
+
+
     <mat-sidenav-content>
 
+
+        <!-- Toolbar cuando esta grande -->
         <mat-toolbar color="primary" class="fixed-top border-dark border-bottom" fxLayout="row" fxShow.sm="false"
             fxShow.xs="false">
             <div fxFlex align="start">
-                <img src="https://eloutput.com/app/uploads-eloutput.com/2020/04/Batman.jpg" alt="Foto de perfil"
-                    class="profile-navbar puntero rounded-circle ml-5" [routerLink]="['faq']">
-                <img src="./assets/img/titulo.png" alt="Simple" class="logo-navbar ml-5 puntero" [routerLink]="['faq']">
+                <a [routerLink]="['faq']" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Perfil de nombre de usuario')">
+                    <img src="https://eloutput.com/app/uploads-eloutput.com/2020/04/Batman.jpg" alt="Foto de perfil"
+                        class="profile-navbar rounded-circle ml-5">
+                </a>
+                <a [routerLink]="['faq']" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Logo de Simple inicio')">
+                    <img src="./assets/img/titulo.png" alt="Simple" class="logo-navbar ml-5">
+                </a>
             </div>
             <div fxFlex align="center">
                 <form>
                     <mat-form-field appearance="legacy" floatLabel="never">
                         <input type="text" placeholder="Buscar" aria-label="Text" matInput [formControl]="myControl"
-                            [matAutocomplete]="auto" (ngModelChange)="updatedVal($event)">
+                            [matAutocomplete]="auto" (ngModelChange)="updatedVal($event)"
+                            (focus)="this.tts.play('Buscar usuario')">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
-                                (click)="userPage(option)" fxLayout="row" [class.d-none]="!show">
+                                (click)="userPage(option)" fxLayout="row" [class.d-none]="!show"
+                                [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Hola')">
                                 <div fxFlex>{{option}}</div>
                                 <div fxFlex>
                                     <img class="profile-search"
@@ -68,19 +87,29 @@
                 </form>
             </div>
             <div fxFlex align="end">
-                <span matBadge="4" matBadgeSize="small" matBadgeColor="warn" class="my-auto mx-4 puntero">
+                <span [matBadge]="notifications" matBadgeSize="small" matBadgeColor="warn"
+                    class="my-auto mx-4 text-none puntero" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Número de notificaciones notificaciones nuevas')" (click)="openDialog()"
+                    (keyup.enter)="openDialog()" [matBadgeHidden]="notifications === 0">
                     <mat-icon style="transform: scale(1.4)">notifications</mat-icon>
                 </span>
-                <span class="my-auto mx-4 puntero" [routerLink]="['faq']">
+                <a class="my-auto mx-4 text-none" [routerLink]="['faq']" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Configuración de la cuenta')">
                     <mat-icon style="transform: scale(1.4)">settings</mat-icon>
-                </span>
+                </a>
             </div>
         </mat-toolbar>
 
+
+
+
+
+        <!-- Toolbar cuando esta chiquito -->
         <mat-toolbar color="primary" class="fixed-top border-dark border-bottom" fxLayout="row" fxShow="false"
             fxShow.sm="true" fxShow.xs="true">
             <div fxFlex align="start">
-                <span class="my-auto mx-4 puntero" (click)="sidenav.toggle()">
+                <span class="my-auto mx-4 puntero" (click)="sidenav.toggle()" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Abrir menu lateral')" (keyup.enter)="sidenav.toggle()">
                     <mat-icon style="transform: scale(1.4)">menu</mat-icon>
                 </span>
             </div>
@@ -88,7 +117,8 @@
                 <form>
                     <mat-form-field appearance="legacy" floatLabel="never">
                         <input type="text" placeholder="Buscar" aria-label="Text" matInput [formControl]="myControl"
-                            [matAutocomplete]="auto" (ngModelChange)="updatedVal($event)">
+                            [matAutocomplete]="auto" (ngModelChange)="updatedVal($event)"
+                            (focus)="this.tts.play('Buscar usuario')">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
                                 (click)="userPage(option)" fxLayout="row" [class.d-none]="!show">
@@ -103,7 +133,10 @@
                 </form>
             </div>
             <div fxFlex align="end">
-                <span matBadge="4" matBadgeSize="small" matBadgeColor="warn" class="my-auto mx-4 puntero">
+                <span [matBadge]="notifications" matBadgeSize="small" matBadgeColor="warn"
+                    class="my-auto mx-4 text-none puntero" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Número de notificaciones notificaciones nuevas')" (click)="openDialog()"
+                    (keyup.enter)="openDialog()" [matBadgeHidden]="notifications === 0">
                     <mat-icon style="transform: scale(1.4)">notifications</mat-icon>
                 </span>
             </div>
