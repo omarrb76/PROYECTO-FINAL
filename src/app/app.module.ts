@@ -16,6 +16,8 @@ import { TexttospeechComponent } from './components/texttospeech/texttospeech.co
 import { TtsdialogComponent } from './components/ttsdialog/ttsdialog.component';
 import { FeedComponent } from './components/feed/feed.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { NotificationsdialogComponent } from './components/notificationsdialog/notificationsdialog.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     TexttospeechComponent,
     TtsdialogComponent,
     FeedComponent,
-    NavbarComponent
+    NavbarComponent,
+    NotificationsdialogComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
