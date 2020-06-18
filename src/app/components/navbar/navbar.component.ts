@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationsdialogComponent } from './../notificationsdialog/notificationsdialog.component';
 import { SnackbarService } from './../../services/snackbar.service';
@@ -21,7 +22,11 @@ export class NavbarComponent implements OnInit {
   show = false;
   notifications = 5;
 
-  constructor(public tts: TexttospeechService, private snackBarService: SnackbarService, public dialog: MatDialog) {}
+  constructor(
+    public tts: TexttospeechService,
+    private snackBarService: SnackbarService,
+    public dialog: MatDialog,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.filteredOptions = this.myControl.valueChanges
@@ -43,7 +48,7 @@ export class NavbarComponent implements OnInit {
   }
 
   userPage(opcion: any) {
-    console.log(opcion);
+    this.router.navigate([`user/${opcion}`]);
   }
 
   updatedVal(e) {

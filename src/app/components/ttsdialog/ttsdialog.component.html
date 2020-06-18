@@ -9,8 +9,7 @@
     <mat-form-field>
         <mat-label (focus)="this.tts.play('Idiomas disponibles')">Idiomas disponibles</mat-label>
         <mat-select #seleccion [value]="selectedIndex">
-            <mat-option *ngFor="let opcion of opciones" [value]="opcion.value"
-                (focus)="this.tts.play('opcion.innerHTML')">
+            <mat-option *ngFor="let opcion of opciones" [value]="opcion.value">
                 {{opcion.innerHTML}}
             </mat-option>
         </mat-select>

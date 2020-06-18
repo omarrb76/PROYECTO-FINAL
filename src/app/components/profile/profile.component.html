@@ -1,1 +1,59 @@
-<p>profile works!</p>
+<div class="container p-5">
+
+    <mat-spinner class="mx-auto my-5" *ngIf="loadingUser"></mat-spinner>
+
+    <div *ngIf="!loadingUser" class="my-5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+        <div fxFlex fxLayout="column" class="text-center">
+            <div fxFlex class="mx-auto px-3 pb-3 contenedor">
+                <img class="profile-profile rounded-circle" src="https://i.ytimg.com/vi/ZAOGgopz_DY/maxresdefault.jpg"
+                    alt="Foto de perfil">
+            </div>
+            <div fxFlex class="px-2">
+                <hr>
+            </div>
+            <div fxFlex>
+                <h1><strong [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(username)">{{username}}</strong>
+                </h1>
+                <h2 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Nombre')">nombre</h2>
+                <h3 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Sexo')">Sexo</h3>
+                <h3 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Eys acumulados')">
+                    <strong>Eys:</strong> numero</h3>
+            </div>
+            <div fxFlex class="px-2">
+                <hr>
+            </div>
+            <div fxFlex fxLayout="row" fxLayout.xs="column">
+                <div fxFlex>
+                    <button mat-raised-button color="negro" (focus)="this.tts.play('Siguiendo')">Siguiendo
+                        numero</button>
+                </div>
+                <div fxFlex class="px-2" fxShow="false" fxShow.xs="true">
+                    <br>
+                </div>
+                <div fxFlex>
+                    <button mat-raised-button color="negro" (focus)="this.tts.play('Seguidores')">Seguidores
+                        numero</button>
+                </div>
+            </div>
+        </div>
+
+        <div fxFlex class="px-2 mb-3" fxShow="false" fxShow.sm="true" fxShow.xs="true">
+            <hr>
+        </div>
+
+        <div fxFlex fxLayout="column" class="text-center">
+            <button mat-stroked-button [color]="this.getSeguirColor()" class="mx-4"
+                (focus)="this.tts.play(siguiendo ? 'Dejar de seguir' : 'Seguir')" (click)="seguirChange()">
+                {{ siguiendo ? "Dejar de seguir" : "Seguir" }}
+            </button>
+            <div class="px-2">
+                <hr>
+            </div>
+            <div fxFlex class="border rounded mx-4">
+                <!-- AQUI IRIAN LOS POSTS -->
+                <h1 class="my-auto" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Aun no hay posts')">AUN
+                    NO HAY POSTS</h1>
+            </div>
+        </div>
+    </div>
+</div>

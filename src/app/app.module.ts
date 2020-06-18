@@ -18,6 +18,7 @@ import { FeedComponent } from './components/feed/feed.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotificationsdialogComponent } from './components/notificationsdialog/notificationsdialog.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     FeedComponent,
     NavbarComponent,
     NotificationsdialogComponent,
-    ProfileComponent
+    ProfileComponent,
+    ConfiguracionComponent
   ],
   imports: [
     BrowserModule,
