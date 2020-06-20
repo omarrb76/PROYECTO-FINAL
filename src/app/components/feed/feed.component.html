@@ -1,13 +1,13 @@
 <div class="container py-5 px-2 mt-5" fxLayout="column">
     <mat-spinner *ngIf="loadingPosts" class="mx-auto my-auto"></mat-spinner>
-    <div fxFlex *ngIf="!loadingPosts && !this.posts">
+    <div fxFlex *ngIf="!loadingPosts && this.posts.length < 1" class="text-center">
         <h1 class="my-auto"><strong [tabindex]="this.tts.getEnabled()"
                 (focus)="this.tts.play('No hay posts para mostrar, empieza a seguir a alguien')">
                 No hay posts para mostrar,
                 empieza a seguir a alguien
             </strong></h1>
     </div>
-    <div fxFlex class="mx-auto">
+    <div fxFlex class="mx-auto" *ngIf="!loadingPosts && this.posts.length > 0">
         <div class="text-center">
             <h1><strong [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Inicio')">
                     INICIO
@@ -19,14 +19,17 @@
                 <div class="contenedor-card puntero" mat-card-avatar>
                     <a (click)="goToProfile(post.username)" [tabindex]="this.tts.getEnabled()"
                         (focus)="this.tts.play('Perfil de ' + post.username)">
-                        <img src="https://eloutput.com/app/uploads-eloutput.com/2020/04/Batman.jpg" alt="Foto de perfil"
+                        <img [src]="post.profilePicture" alt="Foto de perfil"
                             class="rounded-circle">
                     </a>
                 </div>
                 <mat-card-title [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(post.username)">
                     {{post.username}}</mat-card-title>
-                <mat-card-subtitle [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(post.name)">
-                    {{post.name}}</mat-card-subtitle>
+                <mat-card-subtitle [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play(post.name + ' ' + post.date)">
+                    {{post.name}} |
+                    {{post.date.getDate() + '/' + (post.date.getMonth() + 1) + '/' + post.date.getFullYear()}}
+                </mat-card-subtitle>
             </mat-card-header>
             <br>
             <div class="text-center mx-1">
@@ -38,13 +41,22 @@
                     {{post.text}}
                 </p>
             </mat-card-content>
-            <mat-card-actions align="right">
-                <button mat-flat-button [color]="this.getEyColor(post)" (click)="darLike()"
+            <mat-card-actions class="d-flex justify-content-around">
+                <p>Eys: {{post.eys.length}}</p>
+                <button mat-flat-button [color]="this.getEyColor(post)" (click)="darLike(post)"
                     (focus)="this.tts.play('Ey esta Publicación')" matTooltip="Ey" matTooltipPosition="before"
                     matTooltipShowDelay="500" matTooltipHideDelay="500">
                     <mat-icon>thumb_up</mat-icon>
                 </button>
             </mat-card-actions>
         </mat-card>
+        <br>
+        <div class="text-center">
+            <button mat-fab (click)="loadMorePosts()" (focus)="this.tts.play('Cargar más publicaciones')"
+                matTooltip="Cargar más Posts" matTooltipPosition="before" matTooltipShowDelay="500"
+                matTooltipHideDelay="500" color="negro">
+                <mat-icon>add_circle_outline</mat-icon>
+            </button>
+        </div>
     </div>
 </div>
