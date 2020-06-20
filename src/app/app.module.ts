@@ -20,6 +20,9 @@ import { NotificationsdialogComponent } from './components/notificationsdialog/n
 import { ProfileComponent } from './components/profile/profile.component';
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { EditComponent } from './components/edit/edit.component';
+import { NewpostbuttonComponent } from './components/newpostbutton/newpostbutton.component';
+import { NewpostComponent } from './components/newpost/newpost.component';
+import { DomseguroPipe } from './pipes/domseguro.pipe';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { EditComponent } from './components/edit/edit.component';
     NotificationsdialogComponent,
     ProfileComponent,
     ConfiguracionComponent,
-    EditComponent
+    EditComponent,
+    NewpostbuttonComponent,
+    NewpostComponent,
+    DomseguroPipe
   ],
   imports: [
     BrowserModule,

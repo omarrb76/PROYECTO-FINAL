@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { SnackbarService } from './../../services/snackbar.service';
 import { Component, OnInit } from '@angular/core';
@@ -29,7 +30,18 @@ export class LoginComponent implements OnInit {
   // Para saber si el usuario esta logeado, me sirve para cambiar la clase del login y que no se vea amontonado
   active = true;
 
-  constructor(private formBuilder: FormBuilder, private snackBarService: SnackbarService, public tts: TexttospeechService) {
+  // Sesion iniciada, para saber si ya inicio sesion, luego lo cambiaremos por el servicio de firebase para saber
+  // esto
+  sesionIniciada = true;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private snackBarService: SnackbarService,
+    public tts: TexttospeechService,
+    private router: Router) {
+
+    this.comprobarSesionIniciada();
+
     this.loginForm = formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(4)]]
@@ -124,6 +136,14 @@ export class LoginComponent implements OnInit {
       return { res: true };
     }
     return null;
+  }
+
+  // Comprobamos si el usuario ya inicio sesion, en caso de que lo haya hecho, esta pantalla no se tiene que mostrar
+  // y automaticamente lo mandamos a la pagina de feed. Porque no tiene que volver a iniciar sesion si ya lo hizo.
+  comprobarSesionIniciada(){
+    if (this.sesionIniciada){
+      this.router.navigate(['feed']);
+    }
   }
 
 }

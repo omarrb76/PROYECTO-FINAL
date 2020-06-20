@@ -1,0 +1,6 @@
+#botonPost {
+    position: fixed;
+    bottom: 80px;
+    right: 10px;
+    z-index: 1000; /* Muy arriba para que nunca lo tape nada */
+}

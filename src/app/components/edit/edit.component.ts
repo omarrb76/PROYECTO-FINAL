@@ -11,15 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditComponent implements OnInit {
 
-  imagen: any;
+  imagenURL: any;
   editInfoForm;
+  imagenArchivo: any;
 
   constructor(
     public tts: TexttospeechService,
     private router: Router,
     private formBuilder: FormBuilder,
     private snackBarService: SnackbarService) {
-    this.imagen = 'https://andro4all.com/files/2019/10/RDR-2-en-Stadia-700x500.jpg';
+    this.imagenURL = 'https://andro4all.com/files/2019/10/RDR-2-en-Stadia-700x500.jpg';
     this.editInfoForm = formBuilder.group({
       imagen: [''],
       name: ['default', Validators.required],
@@ -36,7 +37,7 @@ export class EditComponent implements OnInit {
   }
 
   changeProfilePhoto() {
-    console.log('hola');
+    console.log('ChangeProfilePhoto');
   }
 
   validateAndUpload(event) {
@@ -46,10 +47,12 @@ export class EditComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (event) => { // called once readAsDataURL is completed
-        this.imagen = event.target.result;
+        this.imagenURL = event.target.result;
       };
 
       console.log(event.target.files[0]);
+
+      this.imagenArchivo = event.target.files[0];
     }
   }
 
@@ -77,6 +80,7 @@ export class EditComponent implements OnInit {
 
       if (this.editInfoForm.value.imagen !== '') {
         // El usuario selecciono una imagen
+        console.log(this.imagenArchivo);
       } else {
         // El usuario no selecciono imagen
       }

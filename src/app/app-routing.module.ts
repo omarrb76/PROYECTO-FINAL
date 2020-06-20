@@ -1,3 +1,5 @@
+import { FeedComponent } from './components/feed/feed.component';
+import { NewpostComponent } from './components/newpost/newpost.component';
 import { EditComponent } from './components/edit/edit.component';
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -17,6 +19,8 @@ const routes: Routes = [
   { path: 'user/:username', component: ProfileComponent },
   { path: 'settings', component: ConfiguracionComponent },
   { path: 'edit', component: EditComponent },
+  { path: 'newpost', component: NewpostComponent },
+  { path: 'feed', component: FeedComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

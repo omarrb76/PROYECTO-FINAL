@@ -1,0 +1,5 @@
+<button mat-fab color="post" class="pulse" aria-label="Boton para crear nuevo post" id="botonPost" (click)="newPost()"
+    (focus)="this.tts.play('Crear nueva publicación')" matTooltip="Crear nuevo Post" matTooltipPosition="before"
+    matTooltipShowDelay="500" matTooltipHideDelay="500" [routerLink]="['newpost']">
+    <mat-icon>add</mat-icon>
+</button>

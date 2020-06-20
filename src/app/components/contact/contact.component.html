@@ -25,7 +25,8 @@
             <div fxFlex>
                 <mat-form-field appearance="outline" fxFlex class="mx-4">
                     <mat-label>Escribe tu comentario...</mat-label>
-                    <textarea matInput formControlName="comentario" (focus)="this.tts.play('Escribe tu comentario')"></textarea>
+                    <textarea matInput formControlName="comentario"
+                        (focus)="this.tts.play('Escribe tu comentario')"></textarea>
                 </mat-form-field>
             </div>
             <div fxFlex fxLayoutAlign="space-around" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
@@ -34,14 +35,15 @@
                     (change)="this.tts.play('Acepta recibir la respuesta en su correo electrónico')">
                     Recibiré respuesta en e-mail
                 </mat-checkbox>
-                <button mat-button color="negro" class="m-3" type="submit" (focus)="this.tts.play('Enviar')">Enviar</button>
+                <button mat-button color="negro" class="m-3" type="submit"
+                    (focus)="this.tts.play('Enviar')">Enviar</button>
             </div>
         </form>
     </div>
 
     <ng-template #cargando>
         <div class="my-3" fxFlex fxLayout="column" (focus)="this.tts.play('Enviando')">
-            <h3 class="mx-auto" >Enviando</h3>
+            <h3 class="mx-auto">Enviando</h3>
             <mat-spinner class="mx-auto"></mat-spinner>
         </div>
     </ng-template>
