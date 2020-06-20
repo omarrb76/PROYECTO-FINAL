@@ -1,3 +1,4 @@
+import { EditComponent } from './components/edit/edit.component';
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ContactComponent } from './components/contact/contact.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'user/:username', component: ProfileComponent },
   { path: 'settings', component: ConfiguracionComponent },
+  { path: 'edit', component: EditComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

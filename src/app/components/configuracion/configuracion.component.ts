@@ -19,4 +19,8 @@ export class ConfiguracionComponent implements OnInit {
     this.router.navigate(['home']);
   }
 
+  editarInfo(){
+    this.router.navigate(['edit']);
+  }
+
 }

@@ -1,0 +1,75 @@
+<div class="container p-5 mt-5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+    <div fxFlex fxLayout="column">
+        <div fxFlex class="mx-auto text-center">
+            <img src="./assets/img/icono.png" alt="Logo de Simple" class="img-fluid icono puntero mb-5"
+                (click)="regresarLOGIN()" [tabindex]="this.tts.getEnabled()"
+                (focus)="this.tts.play('Logo de Simple, regresar a inicio')" (keydown.enter)="regresarLOGIN()">
+            <h2 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Editando Perfil')">Editando Perfil</h2>
+        </div>
+        <div fxFlex class="mx-2">
+            <hr>
+        </div>
+        <div fxFlex fxLayout="row" fxLayout.xs="column" fxShow.sm="false" fxShow.xs="false">
+            <div fxFlex class="text-center">
+                <button mat-raised-button color="negro" (focus)="this.tts.play('Aceptar')" type="submit"
+                    form="editInfoForm">Aceptar</button>
+            </div>
+            <div fxFlex class="px-2" fxShow="false" fxShow.xs="true">
+                <br>
+            </div>
+            <div fxFlex class="text-center">
+                <button mat-raised-button color="rojo" (focus)="this.tts.play('Cancelar')"
+                    (click)="regresarCONFIG()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <form fxFlex fxLayout="column" id="editInfoForm" [formGroup]="editInfoForm" (ngSubmit)="submitEditInfoForm()">
+        <div fxFlex fxLayout="row">
+            <div fxFlex>
+                <div class="contenedor-edit mx-auto">
+                    <img [src]="imagen" alt="Foto de perfil" class="rounded-circle">
+                </div>
+            </div>
+            <div fxFlex class="my-auto">
+                <button mat-stroked-button (click)="archivo.click()"
+                    (focus)="this.tts.play('Cambiar imagen de perfil')">Cambiar imagen</button>
+                <input type="file" accept="image/*" #archivo (click)="changeProfilePhoto()" fxShow="false"
+                    (change)="validateAndUpload($event);" formControlName="imagen">
+            </div>
+        </div>
+        <div fxFlex class="text-center mt-3">
+            <br>
+            <mat-form-field appearance="outline" floatLabel="auto">
+                <mat-label>Nombre</mat-label>
+                <input type="text" matInput (focus)="this.tts.play('Nombre')" formControlName="name">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline" floatLabel="auto">
+                <mat-label>Contraseña Nueva</mat-label>
+                <input type="password" matInput (focus)="this.tts.play('Contraseña nueva')" formControlName="password">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline" floatLabel="auto">
+                <mat-label>Confirme contraseña</mat-label>
+                <input type="password" matInput (focus)="this.tts.play('Confirme contraseña')"
+                    formControlName="password2">
+            </mat-form-field>
+        </div>
+    </form>
+    <div fxFlex class="mx-2 mb-3" fxShow="false" fxShow.sm="true" fxShow.xs="true">
+        <hr>
+    </div>
+    <div fxFlex fxLayout="row" fxLayout.xs="column" fxShow="false" fxShow.sm="true" fxShow.xs="true">
+        <div fxFlex class="text-center">
+            <button mat-raised-button color="negro" (focus)="this.tts.play('Aceptar')" type="submit"
+                form="editInfoForm">Aceptar</button>
+        </div>
+        <div fxFlex class="px-2" fxShow="false" fxShow.xs="true">
+            <br>
+        </div>
+        <div fxFlex class="text-center">
+            <button mat-raised-button color="rojo" (focus)="this.tts.play('Cancelar')"
+                (click)="regresarCONFIG()">Cancelar</button>
+        </div>
+    </div>
+</div>

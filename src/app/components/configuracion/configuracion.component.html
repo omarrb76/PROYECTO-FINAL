@@ -16,8 +16,8 @@
     </div>
     <br>
     <div class="text-center my-2" fxFlex>
-        <button mat-flat-button color="negro" [routerLink]="['about']" [tabindex]="this.tts.getEnabled()"
-            (focus)="this.tts.play('Editar información')">Editar información
+        <button mat-flat-button color="negro" [tabindex]="this.tts.getEnabled()"
+            (focus)="this.tts.play('Editar información')" (click)="editarInfo()">Editar información
             <mat-icon>create</mat-icon>
         </button>
     </div>

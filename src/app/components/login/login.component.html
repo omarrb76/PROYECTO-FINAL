@@ -81,20 +81,23 @@
                                 <mat-form-field appearance="outline" floatLabel="auto">
                                     <mat-label>Confirme contraseña</mat-label>
                                     <input type="password" matInput placeholder="Ingrese de nuevo la contraseña"
-                                        name="password2" formControlName="password2" (focus)="this.tts.play('Confirme contraseña')">
+                                        name="password2" formControlName="password2"
+                                        (focus)="this.tts.play('Confirme contraseña')">
                                     <mat-hint>Mínimo 4 caracteres</mat-hint>
                                 </mat-form-field>
                                 <br><br>
                                 <mat-radio-group formControlName="sexo" class="pt-5">
-                                    <mat-radio-button value="hombre" class="mx-2" color="primary" (change)="this.tts.play('Hombre')">Hombre
+                                    <mat-radio-button value="hombre" class="mx-2" color="primary"
+                                        (change)="this.tts.play('Hombre')">Hombre
                                     </mat-radio-button>
-                                    <mat-radio-button value="mujer" class="mx-2" color="accent" (change)="this.tts.play('Mujer')">Mujer</mat-radio-button>
+                                    <mat-radio-button value="mujer" class="mx-2" color="accent"
+                                        (change)="this.tts.play('Mujer')">Mujer</mat-radio-button>
                                 </mat-radio-group>
                                 <hr>
-                                <button id="btnSubmitLogin" mat-raised-button type="submit" color="negro"
-                                    class="mx-3" (focus)="this.tts.play('Crear sesion')">Crear sesión</button>
-                                <button mat-raised-button color="rojo" class="mx-3"
-                                    (click)="estadoINICIO()" (focus)="this.tts.play('Cancelar')">Cancelar</button>
+                                <button id="btnSubmitLogin" mat-raised-button type="submit" color="negro" class="mx-3"
+                                    (focus)="this.tts.play('Crear sesion')">Crear sesión</button>
+                                <button mat-raised-button color="rojo" class="mx-3" (click)="estadoINICIO()"
+                                    (focus)="this.tts.play('Cancelar')">Cancelar</button>
                             </form>
                         </div>
                         <div class="col" *ngSwitchCase="3" fxFlex>

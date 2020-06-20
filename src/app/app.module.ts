@@ -19,6 +19,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotificationsdialogComponent } from './components/notificationsdialog/notificationsdialog.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
+import { EditComponent } from './components/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ConfiguracionComponent } from './components/configuracion/configuracion
     NavbarComponent,
     NotificationsdialogComponent,
     ProfileComponent,
-    ConfiguracionComponent
+    ConfiguracionComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
