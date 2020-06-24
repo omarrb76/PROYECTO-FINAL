@@ -1,3 +1,5 @@
+import { TablaUsuariosComponent } from './admin/tabla-usuarios/tabla-usuarios.component';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { FeedComponent } from './components/feed/feed.component';
 import { NewpostComponent } from './components/newpost/newpost.component';
 import { EditComponent } from './components/edit/edit.component';
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'edit', component: EditComponent },
   { path: 'newpost', component: NewpostComponent },
   { path: 'feed', component: FeedComponent },
+  { path: 'adminhome', component: AdminHomeComponent },
+  { path: 'tableusers', component: TablaUsuariosComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

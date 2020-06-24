@@ -24,6 +24,8 @@ import { NewpostbuttonComponent } from './components/newpostbutton/newpostbutton
 import { NewpostComponent } from './components/newpost/newpost.component';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { TablaUsuariosComponent } from './admin/tabla-usuarios/tabla-usuarios.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { HttpClientModule } from '@angular/common/http';
     EditComponent,
     NewpostbuttonComponent,
     NewpostComponent,
-    DomseguroPipe
+    DomseguroPipe,
+    AdminHomeComponent,
+    TablaUsuariosComponent
   ],
   imports: [
     BrowserModule,

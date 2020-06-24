@@ -1,0 +1,24 @@
+<div class="container p-5">
+    <app-header></app-header>
+    <div class="row my-2">
+        <div class="col text-center">
+            <h2 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Inicio del administrador')">
+                Inicio del administrador
+            </h2>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+        <div fxFlex class="text-center my-4">
+            <button mat-button (click)="verUsuarios()" [tabindex]="this.tts.getEnabled()"
+                (focus)="this.tts.play('Ver usuarios en Base de Datos')" color="negro">
+                Ver usuarios en Base de Datos
+            </button>
+        </div>
+        <div fxFlex class="text-center my-4">
+            <button mat-button (click)="verEstadisticas()" [tabindex]="this.tts.getEnabled()"
+                (focus)="this.tts.play('Ver estadísticas')" color="negro">
+                Ver estadísticas
+            </button>
+        </div>
+    </div>
+</div>
