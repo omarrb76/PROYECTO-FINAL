@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "proy-isc-6a-2020": {
+      "hosting": {
+        "Simple": [
+          "proy-isc-6a-2020"
+        ]
+      }
+    }
+  }
+}

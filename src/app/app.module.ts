@@ -27,6 +27,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { TablaUsuariosComponent } from './admin/tabla-usuarios/tabla-usuarios.component';
 
+// Imports de Firebase
+import { AngularFireModule} from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +63,10 @@ import { TablaUsuariosComponent } from './admin/tabla-usuarios/tabla-usuarios.co
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
