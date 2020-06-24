@@ -1,3 +1,4 @@
+import { MiApiService } from './../../services/mi-api.service';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { SnackbarService } from './../../services/snackbar.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,13 +14,19 @@ export class ContactComponent implements OnInit {
   contactForm;
   enviado = false;
 
-  constructor(private formBuilder: FormBuilder, private snackBarService: SnackbarService, public tts: TexttospeechService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private snackBarService: SnackbarService,
+    public tts: TexttospeechService,
+    private miApi: MiApiService) {
+
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       comentario: ['', [Validators.required]],
       condicion: ['', Validators.required]
     });
+
   }
 
   ngOnInit(): void {
@@ -29,12 +36,20 @@ export class ContactComponent implements OnInit {
     if (this.contactForm.valid) {
       this.enviado = true;
       this.tts.play('Enviando información');
-      setTimeout(() => {
-        this.enviado = false;
-        this.snackBarService.openSnackBar('Formulario enviado', 'Aceptar');
-      }, 5000);
 
-      console.log(this.contactForm.value);
+      this.miApi.sendEmail({
+
+        nombre: this.contactForm.value.name,
+        correo: this.contactForm.value.email,
+        contenido: this.contactForm.value.comentario
+
+      }).subscribe((data: any) => {
+
+        this.enviado = false;
+        console.log(data);
+        this.snackBarService.openSnackBar('Formulario enviado', 'Aceptar');
+
+      });
     } else {
       if (this.contactForm.get('name').hasError('required')) {
         this.snackBarService.openSnackBar('Por favor ingresa el nombre', 'Aceptar');

@@ -23,6 +23,7 @@ import { EditComponent } from './components/edit/edit.component';
 import { NewpostbuttonComponent } from './components/newpostbutton/newpostbutton.component';
 import { NewpostComponent } from './components/newpost/newpost.component';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { DomseguroPipe } from './pipes/domseguro.pipe';
     MaterialModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
