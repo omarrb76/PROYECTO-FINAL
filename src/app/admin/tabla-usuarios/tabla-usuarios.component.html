@@ -6,64 +6,8 @@
         </h2>
     </div>
     <hr>
-    <div class="mx-auto text-center" *ngIf="newUser">
-        <form id="signupForm" [formGroup]="signupForm" (ngSubmit)="submitSignup()" *ngIf="!cargando">
-            <mat-form-field appearance="outline" floatLabel="auto">
-                <mat-label>Nombre y apellido</mat-label>
-                <input type="text" matInput placeholder="Nombre y apellido" name="name" formControlName="name"
-                    (focus)="this.tts.play('Nombre y apellido')">
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="outline" floatLabel="auto">
-                <mat-label>Nombre de usuario</mat-label>
-                <input type="text" matInput placeholder="Nombre de usuario" name="username" formControlName="username"
-                    (focus)="this.tts.play('Nombre de usuario')">
-                <span style="color: red;" *ngIf="signupForm.controls['username'].hasError('res')"
-                    (focus)="this.tts.play('El nombre de usuario ya esta en uso')">El
-                    nombre de usuario ya esta en uso</span>
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="outline" floatLabel="auto">
-                <mat-label>Correo electrónico</mat-label>
-                <input type="email" matInput placeholder="Correo electrónico" name="email" formControlName="email"
-                    (focus)="this.tts.play('Correo electrónico')">
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="outline" floatLabel="auto">
-                <mat-label>Contraseña</mat-label>
-                <input type="password" matInput placeholder="Contraseña" name="password" formControlName="password"
-                    (focus)="this.tts.play('Contraseña')">
-            </mat-form-field>
-            <br><br>
-            <h3>Sexo:</h3>
-            <mat-radio-group formControlName="sexo" class="pt-5">
-                <mat-radio-button value="hombre" class="mx-2" color="primary" (change)="this.tts.play('Hombre')">Hombre
-                </mat-radio-button>
-                <mat-radio-button value="mujer" class="mx-2" color="accent" (change)="this.tts.play('Mujer')">Mujer
-                </mat-radio-button>
-            </mat-radio-group>
-            <br><br>
-            <h3>Admin:</h3>
-            <mat-radio-group formControlName="admin" class="pt-5">
-                <mat-radio-button value="true" class="mx-2" color="primary" (change)="this.tts.play('Admin')">Admin
-                </mat-radio-button>
-                <mat-radio-button value="false" class="mx-2" color="primary" (change)="this.tts.play('Client')">Client
-                </mat-radio-button>
-            </mat-radio-group>
-            <hr>
-            <button id="btnSubmitLogin" mat-raised-button type="submit" color="negro" class="mx-3"
-                (focus)="this.tts.play('Crear usuario')">Crear usuario</button>
-            <button mat-raised-button color="rojo" class="mx-3" (click)="estadoINICIO()"
-                (focus)="this.tts.play('Cancelar')">Cancelar</button>
-        </form>
-        <mat-spinner class="mx-auto" *ngIf="cargando"></mat-spinner>
-    </div>
-    <div class="mx-auto text-center" *ngIf="!newUser">
-        <button mat-stroked-button (click)="nuevoUsuario()" (focus)="this.tts.play('Crear nuevo usuario')">Crear nuevo
-            usuario</button>
-    </div>
-    <hr>
-    <div class="mx-auto">
+    <mat-spinner class="mx-auto" *ngIf="cargando"></mat-spinner>
+    <div class="mx-auto" *ngIf="!cargando">
         <table class="table table-striped text-center">
             <thead>
                 <tr>
@@ -81,9 +25,6 @@
                     </th>
                     <th scope="col" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Admin')">
                         Admin
-                    </th>
-                    <th scope="col" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Delete')">
-                        Delete
                     </th>
                 </tr>
             </thead>
@@ -103,9 +44,6 @@
                     </td>
                     <td>
                         {{user.admin}}
-                    </td>
-                    <td><button mat-raised-button color="rojo" (click)="borrarUsuario(user.idDB)"
-                            [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Delete user')">Delete</button>
                     </td>
                 </tr>
             </tbody>

@@ -15,17 +15,14 @@ export class FirebaseService {
   constructor(
     private db: AngularFirestore,
     private auth: AngularFireAuth,
-    private auth2: AngularFireAuth,
     private tts: TexttospeechService,
     private snackBarService: SnackbarService
-  ) {
-    this.cerrarSesionAdmin();
-  }
+  ) { }
 
-  getPersonalInfo(email: string) {
-    const query = this.db.collection<User>('users', ref => ref.where('email', '==', email));
-    return query.valueChanges();
-  }
+  setUser(user: User) { this.user = user; }
+  getUser(): User { return this.user; }
+  getUsuarioConectado() { return this.auth.user; }
+  logout() { this.auth.signOut(); }
 
   getUserDB(username: string) {
     const query = this.db.collection<User>('users', ref => ref.where('username', '==', username));
@@ -40,18 +37,6 @@ export class FirebaseService {
     return this.auth.signInWithEmailAndPassword(correo, passwd);
   }
 
-  emailPasswdLoginAdmin(correo: string, passwd: string) {
-    return this.auth2.signInWithEmailAndPassword(correo, passwd);
-  }
-
-  getUsuarioConectado() {
-    return this.auth.user;
-  }
-
-  logout() {
-    this.auth.signOut();
-  }
-
   agregarUsuario(user: User, pass: string) {
     this.db.collection('users').doc(user.username).set(user)
       .catch(err => {
@@ -60,31 +45,12 @@ export class FirebaseService {
         console.error(errorCode, errorMessage);
         alert('Error al grabar en la base de datos');
       });
-
-    this.db.collection('admin').doc(user.username).set({
-      username: user.username,
-      password: pass,
-      email: user.email
-    }).catch(err => {
-      const errorCode = err.code;
-      const errorMessage = err.message;
-      console.error(errorCode, errorMessage);
-      alert('Error al grabar en la base de datos');
-    });
   }
 
   cargarUsuarios() {
     const query = this.db.collection<User>('users',
       ref => ref.orderBy('date', 'asc'));
-    return query.valueChanges({ idField: 'idDB' });
-  }
-
-  setUser(user: User) {
-    this.user = user;
-  }
-
-  getUser(): User {
-    return this.user;
+    return query.valueChanges();
   }
 
   async updateUser(user: User, passwordNew: string, passwordOld: string) {
@@ -114,41 +80,6 @@ export class FirebaseService {
     return new Promise((resolve: any, reject) => {
       resolve(aux);
     });
-  }
-
-  crearNuevoUsuarioAdmin(user: User, password: string) {
-    return this.auth2.createUserWithEmailAndPassword(user.email, password);
-  }
-
-  cerrarSesionAdmin() {
-    this.auth2.signOut();
-  }
-
-  borrarUsuario(id: string) {
-
-    this.getContraseña(id).subscribe((data: any) => {
-      console.log(data);
-      if (data) {
-        const pass_aux = data[0].password;
-        const email = data[0].email;
-        this.emailPasswdLoginAdmin(email, pass_aux).then(res => {
-          this.auth2.currentUser.then((usr) => {
-            usr.delete();
-          });
-        });
-
-        this.db.collection('users').doc(id).delete().then(res => {
-          this.snackBarService.openSnackBar('El usuario: ' + id + ' ha sido borrado exitosamente', 'Aceptar');
-          this.tts.play('El usuario: ' + id + ' ha sido borrado exitosamente');
-        });
-
-        this.db.collection('admin').doc(id).delete();
-      }
-    });
-  }
-
-  getContraseña(username: string) {
-    return this.db.collection<User>('admin', ref => ref.where('username', '==', username)).valueChanges();
   }
 
 }

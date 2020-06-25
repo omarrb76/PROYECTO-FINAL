@@ -42,14 +42,14 @@ export class NavbarComponent implements OnInit {
       );
 
     this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
+      // console.log('Usuario: ', user);
       if (user) {
         this.active = true;
-        this.firebase.getPersonalInfo(user.email).subscribe((data: any) => {
+        this.firebase.getUserDB(user.displayName).subscribe((data: any) => {
           if (data) {
             this.firebase.setUser(data[0]);
             this.user = this.firebase.getUser();
             this.loading = false;
-            this.user.picture = 'https://img.redbull.com/images/c_crop,x_0,y_0,h_2160,w_3240/c_fill,w_1500,h_1000/q_auto,f_auto/redbullcom/2019/02/08/89cd6b51-bf77-485e-bfd5-158940cbc1f2/apex-legends-bloodhound';
           }
         });
       } else {

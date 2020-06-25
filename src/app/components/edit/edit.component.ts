@@ -40,7 +40,7 @@ export class EditComponent implements OnInit {
       if (!user) {
         this.regresarLOGIN();
       } else {
-        this.firebase.getPersonalInfo(user.email).subscribe((data: any) => {
+        this.firebase.getUserDB(user.displayName).subscribe((data: any) => {
           if (data) {
             this.firebase.setUser(data[0]);
             this.user = this.firebase.getUser();
