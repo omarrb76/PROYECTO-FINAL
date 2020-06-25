@@ -7,5 +7,4 @@ export interface User {
     date: Date;
     admin: boolean;
     sexo: string;
-    password: string;
 }

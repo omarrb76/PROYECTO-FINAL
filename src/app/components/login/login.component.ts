@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   signupForm;
 
   // Para saber si el usuario esta logeado, me sirve para cambiar la clase del login y que no se vea amontonado
-  active = true;
+  active = false;
 
   // Sesion iniciada, para saber si ya inicio sesion, luego lo cambiaremos por el servicio de firebase para saber
   // esto
@@ -42,6 +42,15 @@ export class LoginComponent implements OnInit {
     public tts: TexttospeechService,
     private router: Router,
     private firebase: FirebaseService) {
+
+    this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
+      if (user) {
+        this.active = true;
+        this.router.navigate(['feed']);
+      } else {
+        this.active = false;
+      }
+    });
 
     this.loginForm = formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -58,14 +67,7 @@ export class LoginComponent implements OnInit {
     }, { validator: this.checkIfMatchingPasswords('password', 'password2') });
   }
 
-  ngOnInit(): void {
-    this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
-      if (user) {
-        this.router.navigate(['feed']);
-      } else {
-      }
-    });
-  }
+  ngOnInit(): void { }
 
   // Para devolverlo a su valor original
   estadoINICIO() {
@@ -130,11 +132,10 @@ export class LoginComponent implements OnInit {
         picture: '0',
         admin: false,
         sexo: this.signupForm.value.sexo,
-        password: this.signupForm.value.password,
         date: new Date()
       };
 
-      const res = this.firebase.crearNuevoUsuario(user);
+      const res = this.firebase.crearNuevoUsuario(user, this.signupForm.value.password);
       res.then((usrCred: firebase.auth.UserCredential) => {
         // console.log(usrCred);
         usrCred.user.updateProfile({ displayName: user.username });

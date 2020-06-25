@@ -1,4 +1,4 @@
-import { TexttospeechService } from './services/texttospeech.service';
+import { FirebaseService } from './services/firebase.service';
 import { Component } from '@angular/core';
 
 @Component({

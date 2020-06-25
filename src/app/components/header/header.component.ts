@@ -1,3 +1,4 @@
+import { FirebaseService } from './../../services/firebase.service';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -9,11 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  active = true;
+  active = false;
 
-  constructor(private router: Router, public tts: TexttospeechService) { }
+  constructor(private router: Router, public tts: TexttospeechService, private firebase: FirebaseService) { }
 
   ngOnInit(): void {
+    this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
+      if (user) {
+        this.active = true;
+      } else {
+        this.active = false;
+      }
+    });
   }
 
   regresarLOGIN() {

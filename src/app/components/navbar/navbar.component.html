@@ -1,4 +1,4 @@
-<mat-sidenav-container>
+<mat-sidenav-container *ngIf="active && !loading">
 
     <!-- Contenido de sidenav -->
     <mat-sidenav #sidenav fixedInViewport="true">
@@ -10,11 +10,14 @@
                 <hr>
             </div>
             <div fxFlex class="contenedor-sidenav mx-auto">
-                <img src="https://eloutput.com/app/uploads-eloutput.com/2020/04/Batman.jpg" alt="Foto de perfil"
-                    class="rounded-circle">
+                <img [src]="user.picture" alt="Foto de perfil" class="rounded-circle">
             </div>
             <div fxFlex class="mt-2">
-                <h3><strong [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Batman')">Batman</strong></h3>
+                <h3>
+                    <strong [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(user.username)">
+                        {{user.username}}
+                    </strong>
+                </h3>
             </div>
             <div class="px-2">
                 <hr>
@@ -25,8 +28,8 @@
                     <mat-icon>home</mat-icon></button>
             </div>
             <div fxFlex>
-                <button mat-flat-button [routerLink]="['user/batman']" [tabindex]="this.tts.getEnabled()"
-                    (focus)="this.tts.play('Mi perfil')" class="my-3" (click)="sidenav.toggle()">Mi Perfil
+                <button mat-flat-button [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Mi perfil')"
+                    class="my-3" (click)="navegarUsuario(sidenav, true)">Mi Perfil
                     <mat-icon>account_circle</mat-icon></button>
             </div>
             <div fxFlex>
@@ -56,11 +59,10 @@
         <mat-toolbar color="primary" class="fixed-top border-dark border-bottom" fxLayout="row" fxShow.sm="false"
             fxShow.xs="false">
             <div fxFlex align="start" fxLayout="row">
-                <div class="contenedor-navbar ml-5" fxFlex>
-                    <a [routerLink]="['user/batman']" [tabindex]="this.tts.getEnabled()"
+                <div class="contenedor-navbar ml-5 puntero" fxFlex>
+                    <a (click)="navegarUsuario(sidenav, false)" [tabindex]="this.tts.getEnabled()"
                         (focus)="this.tts.play('Perfil de nombre de usuario')">
-                        <img src="https://eloutput.com/app/uploads-eloutput.com/2020/04/Batman.jpg" alt="Foto de perfil"
-                            class="rounded-circle">
+                        <img [src]="user.picture" alt="Foto de perfil" class="rounded-circle">
                     </a>
                 </div>
                 <div fxFlex class="ml-5 my-auto">
@@ -77,13 +79,11 @@
                             [matAutocomplete]="auto" (ngModelChange)="updatedVal($event)"
                             (focus)="this.tts.play('Buscar usuario')">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
-                                (click)="userPage(option)" fxLayout="row" [class.d-none]="!show"
-                                [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Hola')">
-                                <div fxFlex>{{option}}</div>
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.username"
+                                (click)="userPage(option)" fxLayout="row" [class.d-none]="!show">
+                                <div fxFlex>{{ option.username }}</div>
                                 <div fxFlex align="end">
-                                    <img class="profile-search"
-                                        src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg">
+                                    <img class="profile-search" [src]="option.picture">
                                 </div>
                             </mat-option>
                         </mat-autocomplete>
@@ -124,13 +124,11 @@
                             [matAutocomplete]="auto" (ngModelChange)="updatedVal($event)"
                             (focus)="this.tts.play('Buscar usuario')">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
-                                (click)="userPage(option)" fxLayout="row" [class.d-none]="!show"
-                                [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Hola')">
-                                <div fxFlex>{{option}}</div>
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.username"
+                                (click)="userPage(option.username)" fxLayout="row" [class.d-none]="!show">
+                                <div fxFlex>{{ option.username }}</div>
                                 <div fxFlex align="end">
-                                    <img class="profile-search"
-                                        src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg">
+                                    <img class="profile-search" [src]="option.picture">
                                 </div>
                             </mat-option>
                         </mat-autocomplete>

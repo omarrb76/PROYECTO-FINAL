@@ -12,8 +12,18 @@ export class FirebaseService {
 
   constructor(private db: AngularFirestore, private auth: AngularFireAuth) { }
 
-  crearNuevoUsuario(user: User) {
-    return this.auth.createUserWithEmailAndPassword(user.email, user.password);
+  getPersonalInfo(email: string) {
+    const query = this.db.collection<User>('users', ref => ref.where('email', '==', email));
+    return query.valueChanges();
+  }
+
+  getUserDB(username: string){
+    const query = this.db.collection<User>('users', ref => ref.where('username', '==', username));
+    return query.valueChanges();
+  }
+
+  crearNuevoUsuario(user: User, password: string) {
+    return this.auth.createUserWithEmailAndPassword(user.email, password);
   }
 
   emailPasswdLogin(correo: string, passwd: string) {
@@ -37,7 +47,7 @@ export class FirebaseService {
     });
   }
 
-  cargarUsuarios(){
+  cargarUsuarios() {
     const query = this.db.collection<User>('users',
       ref => ref.orderBy('date', 'asc'));
     return query.valueChanges();
