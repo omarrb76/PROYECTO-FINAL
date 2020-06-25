@@ -80,7 +80,7 @@
                     <th scope="row" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(user.username)">
                         {{user.username}}</th>
                     <td [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(user.name)">{{user.name}}</td>
-                    <td [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(user.sex)">{{user.sex}}</td>
+                    <td [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(user.sex)">{{user.sexo}}</td>
                     <td>
                         <div class="contenedor-card mx-auto puntero">
                             <a (click)="goToProfile(user.username)" [tabindex]="this.tts.getEnabled()"

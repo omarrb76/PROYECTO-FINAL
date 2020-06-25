@@ -1,3 +1,5 @@
+import { User } from './../../models/user';
+import { FirebaseService } from './../../services/firebase.service';
 import { Router } from '@angular/router';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { SnackbarService } from './../../services/snackbar.service';
@@ -38,26 +40,31 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackBarService: SnackbarService,
     public tts: TexttospeechService,
-    private router: Router) {
-
-    this.comprobarSesionIniciada();
+    private router: Router,
+    private firebase: FirebaseService) {
 
     this.loginForm = formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4)]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
     this.signupForm = formBuilder.group({
       name: ['', Validators.required],
       username: ['', Validators.compose([Validators.required, this.nameValidator])],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      password2: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      password2: ['', [Validators.required, Validators.minLength(6)]],
       sexo: ['hombre', Validators.required]
     }, { validator: this.checkIfMatchingPasswords('password', 'password2') });
   }
 
   ngOnInit(): void {
+    this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
+      if (user) {
+        this.router.navigate(['feed']);
+      } else {
+      }
+    });
   }
 
   // Para devolverlo a su valor original
@@ -85,10 +92,23 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.tts.play('Iniciando sesión');
       this.estado = State.CARGANDO;
-      setTimeout(() => {
-        this.estado = State.INICIO;
-      }, 5000);
-      console.log(this.loginForm.value); // El formulario funciona
+
+      this.firebase.emailPasswdLogin(this.loginForm.value.email, this.loginForm.value.password)
+        .then((usr: any) => {
+          console.log(usr);
+        })
+        .catch((err: any) => {
+          const errorCode = err.code;
+          const errorMessage = err.message;
+          // alert(errorMessage);
+
+          this.snackBarService.openSnackBar('El correo o contraseña son incorrectos', 'Aceptar');
+          this.tts.play('El correo o contraseña son incorrectos');
+          this.estado = State.LOGIN;
+
+          // console.error(errorCode, errorMessage);
+        });
+
     } else {
       this.snackBarService.openSnackBar('Error llenando los datos del formulario', 'Aceptar');
       this.tts.play('Error llenando los datos del formulario');
@@ -98,12 +118,43 @@ export class LoginComponent implements OnInit {
   // Para hacer el submit de crear usuario
   submitSignup() {
     if (this.signupForm.valid) {
-      this.tts.play('Creando nuevo usuario');
+
       this.estado = State.CARGANDO;
-      setTimeout(() => {
-        this.estado = State.INICIO;
-      }, 5000);
-      console.log(this.signupForm.value);
+      this.tts.play('Creando nuevo usuario');
+
+      const user: User = {
+        id: '0',
+        email: this.signupForm.value.email,
+        username: this.signupForm.value.username,
+        name: this.signupForm.value.name,
+        picture: '0',
+        admin: false,
+        sexo: this.signupForm.value.sexo,
+        password: this.signupForm.value.password,
+        date: new Date()
+      };
+
+      const res = this.firebase.crearNuevoUsuario(user);
+      res.then((usrCred: firebase.auth.UserCredential) => {
+        // console.log(usrCred);
+        usrCred.user.updateProfile({ displayName: user.username });
+        user.id = usrCred.user.uid;
+        this.firebase.setUser(user);
+        this.firebase.agregarUsuario(user);
+      })
+        .catch((err: any) => {
+          const errorCode = err.code;
+          const errorMessage = err.message;
+
+          if (errorCode === 'auth/email-already-in-use') {
+            this.snackBarService.openSnackBar('Este correo ya esta en uso', 'Aceptar');
+            this.tts.play('Este correo electrónico ya esta en uso');
+          }
+
+          // console.error(errorCode, errorMessage);
+          this.estado = State.SIGNUP;
+        });
+
     } else {
       if (this.signupForm.value.password !== this.signupForm.value.password2) {
         this.snackBarService.openSnackBar('Las contraseñas no coinciden', 'Aceptar');
@@ -136,14 +187,6 @@ export class LoginComponent implements OnInit {
       return { res: true };
     }
     return null;
-  }
-
-  // Comprobamos si el usuario ya inicio sesion, en caso de que lo haya hecho, esta pantalla no se tiene que mostrar
-  // y automaticamente lo mandamos a la pagina de feed. Porque no tiene que volver a iniciar sesion si ya lo hizo.
-  comprobarSesionIniciada(){
-    if (this.sesionIniciada){
-      this.router.navigate(['feed']);
-    }
   }
 
 }

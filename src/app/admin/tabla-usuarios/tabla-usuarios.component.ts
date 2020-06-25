@@ -1,20 +1,10 @@
+import { FirebaseService } from './../../services/firebase.service';
+import { User } from './../../models/user';
 import { Router } from '@angular/router';
 import { SnackbarService } from './../../services/snackbar.service';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { Component, OnInit } from '@angular/core';
-
-export interface User {
-  username: string;
-  name: string;
-  sex: string;
-  image: string;
-}
-
-const ELEMENT_DATA: User[] = [
-  { username: 'Omar', name: 'Omar', sex: 'Hombre', image: 'https://media.contentapi.ea.com/content/dam/apex-legends/images/2019/01/apex-featured-image-16x9.jpg.adapt.crop191x100.1200w.jpg' },
-  { username: 'Andrea', name: 'adny', sex: 'Mujer', image: 'boba' }
-];
 
 @Component({
   selector: 'app-tabla-usuarios',
@@ -23,7 +13,7 @@ const ELEMENT_DATA: User[] = [
 })
 export class TablaUsuariosComponent implements OnInit {
 
-  users: User[] = ELEMENT_DATA;
+  users: User[];
   signupForm;
   newUser: boolean;
   cargando: boolean;
@@ -32,7 +22,8 @@ export class TablaUsuariosComponent implements OnInit {
     public tts: TexttospeechService,
     private formBuilder: FormBuilder,
     private snackBarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private firebase: FirebaseService
   ) {
     this.signupForm = formBuilder.group({
       name: ['', Validators.required],
@@ -44,6 +35,12 @@ export class TablaUsuariosComponent implements OnInit {
 
     this.newUser = false;
     this.cargando = false;
+
+    this.firebase.cargarUsuarios().subscribe((data: User[]) => {
+      this.users = data;
+      console.log('Res: ', data);
+    });
+
   }
 
   ngOnInit(): void {

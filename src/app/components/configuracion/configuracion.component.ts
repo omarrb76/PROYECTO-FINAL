@@ -1,3 +1,4 @@
+import { FirebaseService } from './../../services/firebase.service';
 import { Router } from '@angular/router';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,13 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfiguracionComponent implements OnInit {
 
-  constructor(public tts: TexttospeechService, private router: Router) { }
+  constructor(public tts: TexttospeechService, private router: Router, private firebase: FirebaseService) { }
 
   ngOnInit(): void {
   }
 
   cerrarSesion(){
-    console.log('Cerrar sesion');
+    this.firebase.logout();
     this.router.navigate(['home']);
   }
 
