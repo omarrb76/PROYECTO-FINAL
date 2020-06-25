@@ -30,7 +30,8 @@ export class TablaUsuariosComponent implements OnInit {
       username: ['', Validators.compose([Validators.required, this.nameValidator])],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      sexo: ['hombre', Validators.required]
+      sexo: ['hombre', Validators.required],
+      admin: ['false', Validators.required]
     });
 
     this.newUser = false;
@@ -47,7 +48,7 @@ export class TablaUsuariosComponent implements OnInit {
   }
 
   borrarUsuario(user) {
-    console.log(user);
+    this.firebase.borrarUsuario(user);
   }
 
   // Funcion que valida que el username no este en la base de datos
@@ -67,18 +68,46 @@ export class TablaUsuariosComponent implements OnInit {
     if (this.signupForm.valid) {
       this.tts.play('Creando nuevo usuario');
       this.cargando = true;
-      setTimeout(() => {
+
+      const user: User = {
+        id: '0',
+        email: this.signupForm.value.email,
+        username: this.signupForm.value.username,
+        name: this.signupForm.value.name,
+        picture: '0',
+        admin: this.signupForm.value.admin,
+        sexo: this.signupForm.value.sexo,
+        date: new Date()
+      };
+
+      const res = this.firebase.crearNuevoUsuarioAdmin(user, this.signupForm.value.password);
+      res.then((usrCred: firebase.auth.UserCredential) => {
+        usrCred.user.updateProfile({ displayName: user.username });
+        user.id = usrCred.user.uid;
+        this.firebase.agregarUsuario(user, this.signupForm.value.password);
+        this.signupForm.reset();
         this.cargando = false;
         this.newUser = false;
-      }, 5000);
-      this.signupForm.reset();
+      })
+        .catch((err: any) => {
+          const errorCode = err.code;
+          const errorMessage = err.message;
+
+          if (errorCode === 'auth/email-already-in-use') {
+            this.snackBarService.openSnackBar('Este correo ya esta en uso', 'Aceptar');
+            this.tts.play('Este correo electrónico ya esta en uso');
+          }
+
+          // console.error(errorCode, errorMessage);
+          this.cargando = false;
+        });
     } else {
       this.snackBarService.openSnackBar('Error llenando los datos del formulario', 'Aceptar');
       this.tts.play('Error llenando los datos del formulario');
     }
   }
 
-  estadoINICIO(){
+  estadoINICIO() {
     this.newUser = false;
   }
 

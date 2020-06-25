@@ -44,8 +44,7 @@
             <mat-card-actions class="d-flex justify-content-around">
                 <p>Eys: {{post.eys.length}}</p>
                 <button mat-flat-button [color]="this.getEyColor(post)" (click)="darLike(post)"
-                    (focus)="this.tts.play('Ey esta Publicación')" matTooltip="Ey" matTooltipPosition="before"
-                    matTooltipShowDelay="500" matTooltipHideDelay="500">
+                    (focus)="this.tts.play('Ey esta Publicación')">
                     <mat-icon>thumb_up</mat-icon>
                 </button>
             </mat-card-actions>

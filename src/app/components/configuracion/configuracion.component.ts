@@ -13,6 +13,11 @@ export class ConfiguracionComponent implements OnInit {
   constructor(public tts: TexttospeechService, private router: Router, private firebase: FirebaseService) { }
 
   ngOnInit(): void {
+    this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
+      if (!user) {
+        this.router.navigate(['home']);
+      }
+    });
   }
 
   cerrarSesion(){

@@ -1,3 +1,5 @@
+import { User } from './../../models/user';
+import { FirebaseService } from './../../services/firebase.service';
 import { SnackbarService } from './../../services/snackbar.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,22 +16,42 @@ export class EditComponent implements OnInit {
   imagenURL: any;
   editInfoForm;
   imagenArchivo: any;
+  user: User;
+  loading = true;
 
   constructor(
     public tts: TexttospeechService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private snackBarService: SnackbarService) {
-    this.imagenURL = 'https://andro4all.com/files/2019/10/RDR-2-en-Stadia-700x500.jpg';
+    private snackBarService: SnackbarService,
+    private firebase: FirebaseService
+  ) {
     this.editInfoForm = formBuilder.group({
       imagen: [''],
-      name: ['default', Validators.required],
-      password: ['default', [Validators.required, Validators.minLength(4)]],
-      password2: ['default', [Validators.required, Validators.minLength(4)]]
+      name: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      password2: ['', [Validators.required, Validators.minLength(6)]],
+      password_anterior: ['', [Validators.required, Validators.minLength(6)]]
     }, { validator: this.checkIfMatchingPasswords('password', 'password2') });
   }
 
   ngOnInit(): void {
+    this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
+      if (!user) {
+        this.regresarLOGIN();
+      } else {
+        this.firebase.getPersonalInfo(user.email).subscribe((data: any) => {
+          if (data) {
+            this.firebase.setUser(data[0]);
+            this.user = this.firebase.getUser();
+            this.loading = false;
+            this.user.picture = 'https://img.redbull.com/images/c_crop,x_0,y_0,h_2160,w_3240/c_fill,w_1500,h_1000/q_auto,f_auto/redbullcom/2019/02/08/89cd6b51-bf77-485e-bfd5-158940cbc1f2/apex-legends-bloodhound';
+            this.imagenURL = this.user.picture;
+            this.editInfoForm.controls.name.setValue(this.user.name);
+          }
+        });
+      }
+    });
   }
 
   regresarLOGIN() {
@@ -63,10 +85,10 @@ export class EditComponent implements OnInit {
   // Para ver que ambas contraseñas en el signup sean iguales
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
     return (group: FormGroup) => {
-      const password1 = group.controls[passwordKey]
+      const password1 = group.controls[passwordKey];
       const password2 = group.controls[passwordConfirmationKey];
       if (password1.value !== password2.value) {
-        return password2.setErrors({ notEquivalent: true })
+        return password2.setErrors({ notEquivalent: true });
       }
       else {
         return password2.setErrors(null);
@@ -76,7 +98,22 @@ export class EditComponent implements OnInit {
 
   submitEditInfoForm() {
     if (this.editInfoForm.valid) {
-      console.log(this.editInfoForm.value);
+
+      this.user.name = this.editInfoForm.value.name;
+      this.loading = true;
+
+      this.firebase.updateUser(this.user, this.editInfoForm.value.password, this.editInfoForm.value.password_anterior)
+        .then((exito: any) => {
+          this.loading = false;
+          if (exito) {
+            this.snackBarService.openSnackBar('Se modificó correctamente el usuario', 'Aceptar');
+            this.tts.play('Se modificó correctamente el usuario');
+            this.editInfoForm.reset();
+          }
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
 
       if (this.editInfoForm.value.imagen !== '') {
         // El usuario selecciono una imagen
@@ -90,6 +127,9 @@ export class EditComponent implements OnInit {
       if (this.editInfoForm.value.password !== this.editInfoForm.value.password2) {
         this.snackBarService.openSnackBar('Las contraseñas no coinciden', 'Aceptar');
         this.tts.play('Las contraseñas no coinciden');
+      } else if (this.editInfoForm.value.password === '') {
+        this.snackBarService.openSnackBar('Coloque una contraseña válida', 'Aceptar');
+        this.tts.play('Coloque una contraseña válida');
       } else {
         this.snackBarService.openSnackBar('Coloque un nombre válido', 'Aceptar');
         this.tts.play('Coloque un nombre válido');

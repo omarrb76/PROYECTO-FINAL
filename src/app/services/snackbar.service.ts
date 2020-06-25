@@ -13,11 +13,11 @@ export class SnackbarService {
     const snackBarRef = this.snackBar.open(params, action, { duration: 5000 });
 
     snackBarRef.afterDismissed().subscribe(() => {
-      console.log('The snackbar was dismissed');
+      // console.log('The snackbar was dismissed');
     });
 
     snackBarRef.onAction().subscribe(() => {
-      console.log('The snackbar action was triggered');
+      // console.log('The snackbar action was triggered');
     });
   }
 }

@@ -35,10 +35,19 @@
                     (focus)="this.tts.play('Contraseña')">
             </mat-form-field>
             <br><br>
+            <h3>Sexo:</h3>
             <mat-radio-group formControlName="sexo" class="pt-5">
                 <mat-radio-button value="hombre" class="mx-2" color="primary" (change)="this.tts.play('Hombre')">Hombre
                 </mat-radio-button>
                 <mat-radio-button value="mujer" class="mx-2" color="accent" (change)="this.tts.play('Mujer')">Mujer
+                </mat-radio-button>
+            </mat-radio-group>
+            <br><br>
+            <h3>Admin:</h3>
+            <mat-radio-group formControlName="admin" class="pt-5">
+                <mat-radio-button value="true" class="mx-2" color="primary" (change)="this.tts.play('Admin')">Admin
+                </mat-radio-button>
+                <mat-radio-button value="false" class="mx-2" color="primary" (change)="this.tts.play('Client')">Client
                 </mat-radio-button>
             </mat-radio-group>
             <hr>
@@ -70,6 +79,9 @@
                     <th scope="col" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Picture')">
                         Picture
                     </th>
+                    <th scope="col" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Admin')">
+                        Admin
+                    </th>
                     <th scope="col" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Delete')">
                         Delete
                     </th>
@@ -89,7 +101,10 @@
                             </a>
                         </div>
                     </td>
-                    <td><button mat-raised-button color="rojo" (click)="borrarUsuario(user)"
+                    <td>
+                        {{user.admin}}
+                    </td>
+                    <td><button mat-raised-button color="rojo" (click)="borrarUsuario(user.idDB)"
                             [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Delete user')">Delete</button>
                     </td>
                 </tr>

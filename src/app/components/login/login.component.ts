@@ -141,7 +141,7 @@ export class LoginComponent implements OnInit {
         usrCred.user.updateProfile({ displayName: user.username });
         user.id = usrCred.user.uid;
         this.firebase.setUser(user);
-        this.firebase.agregarUsuario(user);
+        this.firebase.agregarUsuario(user, this.signupForm.value.password);
       })
         .catch((err: any) => {
           const errorCode = err.code;

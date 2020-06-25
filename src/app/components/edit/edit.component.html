@@ -1,5 +1,8 @@
 <div class="container p-5 mt-5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
-    <div fxFlex fxLayout="column">
+
+    <mat-spinner class="mx-auto" *ngIf="loading"></mat-spinner>
+
+    <div fxFlex fxLayout="column" *ngIf="!loading">
         <div fxFlex class="mx-auto text-center">
             <img src="./assets/img/icono.png" alt="Logo de Simple" class="img-fluid icono puntero mb-5"
                 (click)="regresarLOGIN()" [tabindex]="this.tts.getEnabled()"
@@ -23,7 +26,8 @@
             </div>
         </div>
     </div>
-    <form fxFlex fxLayout="column" id="editInfoForm" [formGroup]="editInfoForm" (ngSubmit)="submitEditInfoForm()">
+    <form fxFlex fxLayout="column" id="editInfoForm" [formGroup]="editInfoForm" (ngSubmit)="submitEditInfoForm()"
+        *ngIf="!loading">
         <div fxFlex fxLayout="row">
             <div fxFlex>
                 <div class="contenedor-edit mx-auto">
@@ -45,6 +49,12 @@
             </mat-form-field>
             <br>
             <mat-form-field appearance="outline" floatLabel="auto">
+                <mat-label>Contraseña Anterior</mat-label>
+                <input type="password" matInput (focus)="this.tts.play('Contraseña anterior')"
+                    formControlName="password_anterior">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline" floatLabel="auto">
                 <mat-label>Contraseña Nueva</mat-label>
                 <input type="password" matInput (focus)="this.tts.play('Contraseña nueva')" formControlName="password">
             </mat-form-field>
@@ -56,10 +66,10 @@
             </mat-form-field>
         </div>
     </form>
-    <div fxFlex class="mx-2 mb-3" fxShow="false" fxShow.sm="true" fxShow.xs="true">
+    <div fxFlex class="mx-2 mb-3" fxShow="false" fxShow.sm="true" fxShow.xs="true" *ngIf="!loading">
         <hr>
     </div>
-    <div fxFlex fxLayout="row" fxLayout.xs="column" fxShow="false" fxShow.sm="true" fxShow.xs="true">
+    <div fxFlex fxLayout="row" fxLayout.xs="column" fxShow="false" fxShow.sm="true" fxShow.xs="true" *ngIf="!loading">
         <div fxFlex class="text-center">
             <button mat-raised-button color="negro" (focus)="this.tts.play('Aceptar')" type="submit"
                 form="editInfoForm">Aceptar</button>

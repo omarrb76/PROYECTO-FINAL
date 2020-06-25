@@ -1,3 +1,4 @@
+import { FirebaseService } from './../../services/firebase.service';
 import { Router } from '@angular/router';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { Component, OnInit } from '@angular/core';
@@ -32,7 +33,7 @@ export class FeedComponent implements OnInit {
   loadingPosts: boolean;
   index = 0;
 
-  constructor(public tts: TexttospeechService, private router: Router) {
+  constructor(public tts: TexttospeechService, private router: Router, private firebase: FirebaseService) {
     llenarInfo();
     this.loadingPosts = false;
     this.posts = [];
@@ -40,6 +41,12 @@ export class FeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMorePosts();
+
+    this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
+      if (!user) {
+        this.router.navigate(['home']);
+      }
+    });
   }
 
   getEyColor(post: Post) {
