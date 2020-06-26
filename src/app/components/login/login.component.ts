@@ -129,7 +129,7 @@ export class LoginComponent implements OnInit {
         email: this.signupForm.value.email,
         username: this.signupForm.value.username,
         name: this.signupForm.value.name,
-        picture: '0',
+        picture: 'https://firebasestorage.googleapis.com/v0/b/proy-isc-6a-2020.appspot.com/o/default-picture?alt=media&token=4a6e57df-4051-497b-987e-44f5a85ea1a9',
         admin: false,
         sexo: this.signupForm.value.sexo,
         date: new Date()

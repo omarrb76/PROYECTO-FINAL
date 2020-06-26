@@ -28,9 +28,14 @@ import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { TablaUsuariosComponent } from './admin/tabla-usuarios/tabla-usuarios.component';
 
 // Imports de Firebase
-import { AngularFireModule} from '@angular/fire';
+import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
+import {
+  AngularFireStorageModule,
+  AngularFireStorageReference,
+  AngularFireUploadTask
+} from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -66,7 +71,8 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

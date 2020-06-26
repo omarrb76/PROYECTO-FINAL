@@ -53,6 +53,8 @@ export class NavbarComponent implements OnInit {
             this.loading = false;
             if (this.user.admin){
               this.admin = true;
+            } else {
+              this.admin = false;
             }
           }
         });

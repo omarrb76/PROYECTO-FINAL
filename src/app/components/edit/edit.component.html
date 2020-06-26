@@ -37,7 +37,7 @@
             <div fxFlex class="my-auto">
                 <button mat-stroked-button (click)="archivo.click()" type="button"
                     (focus)="this.tts.play('Cambiar imagen de perfil')">Cambiar imagen</button>
-                <input type="file" accept="image/*" #archivo (click)="changeProfilePhoto()" fxShow="false"
+                <input type="file" accept="image/*" #archivo fxShow="false"
                     (change)="validateAndUpload($event);" formControlName="imagen">
             </div>
         </div>
