@@ -38,6 +38,12 @@
                     (click)="sidenav.toggle()">Configuración
                     <mat-icon>settings</mat-icon></button>
             </div>
+            <div fxFlex *ngIf="admin">
+                <button mat-flat-button [routerLink]="['adminhome']" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play('Página del aministrador')" class="my-3"
+                    (click)="sidenav.toggle()">Administrador
+                    <mat-icon>admin_panel_settings</mat-icon></button>
+            </div>
             <div fxFlex>
                 <button mat-flat-button [tabindex]="this.tts.getEnabled()"
                     (focus)="this.tts.play('Cerrar barra lateral')" class="my-3" (click)="sidenav.toggle()"
@@ -70,6 +76,10 @@
                         (focus)="this.tts.play('Logo de Simple inicio')">
                         <img src="./assets/img/titulo.png" alt="Simple" class="logo-navbar">
                     </a>
+                </div>
+                <div fxFlex *ngIf="admin" class="ml-3 my-auto">
+                    <button mat-raised-button color="negro" (click)="administrador()" [tabindex]="this.tts.getEnabled()"
+                        (focus)="this.tts.play('Página del aministrador')">Administrador</button>
                 </div>
             </div>
             <div fxFlex align="center">

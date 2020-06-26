@@ -31,6 +31,19 @@ export class TablaUsuariosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
+      // console.log('Usuario: ', user);
+      if (user) {
+        this.firebase.getUserDB(user.displayName).subscribe((data: any) => {
+          if (data && data[0].admin === true) {
+          } else {
+            this.router.navigate(['home']);
+          }
+        });
+      } else {
+        this.router.navigate(['home']);
+      }
+    });
   }
 
   goToProfile(username: string) {

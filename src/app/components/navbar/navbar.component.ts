@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit {
   active = false;
   user: User;
   loading = true;
+  admin = false;
 
   constructor(
     public tts: TexttospeechService,
@@ -50,6 +51,9 @@ export class NavbarComponent implements OnInit {
             this.firebase.setUser(data[0]);
             this.user = this.firebase.getUser();
             this.loading = false;
+            if (this.user.admin){
+              this.admin = true;
+            }
           }
         });
       } else {
@@ -100,5 +104,9 @@ export class NavbarComponent implements OnInit {
     }
     const link = 'user/' + this.user.username;
     this.router.navigate([link]);
+  }
+
+  administrador(){
+    this.router.navigate(['adminhome']);
   }
 }
