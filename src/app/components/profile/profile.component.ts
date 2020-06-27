@@ -15,7 +15,9 @@ export class ProfileComponent implements OnInit {
   username: string;
   siguiendo: boolean;
   user: User;
+  myUser: User;
   noExiste = false;
+  botonSeguirEnabled: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -32,22 +34,32 @@ export class ProfileComponent implements OnInit {
     this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
       if (!user) {
         this.router.navigate(['home']);
-      }
-    });
-
-    this.activatedRoute.params.subscribe(
-      (params: any) => {
-        this.username = params.username;
-        this.firebase.getUserDB(this.username).subscribe((data: User[]) => {
-          this.loadingUser = false;
+      } else {
+        this.firebase.getUserDB(user.displayName).subscribe((data: User[]) => {
           if (data.length > 0) {
-            this.user = data[0];
-          } else {
-            this.noExiste = true;
+            this.myUser = data[0];
+            this.activatedRoute.params.subscribe(
+              (params: any) => {
+                this.username = params.username;
+                this.firebase.getUserDB(this.username).subscribe((info: User[]) => {
+                  this.loadingUser = false;
+                  if (info.length > 0) {
+                    this.user = info[0];
+                    if (this.user.id === this.myUser.id) {
+                      this.botonSeguirEnabled = false;
+                    } else {
+                      this.botonSeguirEnabled = true;
+                    }
+                  } else {
+                    this.noExiste = true;
+                  }
+                });
+              }
+            );
           }
         });
       }
-    );
+    });
   }
 
   seguirChange() {

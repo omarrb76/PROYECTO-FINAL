@@ -116,40 +116,13 @@ export class EditComponent implements OnInit {
                 if (url) {
                   this.user.picture = url;
                 }
-                this.firebase.updateUser(this.user, this.editInfoForm.value.password, this.editInfoForm.value.password_anterior)
-                  .then((exito: any) => {
-                    this.loading = false;
-                    if (exito) {
-                      this.snackBarService.openSnackBar('Se modificó correctamente el usuario', 'Aceptar');
-                      this.tts.play('Se modificó correctamente el usuario');
-                      this.editInfoForm.reset();
-                    }
-                  })
-                  .catch((err: any) => {
-                    // console.log(err);
-                  });
+                this.actualizarUsuario();
               });
             })
-          )
-          .subscribe(url => {
-            if (url) {
-              // console.log(url);
-            }
-          });
+          ).subscribe(url => { });
       } else {
         // El usuario no selecciono imagen
-        this.firebase.updateUser(this.user, this.editInfoForm.value.password, this.editInfoForm.value.password_anterior)
-          .then((exito: any) => {
-            this.loading = false;
-            if (exito) {
-              this.snackBarService.openSnackBar('Se modificó correctamente el usuario', 'Aceptar');
-              this.tts.play('Se modificó correctamente el usuario');
-              this.editInfoForm.reset();
-            }
-          })
-          .catch((err: any) => {
-            // console.log(err);
-          });
+        this.actualizarUsuario();
       }
 
 
@@ -165,6 +138,21 @@ export class EditComponent implements OnInit {
         this.tts.play('Coloque un nombre válido');
       }
     }
+  }
+
+  actualizarUsuario() {
+    this.firebase.updateUser(this.user, this.editInfoForm.value.password, this.editInfoForm.value.password_anterior)
+      .then((exito: any) => {
+        this.loading = false;
+        if (exito) {
+          this.snackBarService.openSnackBar('Se modificó correctamente el usuario', 'Aceptar');
+          this.tts.play('Se modificó correctamente el usuario');
+          this.editInfoForm.reset();
+        }
+      })
+      .catch((err: any) => {
+        // console.log(err);
+      });
   }
 
 }

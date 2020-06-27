@@ -94,6 +94,10 @@ export class FeedComponent implements OnInit {
     this.index += sum;
   }
 
+  formatDate(date: Date): string{
+    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+  }
+
 }
 
 interface Post {

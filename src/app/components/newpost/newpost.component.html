@@ -8,8 +8,9 @@
     <div fxFlex class="mx-2">
         <hr>
     </div>
-    <form fxFlex fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" id="newPostForm" [formGroup]="newPostForm"
-        (ngSubmit)="submitNewPostForm()">
+    <mat-spinner class="mx-auto" *ngIf="loading"></mat-spinner>
+    <form *ngIf="!loading" fxFlex fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" id="newPostForm"
+        [formGroup]="newPostForm" (ngSubmit)="submitNewPostForm()">
         <mat-form-field fxFlex appearance="outline" class="mx-2">
             <mat-label>Escribe lo que piensas...</mat-label>
             <textarea matInput formControlName="texto"></textarea>
@@ -27,10 +28,10 @@
             </div>
         </div>
     </form>
-    <div fxFlex class="mx-2">
+    <div fxFlex class="mx-2" *ngIf="!loading">
         <hr>
     </div>
-    <div fxFlex fxLayout="row" fxLayout.xs="column">
+    <div *ngIf="!loading" fxFlex fxLayout="row" fxLayout.xs="column">
         <div fxFlex class="text-center">
             <button mat-button color="verde" (focus)="this.tts.play('Aceptar')" type="submit"
                 form="newPostForm">Aceptar</button>

@@ -67,7 +67,7 @@
             <div fxFlex align="start" fxLayout="row">
                 <div class="contenedor-navbar ml-5 puntero" fxFlex>
                     <a (click)="navegarUsuario(sidenav, false)" [tabindex]="this.tts.getEnabled()"
-                        (focus)="this.tts.play('Perfil de nombre de usuario')">
+                        (focus)="this.tts.play('Perfil de ' + user.username)">
                         <img [src]="user.picture" alt="Foto de perfil" class="rounded-circle">
                     </a>
                 </div>

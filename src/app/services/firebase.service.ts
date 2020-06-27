@@ -4,6 +4,7 @@ import { User } from './../models/user';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Post } from '../models/post';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,8 @@ export class FirebaseService {
         const errorMessage = err.message;
         console.error(errorCode, errorMessage);
         alert('Error al grabar en la base de datos');
+        this.snackBarService.openSnackBar('Error al grabar en la base de datos', 'Aceptar');
+        this.tts.play('Error al grabar en la base de datos');
       });
   }
 
@@ -83,6 +86,10 @@ export class FirebaseService {
     return new Promise((resolve: any, reject) => {
       resolve(aux);
     });
+  }
+
+  crearNuevoPost(post: Post){
+    return this.db.collection('users').doc(post.username).collection('posts').doc(post.date.toString()).set(post);
   }
 
 }

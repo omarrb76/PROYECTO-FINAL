@@ -26,9 +26,9 @@
                 <mat-card-title [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(post.username)">
                     {{post.username}}</mat-card-title>
                 <mat-card-subtitle [tabindex]="this.tts.getEnabled()"
-                    (focus)="this.tts.play(post.name + ' ' + post.date)">
+                    (focus)="this.tts.play(post.name + ' ' + this.formatDate(post.date))">
                     {{post.name}} |
-                    {{post.date.getDate() + '/' + (post.date.getMonth() + 1) + '/' + post.date.getFullYear()}}
+                    {{this.formatDate(post.date)}}
                 </mat-card-subtitle>
             </mat-card-header>
             <br>

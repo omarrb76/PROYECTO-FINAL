@@ -5,8 +5,7 @@
     <div *ngIf="!loadingUser && !noExiste" class="my-5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
         <div fxFlex fxLayout="column" class="text-center">
             <div fxFlex class="mx-auto px-3 pb-3 contenedor">
-                <img class="profile-profile rounded-circle" [src]="user.picture"
-                    alt="Foto de perfil">
+                <img class="profile-profile rounded-circle" [src]="user.picture" alt="Foto de perfil">
             </div>
             <div fxFlex class="px-2">
                 <hr>
@@ -48,8 +47,13 @@
 
         <div fxFlex fxLayout="column" class="text-center">
             <button mat-stroked-button [color]="this.getSeguirColor()" class="mx-4"
-                (focus)="this.tts.play(siguiendo ? 'Dejar de seguir' : 'Seguir')" (click)="seguirChange()">
+                (focus)="this.tts.play(siguiendo ? 'Dejar de seguir' : 'Seguir')" (click)="seguirChange()"
+                *ngIf="botonSeguirEnabled">
                 {{ siguiendo ? "Dejar de seguir" : "Seguir" }}
+            </button>
+            <button mat-stroked-button color="negro" class="mx-4"
+                (focus)="this.tts.play('Estas viendo tu propio perfil')" *ngIf="!botonSeguirEnabled" disbaled>
+                Este es tu perfil
             </button>
             <div class="px-2">
                 <hr>

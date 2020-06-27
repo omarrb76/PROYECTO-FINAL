@@ -157,6 +157,9 @@ export class LoginComponent implements OnInit {
               if (errorCode === 'auth/email-already-in-use') {
                 this.snackBarService.openSnackBar('Este correo ya esta en uso', 'Aceptar');
                 this.tts.play('Este correo electrónico ya esta en uso');
+              } else if (errorCode === 'auth/invalid-email'){
+                this.snackBarService.openSnackBar('Esta dirección de correo es inválida', 'Aceptar');
+                this.tts.play('Esta dirección de correo es inválida');
               }
 
               // console.error(errorCode, errorMessage);
