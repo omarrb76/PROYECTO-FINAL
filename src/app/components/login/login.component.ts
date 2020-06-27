@@ -58,8 +58,8 @@ export class LoginComponent implements OnInit {
     });
 
     this.signupForm = formBuilder.group({
-      name: ['', Validators.required],
-      username: ['', Validators.compose([Validators.required, this.nameValidator])],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
+      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       password2: ['', [Validators.required, Validators.minLength(6)]],
@@ -118,43 +118,57 @@ export class LoginComponent implements OnInit {
   }
 
   // Para hacer el submit de crear usuario
-  submitSignup() {
+  async submitSignup() {
     if (this.signupForm.valid) {
 
       this.estado = State.CARGANDO;
-      this.tts.play('Creando nuevo usuario');
 
-      const user: User = {
-        id: '0',
-        email: this.signupForm.value.email,
-        username: this.signupForm.value.username,
-        name: this.signupForm.value.name,
-        picture: 'https://firebasestorage.googleapis.com/v0/b/proy-isc-6a-2020.appspot.com/o/default-picture?alt=media&token=4a6e57df-4051-497b-987e-44f5a85ea1a9',
-        admin: false,
-        sexo: this.signupForm.value.sexo,
-        date: new Date()
-      };
+      this.firebase.getUserDB(this.signupForm.value.username).subscribe((data: any) => {
+        // Si el username no esta tomado
+        console.log(data);
+        if (data.length === 0) {
+          console.log('entre');
+          this.tts.play('Creando nuevo usuario');
 
-      const res = this.firebase.crearNuevoUsuario(user, this.signupForm.value.password);
-      res.then((usrCred: firebase.auth.UserCredential) => {
-        // console.log(usrCred);
-        usrCred.user.updateProfile({ displayName: user.username });
-        user.id = usrCred.user.uid;
-        this.firebase.setUser(user);
-        this.firebase.agregarUsuario(user, this.signupForm.value.password);
-      })
-        .catch((err: any) => {
-          const errorCode = err.code;
-          const errorMessage = err.message;
+          const user: User = {
+            id: '0',
+            email: this.signupForm.value.email,
+            username: this.signupForm.value.username.toLowerCase(),
+            name: this.signupForm.value.name,
+            picture: 'https://firebasestorage.googleapis.com/v0/b/' +
+              'proy-isc-6a-2020.appspot.com/o/default-picture?alt=media&token=4a6e57df-4051-497b-987e-44f5a85ea1a9',
+            admin: false,
+            sexo: this.signupForm.value.sexo,
+            date: new Date()
+          };
 
-          if (errorCode === 'auth/email-already-in-use') {
-            this.snackBarService.openSnackBar('Este correo ya esta en uso', 'Aceptar');
-            this.tts.play('Este correo electrónico ya esta en uso');
-          }
+          const res = this.firebase.crearNuevoUsuario(user, this.signupForm.value.password);
+          res.then((usrCred: firebase.auth.UserCredential) => {
+            // console.log(usrCred);
+            usrCred.user.updateProfile({ displayName: user.username });
+            user.id = usrCred.user.uid;
+            this.firebase.setUser(user);
+            this.firebase.agregarUsuario(user);
+          })
+            .catch((err: any) => {
+              const errorCode = err.code;
+              const errorMessage = err.message;
 
-          // console.error(errorCode, errorMessage);
+              if (errorCode === 'auth/email-already-in-use') {
+                this.snackBarService.openSnackBar('Este correo ya esta en uso', 'Aceptar');
+                this.tts.play('Este correo electrónico ya esta en uso');
+              }
+
+              // console.error(errorCode, errorMessage);
+              this.estado = State.SIGNUP;
+            });
+        } else {
+          this.snackBarService.openSnackBar('Este nombre de usuario ya esta en uso', 'Aceptar');
+          this.tts.play('Este nombre de usuario ya esta en uso');
+
           this.estado = State.SIGNUP;
-        });
+        }
+      });
 
     } else {
       if (this.signupForm.value.password !== this.signupForm.value.password2) {
@@ -179,15 +193,6 @@ export class LoginComponent implements OnInit {
         return password2.setErrors(null);
       }
     };
-  }
-
-  // Funcion que valida que el username no este en la base de datos
-  nameValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    if (control.value === 'miguel') {
-      console.log('Nombre invalido');
-      return { res: true };
-    }
-    return null;
   }
 
 }

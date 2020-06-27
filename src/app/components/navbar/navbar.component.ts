@@ -24,7 +24,16 @@ export class NavbarComponent implements OnInit {
   show = false;
   notifications = 5;
   active = false;
-  user: User;
+  user: User = {
+    id: '',
+    email: '',
+    username: '',
+    name: '',
+    picture: '',
+    date: new Date(),
+    admin: false,
+    sexo: '',
+  };
   loading = true;
   admin = false;
 
@@ -33,7 +42,8 @@ export class NavbarComponent implements OnInit {
     private snackBarService: SnackbarService,
     public dialog: MatDialog,
     private router: Router,
-    private firebase: FirebaseService) { }
+    private firebase: FirebaseService) {
+  }
 
   ngOnInit(): void {
     this.filteredOptions = this.myControl.valueChanges
@@ -43,19 +53,18 @@ export class NavbarComponent implements OnInit {
       );
 
     this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
-      // console.log('Usuario: ', user);
       if (user) {
-        this.active = true;
         this.firebase.getUserDB(user.displayName).subscribe((data: any) => {
           if (data) {
             this.firebase.setUser(data[0]);
             this.user = this.firebase.getUser();
             this.loading = false;
-            if (this.user.admin){
+            if (this.user.admin) {
               this.admin = true;
             } else {
               this.admin = false;
             }
+            this.active = true;
           }
         });
       } else {
@@ -108,7 +117,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigate([link]);
   }
 
-  administrador(){
+  administrador() {
     this.router.navigate(['adminhome']);
   }
 }

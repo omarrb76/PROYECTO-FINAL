@@ -126,14 +126,14 @@ export class EditComponent implements OnInit {
                     }
                   })
                   .catch((err: any) => {
-                    console.log(err);
+                    // console.log(err);
                   });
               });
             })
           )
           .subscribe(url => {
             if (url) {
-              console.log(url);
+              // console.log(url);
             }
           });
       } else {
@@ -148,7 +148,7 @@ export class EditComponent implements OnInit {
             }
           })
           .catch((err: any) => {
-            console.log(err);
+            // console.log(err);
           });
       }
 

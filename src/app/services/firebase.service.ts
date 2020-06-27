@@ -37,8 +37,11 @@ export class FirebaseService {
     return this.auth.signInWithEmailAndPassword(correo, passwd);
   }
 
-  agregarUsuario(user: User, pass: string) {
+  agregarUsuario(user: User) {
     this.db.collection('users').doc(user.username).set(user)
+      .then(exito => {
+        window.location.reload();
+      })
       .catch(err => {
         const errorCode = err.code;
         const errorMessage = err.message;
