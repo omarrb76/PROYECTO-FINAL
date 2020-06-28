@@ -98,12 +98,15 @@ export class FirebaseService {
   }
 
   crearNuevoPost(post: Post) {
-    return this.db.collection('users').doc(post.username).collection('posts').doc(post.date.toString()).set(post);
+    return this.db.collection('users').doc(post.username).collection('posts').doc(this.formatDate(post.date)).set(post);
   }
 
-  async getAllPosts(users: string[]) {
+  async getAllPosts(users: string[], tuCuenta: boolean) {
 
-    users.push(this.user.username);
+    // Si es su propia cuenta
+    if (tuCuenta) {
+      users.push(this.user.username);
+    }
 
     const posts: Post[] = [];
 
@@ -123,9 +126,9 @@ export class FirebaseService {
     }
 
     posts.sort((a, b) => {
-      if (a.date > b.date){
+      if (a.date > b.date) {
         return -1;
-      } else if (a.date < b.date){
+      } else if (a.date < b.date) {
         return 1;
       } else {
         return 0;
@@ -142,22 +145,29 @@ export class FirebaseService {
     return query.get();
   }
 
-  async getProfilePictures(users){
+  async getProfilePictures(users) {
     const pictures: any[] = [];
     for (const user of users) {
       await this.getProfilePicture(user).toPromise().then(res => {
-        res.forEach(doc => pictures.push({username: user, picture: doc.data().picture}));
+        res.forEach(doc => pictures.push({ username: user, picture: doc.data().picture }));
       });
     }
-    console.log(pictures);
     return new Promise((resolve, reject) => {
       resolve(pictures);
     });
   }
 
-  private getProfilePicture(username: string){
+  private getProfilePicture(username: string) {
     const query = this.db.collection('users', ref => ref.where('username', '==', username));
     return query.get();
+  }
+
+  actualizarPost(post: Post) {
+    this.db.collection('users').doc(post.username).collection('posts').doc(this.formatDate(post.date)).update(post);
+  }
+
+  formatDate(date: Date): string {
+    return date.getTime().toString();
   }
 
 }

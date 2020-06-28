@@ -62,7 +62,7 @@ export class FeedComponent implements OnInit {
   }
 
   async getAllPosts(){
-    await this.firebase.getAllPosts(this.user.siguiendo).then((res: any) => this.allPosts = res);
+    await this.firebase.getAllPosts(this.user.siguiendo, true).then((res: any) => this.allPosts = res);
     await this.firebase.getProfilePictures(this.user.siguiendo).then((res: any) => this.pictures = res);
     this.loadingPosts = false;
     this.posts = this.allPosts;

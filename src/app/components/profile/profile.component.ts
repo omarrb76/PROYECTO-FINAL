@@ -3,6 +3,7 @@ import { FirebaseService } from './../../services/firebase.service';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Post } from 'src/app/models/post';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +19,8 @@ export class ProfileComponent implements OnInit {
   myUser: User;
   noExiste = false;
   botonSeguirEnabled: boolean;
+  posts: Post[];
+  pictures: any[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -27,6 +30,7 @@ export class ProfileComponent implements OnInit {
   ) {
     this.loadingUser = true;
     this.siguiendo = true;
+    this.posts = [];
   }
 
   ngOnInit(): void {
@@ -40,18 +44,21 @@ export class ProfileComponent implements OnInit {
             this.myUser = data[0];
             this.activatedRoute.params.subscribe(
               (params: any) => {
+                console.log('hola cambie ', params.username);
                 this.username = params.username;
                 this.firebase.getUserDB(this.username).subscribe((info: User[]) => {
-                  this.loadingUser = false;
                   if (info.length > 0) {
                     this.user = info[0];
                     if (this.user.id === this.myUser.id) {
+                      this.getAllPosts(true);
                       this.botonSeguirEnabled = false;
                     } else {
+                      this.getAllPosts(false);
                       this.botonSeguirEnabled = true;
                       this.comprobarSiguiendo(this.user.username);
                     }
                   } else {
+                    this.loadingUser = false;
                     this.noExiste = true;
                   }
                 });
@@ -103,6 +110,18 @@ export class ProfileComponent implements OnInit {
     } else {
       this.siguiendo = false;
     }
+  }
+
+  async getAllPosts(tuCuenta: boolean){
+
+    // Si esta viendo su propia cuenta
+    if (tuCuenta){
+      await this.firebase.getAllPosts([], tuCuenta).then((res: any) => this.posts = res);
+    } else {
+      await this.firebase.getAllPosts([this.user.username], tuCuenta).then((res: any) => this.posts = res);
+    }
+    await this.firebase.getProfilePictures([this.user.username]).then((res: any) => this.pictures = res);
+    this.loadingUser = false;
   }
 
 }

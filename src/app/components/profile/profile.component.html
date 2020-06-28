@@ -1,42 +1,44 @@
-<div class="container p-5">
+<div class="container py-5">
 
     <mat-spinner class="mx-auto my-5" *ngIf="loadingUser"></mat-spinner>
 
     <div *ngIf="!loadingUser && !noExiste" class="my-5" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
-        <div fxFlex fxLayout="column" class="text-center">
-            <div fxFlex class="mx-auto px-3 pb-3 contenedor">
-                <img class="profile-profile rounded-circle" [src]="user.picture" alt="Foto de perfil">
-            </div>
-            <div fxFlex class="px-2">
-                <hr>
-            </div>
-            <div fxFlex>
-                <h1><strong [tabindex]="this.tts.getEnabled()"
-                        (focus)="this.tts.play(user.username)">{{user.username}}</strong>
-                </h1>
-                <h2 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(user.name)">
-                    {{user.name}}
-                </h2>
-                <h3 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(user.sexo)">
-                    {{user.sexo}}
-                </h3>
-                <h3 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Eys acumulados')">
-                    <strong>Eys:</strong> numero</h3>
-            </div>
-            <div fxFlex class="px-2">
-                <hr>
-            </div>
-            <div fxFlex fxLayout="row" fxLayout.xs="column">
-                <div fxFlex>
-                    <button mat-raised-button color="negro" (focus)="this.tts.play('Siguiendo')">Siguiendo:
-                        <strong>{{ user.siguiendo.length }}</strong></button>
+        <div fxFlex>
+            <div fxLayout="column" class="text-center">
+                <div fxFlex class="mx-auto px-3 pb-3 contenedor">
+                    <img class="profile-profile rounded-circle" [src]="user.picture" alt="Foto de perfil">
                 </div>
-                <div fxFlex class="px-2" fxShow="false" fxShow.xs="true">
-                    <br>
+                <div fxFlex class="px-2">
+                    <hr>
                 </div>
                 <div fxFlex>
-                    <button mat-raised-button color="negro" (focus)="this.tts.play('Seguidores')">Seguidores:
-                        <strong>{{ user.seguidores.length }}</strong></button>
+                    <h1><strong [tabindex]="this.tts.getEnabled()"
+                            (focus)="this.tts.play(user.username)">{{user.username}}</strong>
+                    </h1>
+                    <h2 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(user.name)">
+                        {{user.name}}
+                    </h2>
+                    <h3 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(user.sexo)">
+                        {{user.sexo}}
+                    </h3>
+                    <h3 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Eys acumulados')">
+                        <strong>Eys:</strong> numero</h3>
+                </div>
+                <div fxFlex class="px-2">
+                    <hr>
+                </div>
+                <div fxFlex fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex>
+                        <button mat-raised-button color="negro" (focus)="this.tts.play('Siguiendo')">Siguiendo:
+                            <strong>{{ user.siguiendo.length }}</strong></button>
+                    </div>
+                    <div fxFlex class="px-2" fxShow="false" fxShow.xs="true">
+                        <br>
+                    </div>
+                    <div fxFlex>
+                        <button mat-raised-button color="negro" (focus)="this.tts.play('Seguidores')">Seguidores:
+                            <strong>{{ user.seguidores.length }}</strong></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,7 +47,7 @@
             <hr>
         </div>
 
-        <div fxFlex fxLayout="column" class="text-center">
+        <div fxFlex fxLayout="column">
             <button mat-stroked-button [color]="this.getSeguirColor()" class="mx-4"
                 (focus)="this.tts.play(siguiendo ? 'Dejar de seguir' : 'Seguir')" (click)="seguirChange()"
                 *ngIf="botonSeguirEnabled">
@@ -58,10 +60,14 @@
             <div class="px-2">
                 <hr>
             </div>
-            <div fxFlex class="border rounded mx-4">
+            <div fxFlex>
                 <!-- AQUI IRIAN LOS POSTS -->
-                <h1 class="my-auto" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Aun no hay posts')">AUN
+                <h1 class="my-auto" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Aun no hay posts')"
+                    *ngIf="posts.length === 0">AUN
                     NO HAY POSTS</h1>
+                <app-posts [posts]="posts" [username]="this.myUser.username" [pictures]="pictures"
+                    *ngIf="posts.length !== 0">
+                </app-posts>
             </div>
         </div>
     </div>
