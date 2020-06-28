@@ -60,11 +60,13 @@
             <div class="px-2">
                 <hr>
             </div>
-            <div fxFlex>
+            <div fxFlex align="center">
                 <!-- AQUI IRIAN LOS POSTS -->
-                <h1 class="my-auto" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Aun no hay posts')"
-                    *ngIf="posts.length === 0">AUN
-                    NO HAY POSTS</h1>
+                <div class="my-auto text-center" *ngIf="posts.length === 0">
+                    <h1 class="my-auto" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Aun no hay posts')">
+                        AUN NO HAY POSTS
+                    </h1>
+                </div>
                 <app-posts [posts]="posts" [username]="this.myUser.username" [pictures]="pictures"
                     *ngIf="posts.length !== 0">
                 </app-posts>

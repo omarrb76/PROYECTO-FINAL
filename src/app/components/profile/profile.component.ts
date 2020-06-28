@@ -46,14 +46,14 @@ export class ProfileComponent implements OnInit {
               (params: any) => {
                 console.log('hola cambie ', params.username);
                 this.username = params.username;
-                this.firebase.getUserDB(this.username).subscribe((info: User[]) => {
+                this.firebase.getUserDB(this.username).subscribe(async (info: User[]) => {
                   if (info.length > 0) {
                     this.user = info[0];
                     if (this.user.id === this.myUser.id) {
-                      this.getAllPosts(true);
+                      await this.getAllPosts(true);
                       this.botonSeguirEnabled = false;
                     } else {
-                      this.getAllPosts(false);
+                      await this.getAllPosts(false);
                       this.botonSeguirEnabled = true;
                       this.comprobarSiguiendo(this.user.username);
                     }
@@ -70,14 +70,14 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  seguirChange() {
+  async seguirChange() {
     if (this.siguiendo){
       let index = this.myUser.siguiendo.findIndex(element => element === this.user.username);
       this.myUser.siguiendo.splice(index, 1);
       index = this.user.seguidores.findIndex(element => element === this.myUser.username);
       this.user.seguidores.splice(index, 1);
 
-      this.firebase.actualizarSeguidores(this.user, this.myUser);
+      await this.firebase.actualizarSeguidores(this.user, this.myUser);
 
       this.siguiendo = !this.siguiendo;
     } else {
@@ -86,7 +86,7 @@ export class ProfileComponent implements OnInit {
       if (!ref && !ref2){
         this.myUser.siguiendo.push(this.user.username);
         this.user.seguidores.push(this.myUser.username);
-        this.firebase.actualizarSeguidores(this.user, this.myUser);
+        await this.firebase.actualizarSeguidores(this.user, this.myUser);
         this.siguiendo = !this.siguiendo;
       }
     }
