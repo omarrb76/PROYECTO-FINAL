@@ -1,5 +1,7 @@
 <div class="container py-5 px-2 mt-5" fxLayout="column">
+
     <mat-spinner *ngIf="loadingPosts" class="mx-auto my-auto"></mat-spinner>
+
     <div fxFlex *ngIf="!loadingPosts && this.posts.length < 1" class="text-center">
         <h1 class="my-auto"><strong [tabindex]="this.tts.getEnabled()"
                 (focus)="this.tts.play('No hay posts para mostrar, empieza a seguir a alguien')">
@@ -7,6 +9,7 @@
                 empieza a seguir a alguien
             </strong></h1>
     </div>
+
     <div fxFlex class="mx-auto" *ngIf="!loadingPosts && this.posts.length > 0">
         <div class="text-center">
             <h1><strong [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Inicio')">
@@ -14,41 +17,9 @@
                 </strong></h1>
         </div>
         <br>
-        <mat-card class="post-card mb-3" *ngFor="let post of posts">
-            <mat-card-header>
-                <div class="contenedor-card puntero" mat-card-avatar>
-                    <a (click)="goToProfile(post.username)" [tabindex]="this.tts.getEnabled()"
-                        (focus)="this.tts.play('Perfil de ' + post.username)">
-                        <img [src]="post.profilePicture" alt="Foto de perfil"
-                            class="rounded-circle">
-                    </a>
-                </div>
-                <mat-card-title [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(post.username)">
-                    {{post.username}}</mat-card-title>
-                <mat-card-subtitle [tabindex]="this.tts.getEnabled()"
-                    (focus)="this.tts.play(post.name + ' ' + this.formatDate(post.date))">
-                    {{post.name}} |
-                    {{this.formatDate(post.date)}}
-                </mat-card-subtitle>
-            </mat-card-header>
-            <br>
-            <div class="text-center mx-1">
-                <img mat-card-image [src]="post.imagen | domseguro" alt="Imagen del post"
-                    class="img-fluid border rounded post-image" *ngIf="post.imagen !== ''">
-            </div>
-            <mat-card-content>
-                <p [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(post.text)">
-                    {{post.text}}
-                </p>
-            </mat-card-content>
-            <mat-card-actions class="d-flex justify-content-around">
-                <p>Eys: {{post.eys.length}}</p>
-                <button mat-flat-button [color]="this.getEyColor(post)" (click)="darLike(post)"
-                    (focus)="this.tts.play('Ey esta Publicación')">
-                    <mat-icon>thumb_up</mat-icon>
-                </button>
-            </mat-card-actions>
-        </mat-card>
+
+        <app-posts [posts]="allPosts" [username]="user.username" [pictures]="pictures"></app-posts>
+
         <br>
         <div class="text-center">
             <button mat-fab (click)="loadMorePosts()" (focus)="this.tts.play('Cargar más publicaciones')"
@@ -58,4 +29,5 @@
             </button>
         </div>
     </div>
+
 </div>

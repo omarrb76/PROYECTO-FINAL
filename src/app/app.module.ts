@@ -37,6 +37,7 @@ import {
   AngularFireUploadTask
 } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
+import { PostsComponent } from './components/posts/posts.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { environment } from '../environments/environment';
     NewpostComponent,
     DomseguroPipe,
     AdminHomeComponent,
-    TablaUsuariosComponent
+    TablaUsuariosComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,

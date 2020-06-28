@@ -28,15 +28,15 @@
             </div>
             <div fxFlex fxLayout="row" fxLayout.xs="column">
                 <div fxFlex>
-                    <button mat-raised-button color="negro" (focus)="this.tts.play('Siguiendo')">Siguiendo
-                        numero</button>
+                    <button mat-raised-button color="negro" (focus)="this.tts.play('Siguiendo')">Siguiendo:
+                        <strong>{{ user.siguiendo.length }}</strong></button>
                 </div>
                 <div fxFlex class="px-2" fxShow="false" fxShow.xs="true">
                     <br>
                 </div>
                 <div fxFlex>
-                    <button mat-raised-button color="negro" (focus)="this.tts.play('Seguidores')">Seguidores
-                        numero</button>
+                    <button mat-raised-button color="negro" (focus)="this.tts.play('Seguidores')">Seguidores:
+                        <strong>{{ user.seguidores.length }}</strong></button>
                 </div>
             </div>
         </div>
@@ -51,9 +51,9 @@
                 *ngIf="botonSeguirEnabled">
                 {{ siguiendo ? "Dejar de seguir" : "Seguir" }}
             </button>
-            <button mat-stroked-button color="negro" class="mx-4"
-                (focus)="this.tts.play('Estas viendo tu propio perfil')" *ngIf="!botonSeguirEnabled" disbaled>
-                Este es tu perfil
+            <button mat-stroked-button color="negro" class="mx-4" (focus)="this.tts.play('Editar perfil')"
+                *ngIf="!botonSeguirEnabled" (click)="editarPerfil()">
+                Editar perfil
             </button>
             <div class="px-2">
                 <hr>

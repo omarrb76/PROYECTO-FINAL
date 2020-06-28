@@ -7,4 +7,6 @@ export interface User {
     date: Date;
     admin: boolean;
     sexo: string;
+    siguiendo: string[];
+    seguidores: string[];
 }

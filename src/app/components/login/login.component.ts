@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.signupForm = formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       username: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
 
       this.firebase.emailPasswdLogin(this.loginForm.value.email, this.loginForm.value.password)
         .then((usr: any) => {
-          console.log(usr);
+          // console.log(usr);
         })
         .catch((err: any) => {
           const errorCode = err.code;
@@ -125,9 +125,8 @@ export class LoginComponent implements OnInit {
 
       this.firebase.getUserDB(this.signupForm.value.username).subscribe((data: any) => {
         // Si el username no esta tomado
-        console.log(data);
+        // console.log(data);
         if (data.length === 0) {
-          console.log('entre');
           this.tts.play('Creando nuevo usuario');
 
           const user: User = {
@@ -139,27 +138,34 @@ export class LoginComponent implements OnInit {
               'proy-isc-6a-2020.appspot.com/o/default-picture?alt=media&token=4a6e57df-4051-497b-987e-44f5a85ea1a9',
             admin: false,
             sexo: this.signupForm.value.sexo,
-            date: new Date()
+            date: new Date(),
+            siguiendo: [],
+            seguidores: []
           };
 
           const res = this.firebase.crearNuevoUsuario(user, this.signupForm.value.password);
           res.then((usrCred: firebase.auth.UserCredential) => {
-            // console.log(usrCred);
+
             usrCred.user.updateProfile({ displayName: user.username });
             user.id = usrCred.user.uid;
             this.firebase.setUser(user);
             this.firebase.agregarUsuario(user);
+
           })
             .catch((err: any) => {
               const errorCode = err.code;
               const errorMessage = err.message;
 
               if (errorCode === 'auth/email-already-in-use') {
+
                 this.snackBarService.openSnackBar('Este correo ya esta en uso', 'Aceptar');
                 this.tts.play('Este correo electrónico ya esta en uso');
-              } else if (errorCode === 'auth/invalid-email'){
+
+              } else if (errorCode === 'auth/invalid-email') {
+
                 this.snackBarService.openSnackBar('Esta dirección de correo es inválida', 'Aceptar');
                 this.tts.play('Esta dirección de correo es inválida');
+
               }
 
               // console.error(errorCode, errorMessage);

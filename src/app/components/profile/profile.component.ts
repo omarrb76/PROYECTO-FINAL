@@ -49,6 +49,7 @@ export class ProfileComponent implements OnInit {
                       this.botonSeguirEnabled = false;
                     } else {
                       this.botonSeguirEnabled = true;
+                      this.comprobarSiguiendo(this.user.username);
                     }
                   } else {
                     this.noExiste = true;
@@ -63,7 +64,25 @@ export class ProfileComponent implements OnInit {
   }
 
   seguirChange() {
-    this.siguiendo = !this.siguiendo;
+    if (this.siguiendo){
+      let index = this.myUser.siguiendo.findIndex(element => element === this.user.username);
+      this.myUser.siguiendo.splice(index, 1);
+      index = this.user.seguidores.findIndex(element => element === this.myUser.username);
+      this.user.seguidores.splice(index, 1);
+
+      this.firebase.actualizarSeguidores(this.user, this.myUser);
+
+      this.siguiendo = !this.siguiendo;
+    } else {
+      let ref = this.myUser.siguiendo.find(element => element === this.user.username);
+      let ref2 = this.user.seguidores.find(element => element === this.myUser.username);
+      if (!ref && !ref2){
+        this.myUser.siguiendo.push(this.user.username);
+        this.user.seguidores.push(this.myUser.username);
+        this.firebase.actualizarSeguidores(this.user, this.myUser);
+        this.siguiendo = !this.siguiendo;
+      }
+    }
   }
 
   getSeguirColor(): string {
@@ -71,6 +90,19 @@ export class ProfileComponent implements OnInit {
       return 'rojo';
     }
     return 'azul';
+  }
+
+  editarPerfil() {
+    this.router.navigate(['edit']);
+  }
+
+  comprobarSiguiendo(username: string) {
+    const ref = this.myUser.siguiendo.find(element => element === this.user.username);
+    if (ref) {
+      this.siguiendo = true;
+    } else {
+      this.siguiendo = false;
+    }
   }
 
 }

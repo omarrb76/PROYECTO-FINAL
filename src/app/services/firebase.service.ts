@@ -59,6 +59,15 @@ export class FirebaseService {
     return query.valueChanges();
   }
 
+  actualizarSeguidores(user1: User, user2: User) {
+    this.actualizarUsuario(user1);
+    this.actualizarUsuario(user2);
+  }
+
+  actualizarUsuario(user: User) {
+    this.db.collection('users').doc(user.username).update(user);
+  }
+
   async updateUser(user: User, passwordNew: string, passwordOld: string) {
 
     let aux = false;
@@ -88,8 +97,67 @@ export class FirebaseService {
     });
   }
 
-  crearNuevoPost(post: Post){
+  crearNuevoPost(post: Post) {
     return this.db.collection('users').doc(post.username).collection('posts').doc(post.date.toString()).set(post);
+  }
+
+  async getAllPosts(users: string[]) {
+
+    users.push(this.user.username);
+
+    const posts: Post[] = [];
+
+    for (const user of users) {
+      await this.getUserPosts(user).toPromise().then(res => {
+        res.forEach(doc => {
+          const post: Post = {
+            username: doc.data().username,
+            date: doc.data().date.toDate(),
+            text: doc.data().text,
+            image: doc.data().image,
+            likes: doc.data().likes
+          };
+          posts.push(post);
+        });
+      });
+    }
+
+    posts.sort((a, b) => {
+      if (a.date > b.date){
+        return -1;
+      } else if (a.date < b.date){
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return new Promise((resolve, reject) => {
+      resolve(posts);
+    });
+  }
+
+  getUserPosts(username: string) {
+    const query = this.db.collection('users').doc(username).collection<Post>('posts', ref => ref.orderBy('date', 'desc'));
+    return query.get();
+  }
+
+  async getProfilePictures(users){
+    const pictures: any[] = [];
+    for (const user of users) {
+      await this.getProfilePicture(user).toPromise().then(res => {
+        res.forEach(doc => pictures.push({username: user, picture: doc.data().picture}));
+      });
+    }
+    console.log(pictures);
+    return new Promise((resolve, reject) => {
+      resolve(pictures);
+    });
+  }
+
+  private getProfilePicture(username: string){
+    const query = this.db.collection('users', ref => ref.where('username', '==', username));
+    return query.get();
   }
 
 }

@@ -24,16 +24,7 @@ export class NavbarComponent implements OnInit {
   show = false;
   notifications = 5;
   active = false;
-  user: User = {
-    id: '',
-    email: '',
-    username: '',
-    name: '',
-    picture: '',
-    date: new Date(),
-    admin: false,
-    sexo: '',
-  };
+  user: User;
   loading = true;
   admin = false;
 

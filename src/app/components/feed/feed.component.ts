@@ -1,25 +1,9 @@
+import { User } from './../../models/user';
 import { FirebaseService } from './../../services/firebase.service';
 import { Router } from '@angular/router';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { Component, OnInit } from '@angular/core';
-
-const INFO: Post[] = [];
-
-function llenarInfo() {
-  for (let i = 0; i < 15; i++) {
-    const temp = {
-      id: i,
-      profilePicture: 'https://okdiario.com/img/2019/04/04/el-increible-hulk-655x368.jpg',
-      date: new Date(2020, 5, i + 1),
-      username: 'omarrb76',
-      name: 'Omar Ruiz',
-      imagen: 'https://media.revistagq.com/photos/5ca5f6a77a3aec0df5496c59/master/w_2044,c_limit/bob_esponja_9564.png',
-      text: 'Es mi primer post',
-      eys: []
-    };
-    INFO.push(temp);
-  }
-}
+import { Post } from 'src/app/models/post';
 
 @Component({
   selector: 'app-feed',
@@ -28,57 +12,40 @@ function llenarInfo() {
 })
 export class FeedComponent implements OnInit {
 
-  allPosts = INFO;
+  allPosts: Post[] = [];
   posts: any[];
-  loadingPosts: boolean;
+  loadingPosts = true;
   index = 0;
+  user: User;
+  pictures: any[];
 
-  constructor(public tts: TexttospeechService, private router: Router, private firebase: FirebaseService) {
-    llenarInfo();
-    this.loadingPosts = false;
+  constructor(
+    public tts: TexttospeechService,
+    private firebase: FirebaseService,
+    private router: Router
+  ) {
     this.posts = [];
   }
 
   ngOnInit(): void {
-    this.loadMorePosts();
 
     this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
       if (!user) {
         this.router.navigate(['home']);
+      } else {
+        this.firebase.getUserDB(user.displayName).subscribe((data: any) => {
+          if (data) {
+            this.firebase.setUser(data[0]);
+            this.user = this.firebase.getUser();
+            this.getAllPosts();
+          }
+        });
       }
     });
   }
 
-  getEyColor(post: Post) {
-    if (post.eys.find((element) => element === 'andrea')) {
-      return 'verde';
-    } else {
-      return 'negro';
-    }
-  }
-
-  darLike(post: Post) {
-    const username = 'andrea';
-    const found = post.eys.find((element) => element === 'andrea');
-    console.log(found);
-    const res = this.posts.findIndex((element) => element.id === post.id);
-    if (!found){
-      console.log(res);
-      this.posts[res].eys.push(username);
-    } else {
-      const borrar = this.posts[res].eys.indexOf(username);
-      if (borrar > -1){
-        this.posts[res].eys.splice(borrar, 1);
-      }
-    }
-  }
-
-  goToProfile(username: string) {
-    this.router.navigate([`user/${username}`]);
-  }
-
   loadMorePosts() {
-    console.log(this.index);
+    /* console.log(this.index);
 
     let sum = 0;
 
@@ -91,22 +58,14 @@ export class FeedComponent implements OnInit {
       }
     }
 
-    this.index += sum;
+    this.index += sum; */
   }
 
-  formatDate(date: Date): string{
-    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+  async getAllPosts(){
+    await this.firebase.getAllPosts(this.user.siguiendo).then((res: any) => this.allPosts = res);
+    await this.firebase.getProfilePictures(this.user.siguiendo).then((res: any) => this.pictures = res);
+    this.loadingPosts = false;
+    this.posts = this.allPosts;
   }
 
-}
-
-interface Post {
-  id: number,
-  profilePicture: any;
-  username: string;
-  name: string;
-  date: Date;
-  imagen: any;
-  text: string;
-  eys: string[]; // En el array de string se guardan los usernames y para saber cuantos eys tiene, usamos el atributo length
 }
