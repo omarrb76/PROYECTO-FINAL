@@ -39,6 +39,9 @@ import {
 import { environment } from '../environments/environment';
 import { PostsComponent } from './components/posts/posts.component';
 
+// Imports de código QR
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +77,8 @@ import { PostsComponent } from './components/posts/posts.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    NgxQRCodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

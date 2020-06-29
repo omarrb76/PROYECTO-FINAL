@@ -58,6 +58,8 @@
             <div class="px-2">
                 <hr>
             </div>
+            <ngx-qrcode [elementType]="elementType" [value]="value" cssClass="aclass" errorCorrectionLevel="L">
+            </ngx-qrcode>
             <div fxFlex class="border rounded mx-4">
                 <!-- AQUI IRIAN LOS POSTS -->
                 <h1 class="my-auto" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Aun no hay posts')">AUN
