@@ -19,6 +19,9 @@ export class ProfileComponent implements OnInit {
   myUser: User;
   noExiste = false;
   botonSeguirEnabled: boolean;
+  ruta = 'http://localhost:4200/user/';
+  elementType = 'url';
+  value = 'Techiediaries';
   posts: Post[];
   pictures: any[];
 
@@ -44,8 +47,9 @@ export class ProfileComponent implements OnInit {
             this.myUser = data[0];
             this.activatedRoute.params.subscribe(
               (params: any) => {
-                console.log('hola cambie ', params.username);
                 this.username = params.username;
+                // Obtener valor para el codigo QR
+                this.value = this.ruta + this.username;
                 this.firebase.getUserDB(this.username).subscribe(async (info: User[]) => {
                   if (info.length > 0) {
                     this.user = info[0];
@@ -81,8 +85,8 @@ export class ProfileComponent implements OnInit {
 
       this.siguiendo = !this.siguiendo;
     } else {
-      let ref = this.myUser.siguiendo.find(element => element === this.user.username);
-      let ref2 = this.user.seguidores.find(element => element === this.myUser.username);
+      const ref = this.myUser.siguiendo.find(element => element === this.user.username);
+      const ref2 = this.user.seguidores.find(element => element === this.myUser.username);
       if (!ref && !ref2){
         this.myUser.siguiendo.push(this.user.username);
         this.user.seguidores.push(this.myUser.username);

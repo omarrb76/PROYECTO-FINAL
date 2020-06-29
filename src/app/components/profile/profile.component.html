@@ -60,6 +60,8 @@
             <div class="px-2">
                 <hr>
             </div>
+            <ngx-qrcode [elementType]="elementType" [value]="value" cssClass="aclass" errorCorrectionLevel="L">
+            </ngx-qrcode>
             <div fxFlex align="center">
                 <!-- AQUI IRIAN LOS POSTS -->
                 <div class="my-auto text-center" *ngIf="posts.length === 0">
