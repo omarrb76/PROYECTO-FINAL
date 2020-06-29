@@ -3,6 +3,7 @@ import { FirebaseService } from './../../services/firebase.service';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Post } from 'src/app/models/post';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,8 @@ export class ProfileComponent implements OnInit {
   ruta = 'http://localhost:4200/user/';
   elementType = 'url';
   value = 'Techiediaries';
+  posts: Post[];
+  pictures: any[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,6 +33,7 @@ export class ProfileComponent implements OnInit {
   ) {
     this.loadingUser = true;
     this.siguiendo = true;
+    this.posts = [];
   }
 
   ngOnInit(): void {
@@ -46,17 +50,19 @@ export class ProfileComponent implements OnInit {
                 this.username = params.username;
                 // Obtener valor para el codigo QR
                 this.value = this.ruta + this.username;
-                this.firebase.getUserDB(this.username).subscribe((info: User[]) => {
-                  this.loadingUser = false;
+                this.firebase.getUserDB(this.username).subscribe(async (info: User[]) => {
                   if (info.length > 0) {
                     this.user = info[0];
                     if (this.user.id === this.myUser.id) {
+                      await this.getAllPosts(true);
                       this.botonSeguirEnabled = false;
                     } else {
+                      await this.getAllPosts(false);
                       this.botonSeguirEnabled = true;
                       this.comprobarSiguiendo(this.user.username);
                     }
                   } else {
+                    this.loadingUser = false;
                     this.noExiste = true;
                   }
                 });
@@ -68,14 +74,14 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  seguirChange() {
+  async seguirChange() {
     if (this.siguiendo){
       let index = this.myUser.siguiendo.findIndex(element => element === this.user.username);
       this.myUser.siguiendo.splice(index, 1);
       index = this.user.seguidores.findIndex(element => element === this.myUser.username);
       this.user.seguidores.splice(index, 1);
 
-      this.firebase.actualizarSeguidores(this.user, this.myUser);
+      await this.firebase.actualizarSeguidores(this.user, this.myUser);
 
       this.siguiendo = !this.siguiendo;
     } else {
@@ -84,7 +90,7 @@ export class ProfileComponent implements OnInit {
       if (!ref && !ref2){
         this.myUser.siguiendo.push(this.user.username);
         this.user.seguidores.push(this.myUser.username);
-        this.firebase.actualizarSeguidores(this.user, this.myUser);
+        await this.firebase.actualizarSeguidores(this.user, this.myUser);
         this.siguiendo = !this.siguiendo;
       }
     }
@@ -108,6 +114,18 @@ export class ProfileComponent implements OnInit {
     } else {
       this.siguiendo = false;
     }
+  }
+
+  async getAllPosts(tuCuenta: boolean){
+
+    // Si esta viendo su propia cuenta
+    if (tuCuenta){
+      await this.firebase.getAllPosts([], tuCuenta).then((res: any) => this.posts = res);
+    } else {
+      await this.firebase.getAllPosts([this.user.username], tuCuenta).then((res: any) => this.posts = res);
+    }
+    await this.firebase.getProfilePictures([this.user.username]).then((res: any) => this.pictures = res);
+    this.loadingUser = false;
   }
 
 }

@@ -25,11 +25,11 @@
         </p>
         <hr>
     </mat-card-content>
-    <mat-card-actions class="d-flex justify-content-around">
-        <p>Eys: {{post.likes.length}}</p>
+    <mat-card-actions align="end">
         <button mat-flat-button [color]="this.getEyColor(post)" (click)="darLike(post)"
             (focus)="this.tts.play('Ey esta Publicación')">
-            <mat-icon>thumb_up</mat-icon>
+            <mat-icon class="mr-3">thumb_up</mat-icon>
+            <strong>{{post.likes.length}}</strong>
         </button>
     </mat-card-actions>
 </mat-card>

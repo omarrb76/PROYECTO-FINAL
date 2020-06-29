@@ -111,4 +111,12 @@ export class NavbarComponent implements OnInit {
   administrador() {
     this.router.navigate(['adminhome']);
   }
+
+  obtainAlign(){
+    if (this.user.admin){
+      console.log('centee');
+      return 'center';
+    }
+    return 'start';
+  }
 }

@@ -1,3 +1,4 @@
+import { FirebaseService } from './../../services/firebase.service';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
@@ -14,7 +15,7 @@ export class PostsComponent implements OnInit {
   @Input() username = '';
   @Input() pictures: any[] = [];
 
-  constructor(private router: Router, public tts: TexttospeechService) {}
+  constructor(private router: Router, public tts: TexttospeechService, private firebase: FirebaseService) {}
 
   ngOnInit(): void {
     console.log(this.username);
@@ -31,15 +32,31 @@ export class PostsComponent implements OnInit {
   }
 
   darLike(post: Post) {
+    const index = this.getLike(post);
+    if (index > -1){
+      post.likes.splice(index, 1);
+    } else {
+      post.likes.push(this.username);
+    }
+    this.firebase.actualizarPost(post);
   }
 
-  getEyColor(post: Post) {
-    return 'verde';
+  getLike(post: Post){
+    return post.likes.findIndex(element => element === this.username);
+  }
+
+  getEyColor(post: Post): string {
+    const index = this.getLike(post);
+    if (index > -1){
+      return 'verde';
+    } else {
+      return 'negro';
+    }
   }
 
   getProfilePicture(username: string){
     const index = this.pictures.findIndex(element => element.username === username);
-    return this.pictures[index].picture;
+    return index > -1 ? this.pictures[index].picture : '';
   }
 
 }
