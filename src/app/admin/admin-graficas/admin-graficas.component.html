@@ -1,0 +1,54 @@
+<div class="container p-5">
+    <app-header></app-header>
+    <div class="col text-center">
+        <h2>
+            Estadísticas
+        </h2>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6 mt-6">
+            <div class="text-center">
+                <h3>Sexo</h3>
+                <div class="chart">
+                    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                        [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-6">
+            <div class="text-center">
+                <h3>Actividad por Usuario</h3>
+                <div style="display: block">
+                    <canvas baseChart [data]="polarAreaChartData" [labels]="polarAreaChartLabels"
+                        [legend]="polarAreaLegend" [chartType]="polarAreaChartType">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mt-6">
+            <div class="text-center">
+                <h3>Actividad Desglosada por usuario</h3>
+                <div style="display: block">
+                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                        [legend]="barChartLegend" [chartType]="barChartType">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 pt-6">
+            <div class="text-center">
+                <h3>Actividad Acumulada</h3>
+                <div>
+                    <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
+                        [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+                        [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

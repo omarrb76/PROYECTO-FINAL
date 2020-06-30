@@ -42,6 +42,10 @@ import { PostsComponent } from './components/posts/posts.component';
 // Imports de código QR
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
+// Import para gráficas
+import { ChartsModule } from 'ng2-charts';
+import { AdminGraficasComponent } from './admin/admin-graficas/admin-graficas.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +68,8 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
     DomseguroPipe,
     AdminHomeComponent,
     TablaUsuariosComponent,
-    PostsComponent
+    PostsComponent,
+    AdminGraficasComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +83,8 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

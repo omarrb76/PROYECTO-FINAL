@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminHomeComponent implements OnInit {
 
+
   constructor(public tts: TexttospeechService, private router: Router, private firebase: FirebaseService) { }
 
   ngOnInit(): void {
@@ -28,12 +29,11 @@ export class AdminHomeComponent implements OnInit {
     });
   }
 
-  verUsuarios(){
+  verUsuarios() {
     this.router.navigate(['tableusers']);
   }
 
-  verEstadisticas(){
-    this.router.navigate(['tableusers']);
+  verEstadisticas() {
+    this.router.navigate(['estadisticas']);
   }
-
 }
