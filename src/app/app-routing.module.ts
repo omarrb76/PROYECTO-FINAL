@@ -1,3 +1,4 @@
+import { AdminGraficasComponent } from './admin/admin-graficas/admin-graficas.component';
 import { TablaUsuariosComponent } from './admin/tabla-usuarios/tabla-usuarios.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { FeedComponent } from './components/feed/feed.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'feed', component: FeedComponent },
   { path: 'adminhome', component: AdminHomeComponent },
   { path: 'tableusers', component: TablaUsuariosComponent },
+  { path: 'estadisticas', component: AdminGraficasComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 
