@@ -1,3 +1,6 @@
+import { ListPersonsDialogComponent } from './../list-persons-dialog/list-persons-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { QrdialogComponent } from './../qrdialog/qrdialog.component';
 import { User } from './../../models/user';
 import { FirebaseService } from './../../services/firebase.service';
 import { TexttospeechService } from './../../services/texttospeech.service';
@@ -19,17 +22,16 @@ export class ProfileComponent implements OnInit {
   myUser: User;
   noExiste = false;
   botonSeguirEnabled: boolean;
-  ruta = 'http://localhost:4200/user/';
-  elementType = 'url';
-  value = 'Techiediaries';
   posts: Post[];
   pictures: any[];
+  disabled = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     public tts: TexttospeechService,
     private firebase: FirebaseService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     this.loadingUser = true;
     this.siguiendo = true;
@@ -48,8 +50,6 @@ export class ProfileComponent implements OnInit {
             this.activatedRoute.params.subscribe(
               (params: any) => {
                 this.username = params.username;
-                // Obtener valor para el codigo QR
-                this.value = this.ruta + this.username;
                 this.firebase.getUserDB(this.username).subscribe(async (info: User[]) => {
                   if (info.length > 0) {
                     this.user = info[0];
@@ -75,25 +75,20 @@ export class ProfileComponent implements OnInit {
   }
 
   async seguirChange() {
-    if (this.siguiendo){
+    this.disabled = true;
+    if (this.siguiendo) {
       let index = this.myUser.siguiendo.findIndex(element => element === this.user.username);
       this.myUser.siguiendo.splice(index, 1);
       index = this.user.seguidores.findIndex(element => element === this.myUser.username);
       this.user.seguidores.splice(index, 1);
-
-      await this.firebase.actualizarSeguidores(this.user, this.myUser);
-
-      this.siguiendo = !this.siguiendo;
     } else {
-      const ref = this.myUser.siguiendo.find(element => element === this.user.username);
-      const ref2 = this.user.seguidores.find(element => element === this.myUser.username);
-      if (!ref && !ref2){
-        this.myUser.siguiendo.push(this.user.username);
-        this.user.seguidores.push(this.myUser.username);
-        await this.firebase.actualizarSeguidores(this.user, this.myUser);
-        this.siguiendo = !this.siguiendo;
-      }
+      this.myUser.siguiendo.push(this.user.username);
+      this.user.seguidores.push(this.myUser.username);
     }
+    await this.firebase.actualizarSeguidores(this.user, this.myUser).then(res => {
+      this.comprobarSiguiendo(this.user.username);
+      this.disabled = false;
+    });
   }
 
   getSeguirColor(): string {
@@ -116,16 +111,30 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  async getAllPosts(tuCuenta: boolean){
+  async getAllPosts(tuCuenta: boolean) {
 
     // Si esta viendo su propia cuenta
-    if (tuCuenta){
+    if (tuCuenta) {
       await this.firebase.getAllPosts([], tuCuenta).then((res: any) => this.posts = res);
     } else {
       await this.firebase.getAllPosts([this.user.username], tuCuenta).then((res: any) => this.posts = res);
     }
     await this.firebase.getProfilePictures([this.user.username]).then((res: any) => this.pictures = res);
     this.loadingUser = false;
+  }
+
+  openQrDialogComponent() {
+    this.dialog.open(QrdialogComponent, { data: { username: this.user.username } });
+  }
+
+  verSiguiendo() {
+    this.dialog.open(ListPersonsDialogComponent,
+      { data: { users: this.user.siguiendo, accion: this.user.username + ' sigue a' } });
+  }
+
+  verSeguidores() {
+    this.dialog.open(ListPersonsDialogComponent,
+      { data: { users: this.user.seguidores, accion: 'Seguidores de ' + this.user.username } });
   }
 
 }

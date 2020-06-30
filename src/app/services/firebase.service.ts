@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Post } from '../models/post';
+import { pipe } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -59,13 +60,16 @@ export class FirebaseService {
     return query.valueChanges();
   }
 
-  actualizarSeguidores(user1: User, user2: User) {
-    this.actualizarUsuario(user1);
-    this.actualizarUsuario(user2);
+  async actualizarSeguidores(user1: User, user2: User) {
+    await this.actualizarUsuario(user1);
+    await this.actualizarUsuario(user2);
+    return new Promise((resolve, reject) => {
+      resolve(true);
+    });
   }
 
   actualizarUsuario(user: User) {
-    this.db.collection('users').doc(user.username).update(user);
+    return this.db.collection('users').doc(user.username).update(user);
   }
 
   async updateUser(user: User, passwordNew: string, passwordOld: string) {
@@ -163,11 +167,23 @@ export class FirebaseService {
   }
 
   actualizarPost(post: Post) {
-    this.db.collection('users').doc(post.username).collection('posts').doc(this.formatDate(post.date)).update(post);
+    return this.db.collection('users').doc(post.username).collection('posts').doc(this.formatDate(post.date)).update(post);
   }
 
   formatDate(date: Date): string {
     return date.getTime().toString();
+  }
+
+  async getUsersDB(users: string[]) {
+    const allUsers: User[] = [];
+    for (const user of users) {
+      await this.getProfilePicture(user).toPromise().then(res => {
+        res.forEach(doc => allUsers.push((doc.data() as User)));
+      });
+    }
+    return new Promise((resolve, reject) => {
+      resolve(allUsers);
+    });
   }
 
 }

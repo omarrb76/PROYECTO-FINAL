@@ -45,6 +45,8 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 // Import para gráficas
 import { ChartsModule } from 'ng2-charts';
 import { AdminGraficasComponent } from './admin/admin-graficas/admin-graficas.component';
+import { QrdialogComponent } from './components/qrdialog/qrdialog.component';
+import { ListPersonsDialogComponent } from './components/list-persons-dialog/list-persons-dialog.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { AdminGraficasComponent } from './admin/admin-graficas/admin-graficas.co
     AdminHomeComponent,
     TablaUsuariosComponent,
     PostsComponent,
-    AdminGraficasComponent
+    AdminGraficasComponent,
+    QrdialogComponent,
+    ListPersonsDialogComponent
   ],
   imports: [
     BrowserModule,

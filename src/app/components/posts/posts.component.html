@@ -3,14 +3,12 @@
         <div class="contenedor-card puntero" mat-card-avatar>
             <a (click)="goToProfile(post.username)" [tabindex]="this.tts.getEnabled()"
                 (focus)="this.tts.play('Perfil de ' + post.username)">
-                <img [src]="getProfilePicture(post.username)" alt="Foto de perfil"
-                    class="rounded-circle">
+                <img [src]="getProfilePicture(post.username)" alt="Foto de perfil" class="rounded-circle">
             </a>
         </div>
         <mat-card-title [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(post.username)">
             {{post.username}}</mat-card-title>
-        <mat-card-subtitle [tabindex]="this.tts.getEnabled()"
-            (focus)="this.tts.play(this.formatDate(post.date))">
+        <mat-card-subtitle [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(this.formatDate(post.date))">
             {{this.formatDate(post.date)}}
         </mat-card-subtitle>
     </mat-card-header>
@@ -26,8 +24,12 @@
         <hr>
     </mat-card-content>
     <mat-card-actions align="end">
+        <button mat-mini-fab color="gris" (click)="verEys(post)" class="mr-2"
+            (focus)="this.tts.play('Ver quién reaccionó a esta publicación')" [disabled]="this.disabled">
+            <mat-icon>supervised_user_circle</mat-icon>
+        </button>
         <button mat-flat-button [color]="this.getEyColor(post)" (click)="darLike(post)"
-            (focus)="this.tts.play('Ey esta Publicación')">
+            (focus)="this.tts.play('Ey esta Publicación')" class="ml-2" [disabled]="this.disabled">
             <mat-icon class="mr-3">thumb_up</mat-icon>
             <strong>{{post.likes.length}}</strong>
         </button>

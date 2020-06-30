@@ -208,3 +208,7 @@ body {
 .post-card {
   max-width: 650px;
 }
+.profile-card{
+  min-width: 250px;
+  max-width: 400px;
+}

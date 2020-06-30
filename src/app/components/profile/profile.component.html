@@ -29,14 +29,16 @@
                 </div>
                 <div fxFlex fxLayout="row" fxLayout.xs="column">
                     <div fxFlex>
-                        <button mat-raised-button color="negro" (focus)="this.tts.play('Siguiendo')">Siguiendo:
+                        <button mat-raised-button color="negro" (focus)="this.tts.play('Siguiendo')"
+                            (click)="verSiguiendo()" [disabled]="this.disabled">Siguiendo:
                             <strong>{{ user.siguiendo.length }}</strong></button>
                     </div>
                     <div fxFlex class="px-2" fxShow="false" fxShow.xs="true">
                         <br>
                     </div>
                     <div fxFlex>
-                        <button mat-raised-button color="negro" (focus)="this.tts.play('Seguidores')">Seguidores:
+                        <button mat-raised-button color="negro" (focus)="this.tts.play('Seguidores')"
+                            (click)="verSeguidores()" [disabled]="this.disabled">Seguidores:
                             <strong>{{ user.seguidores.length }}</strong></button>
                     </div>
                 </div>
@@ -50,18 +52,21 @@
         <div fxFlex fxLayout="column">
             <button mat-stroked-button [color]="this.getSeguirColor()" class="mx-4"
                 (focus)="this.tts.play(siguiendo ? 'Dejar de seguir' : 'Seguir')" (click)="seguirChange()"
-                *ngIf="botonSeguirEnabled">
+                *ngIf="botonSeguirEnabled" [disabled]="this.disabled">
                 {{ siguiendo ? "Dejar de seguir" : "Seguir" }}
             </button>
             <button mat-stroked-button color="negro" class="mx-4" (focus)="this.tts.play('Editar perfil')"
-                *ngIf="!botonSeguirEnabled" (click)="editarPerfil()">
+                *ngIf="!botonSeguirEnabled" (click)="editarPerfil()" [disabled]="this.disabled">
                 Editar perfil
+            </button>
+            <br>
+            <button mat-stroked-button color="gris" class="mx-4" (focus)="this.tts.play('Generar código QR')"
+                (click)="openQrDialogComponent()" [disabled]="this.disabled">
+                Generar código QR
             </button>
             <div class="px-2">
                 <hr>
             </div>
-            <ngx-qrcode [elementType]="elementType" [value]="value" cssClass="aclass" errorCorrectionLevel="L">
-            </ngx-qrcode>
             <div fxFlex align="center">
                 <!-- AQUI IRIAN LOS POSTS -->
                 <div class="my-auto text-center" *ngIf="posts.length === 0">

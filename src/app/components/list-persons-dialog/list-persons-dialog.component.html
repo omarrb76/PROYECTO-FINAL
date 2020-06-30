@@ -1,0 +1,20 @@
+<div class="text-center">
+    <h1><strong>{{accion}}</strong></h1>
+</div>
+<mat-spinner class="mx-auto my-auto" *ngIf="loading"></mat-spinner>
+<div *ngIf="!loading">
+    <mat-card *ngFor="let user of users" class="my-2 puntero profile-card" (click)="goToProfile(user.username, cerrar)"
+        [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Perfil de ' + user.username)">
+        <mat-card-header class="d-flex justify-content-around">
+            <div class="contenedor-card" mat-card-avatar>
+                <a>
+                    <img [src]="user.picture" alt="Foto de perfil" class="rounded-circle">
+                </a>
+            </div>
+            <p class="my-auto" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(user.username)">
+                {{user.username}}
+            </p>
+        </mat-card-header>
+    </mat-card>
+</div>
+<button hidden [mat-dialog-close]="null" #cerrar>Cerrar</button>
