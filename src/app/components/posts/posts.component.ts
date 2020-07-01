@@ -17,6 +17,9 @@ export class PostsComponent implements OnInit {
   @Input() username = '';
   @Input() pictures: any[] = [];
   disabled = false;
+  postsVisibles: Post[] = [];
+  index = 0;
+  postsAcabados = false;
 
   constructor(
     private router: Router,
@@ -26,6 +29,7 @@ export class PostsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadMorePosts();
   }
 
   goToProfile(username: string) {
@@ -67,6 +71,36 @@ export class PostsComponent implements OnInit {
 
   verEys(post: Post) {
     this.dialog.open(ListPersonsDialogComponent, { data: { users: post.likes, accion: 'Usuarios que dieron eys' } });
+  }
+
+  loadMorePosts(){
+    let i = 0;
+    for (i = this.index; i < this.index + 5; i++){
+      if (this.posts[i] === undefined){
+        this.postsAcabados = true;
+        break;
+      }
+      this.postsVisibles.push(this.posts[i]);
+    }
+    this.index = i;
+  }
+
+  formatText(text: string){
+    let res = '';
+    for (let i = 0, x = 0; i < text.length; i++){
+      if (x >= 20){
+        res += ' ';
+        x = 0;
+        i--;
+        continue;
+      }
+      if (text.charAt(i) === ' '){
+        x = 0;
+      }
+      res += text.charAt(i);
+      x++;
+    }
+    return res;
   }
 
 }

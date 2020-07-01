@@ -1,4 +1,4 @@
-<mat-card class="post-card mb-3" *ngFor="let post of posts">
+<mat-card class="post-card mb-3" *ngFor="let post of postsVisibles">
     <mat-card-header>
         <div class="contenedor-card puntero" mat-card-avatar>
             <a (click)="goToProfile(post.username)" [tabindex]="this.tts.getEnabled()"
@@ -19,7 +19,7 @@
     </div>
     <mat-card-content>
         <p [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play(post.text)">
-            {{post.text}}
+            {{this.formatText(post.text)}}
         </p>
         <hr>
     </mat-card-content>
@@ -35,3 +35,10 @@
         </button>
     </mat-card-actions>
 </mat-card>
+<div class="text-center" *ngIf="!postsAcabados">
+    <button mat-fab (click)="loadMorePosts()" (focus)="this.tts.play('Cargar más publicaciones')"
+        matTooltip="Cargar más Posts" matTooltipPosition="before" matTooltipShowDelay="500" matTooltipHideDelay="500"
+        color="negro">
+        <mat-icon>add_circle_outline</mat-icon>
+    </button>
+</div>

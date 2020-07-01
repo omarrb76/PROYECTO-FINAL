@@ -38,37 +38,32 @@ export class ProfileComponent implements OnInit {
     this.posts = [];
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
 
     this.firebase.getUsuarioConectado().subscribe((user: firebase.User) => {
       if (!user) {
         this.router.navigate(['home']);
       } else {
-        this.firebase.getUserDB(user.displayName).subscribe((data: User[]) => {
-          if (data.length > 0) {
-            this.myUser = data[0];
-            this.activatedRoute.params.subscribe(
-              (params: any) => {
-                this.username = params.username;
-                this.firebase.getUserDB(this.username).subscribe(async (info: User[]) => {
-                  if (info.length > 0) {
-                    this.user = info[0];
-                    if (this.user.id === this.myUser.id) {
-                      await this.getAllPosts(true);
-                      this.botonSeguirEnabled = false;
-                    } else {
-                      await this.getAllPosts(false);
-                      this.botonSeguirEnabled = true;
-                      this.comprobarSiguiendo(this.user.username);
-                    }
-                  } else {
-                    this.loadingUser = false;
-                    this.noExiste = true;
-                  }
-                });
+        this.activatedRoute.params.subscribe(async (params: any) => {
+          this.loadingUser = true;
+          this.username = params.username;
+          await this.firebase.getUsersDB([user.displayName, this.username]).then(async (info: User[]) => {
+            if (info.length > 1) {
+              this.myUser = info[0];
+              this.user = info[1];
+              if (this.user.id === this.myUser.id) {
+                await this.getAllPosts(true);
+                this.botonSeguirEnabled = false;
+              } else {
+                await this.getAllPosts(false);
+                this.botonSeguirEnabled = true;
+                this.comprobarSiguiendo(this.user.username);
               }
-            );
-          }
+            } else {
+              this.noExiste = true;
+            }
+            this.loadingUser = false;
+          });
         });
       }
     });
@@ -135,6 +130,14 @@ export class ProfileComponent implements OnInit {
   verSeguidores() {
     this.dialog.open(ListPersonsDialogComponent,
       { data: { users: this.user.seguidores, accion: 'Seguidores de ' + this.user.username } });
+  }
+
+  contarLikes(){
+    let total = 0;
+    this.posts.forEach(post => {
+      total += post.likes.length;
+    });
+    return total;
   }
 
 }

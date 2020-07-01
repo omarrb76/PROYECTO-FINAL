@@ -75,12 +75,7 @@ body {
   border-radius: 50%;
 }
 .mat-toolbar.mat-primary {
-  background: linear-gradient(
-    0deg,
-    rgba(245, 245, 245, 1) 0%,
-    rgba(219, 219, 219, 1) 50%,
-    rgba(170, 170, 170, 1) 96%
-  );
+  background: white;
   color: black;
 }
 .slogan {

@@ -22,7 +22,9 @@
                         {{user.sexo}}
                     </h3>
                     <h3 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Eys acumulados')">
-                        <strong>Eys:</strong> numero</h3>
+                        <strong>Eys: </strong>{{this.contarLikes()}}</h3>
+                    <h3 [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Publicaciones totales')">
+                        <strong>Posts: </strong>{{posts.length}}</h3>
                 </div>
                 <div fxFlex class="px-2">
                     <hr>
@@ -67,9 +69,9 @@
             <div class="px-2">
                 <hr>
             </div>
-            <div fxFlex align="center">
+            <div fxFlex>
                 <!-- AQUI IRIAN LOS POSTS -->
-                <div class="my-auto text-center" *ngIf="posts.length === 0">
+                <div class="my-auto text-center d-block" *ngIf="posts.length === 0">
                     <h1 class="my-auto" [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Aun no hay posts')">
                         AUN NO HAY POSTS
                     </h1>
