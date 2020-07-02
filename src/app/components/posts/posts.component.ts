@@ -1,10 +1,12 @@
+import { User } from './../../models/user';
+import { Notification } from './../../models/notification';
+import { Post } from './../../models/post';
 import { ListPersonsDialogComponent } from './../list-persons-dialog/list-persons-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FirebaseService } from './../../services/firebase.service';
 import { TexttospeechService } from './../../services/texttospeech.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
-import { Post } from 'src/app/models/post';
 
 @Component({
   selector: 'app-posts',
@@ -45,8 +47,10 @@ export class PostsComponent implements OnInit {
     this.disabled = true;
     if (index > -1) {
       post.likes.splice(index, 1);
+      this.quitarNotificacion(post);
     } else {
       post.likes.push(this.username);
+      this.nuevaNotificacion(post);
     }
     await this.firebase.actualizarPost(post).then(res => this.disabled = false);
   }
@@ -73,10 +77,10 @@ export class PostsComponent implements OnInit {
     this.dialog.open(ListPersonsDialogComponent, { data: { users: post.likes, accion: 'Usuarios que dieron eys' } });
   }
 
-  loadMorePosts(){
+  loadMorePosts() {
     let i = 0;
-    for (i = this.index; i < this.index + 5; i++){
-      if (this.posts[i] === undefined){
+    for (i = this.index; i < this.index + 5; i++) {
+      if (this.posts[i] === undefined) {
         this.postsAcabados = true;
         break;
       }
@@ -85,22 +89,45 @@ export class PostsComponent implements OnInit {
     this.index = i;
   }
 
-  formatText(text: string){
+  formatText(text: string) {
     let res = '';
-    for (let i = 0, x = 0; i < text.length; i++){
-      if (x >= 20){
+    for (let i = 0, x = 0; i < text.length; i++) {
+      if (x >= 20) {
         res += ' ';
         x = 0;
         i--;
         continue;
       }
-      if (text.charAt(i) === ' '){
+      if (text.charAt(i) === ' ') {
         x = 0;
       }
       res += text.charAt(i);
       x++;
     }
     return res;
+  }
+
+  async nuevaNotificacion(post: Post) {
+    const notificacion: Notification = {
+      post: post.date.getTime().toString(),
+      username: this.username,
+      date: new Date(),
+      leido: false
+    };
+    let tempUser: User;
+    await this.firebase.getUsersDB([post.username]).then(res => tempUser = res[0]);
+    tempUser.notifications.push(notificacion);
+    await this.firebase.actualizarUsuario(tempUser);
+  }
+
+  async quitarNotificacion(post: Post) {
+    let tempUser: User;
+    await this.firebase.getUsersDB([post.username]).then(res => tempUser = res[0]);
+    const index = tempUser.notifications.findIndex(element => element.post === post.date.getTime().toString());
+    if (index > -1) {
+      tempUser.notifications.splice(index, 1);
+      await this.firebase.actualizarUsuario(tempUser);
+    }
   }
 
 }

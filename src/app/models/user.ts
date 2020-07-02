@@ -1,3 +1,4 @@
+import { Notification } from './notification';
 export interface User {
     id: string;
     email: string;
@@ -9,4 +10,5 @@ export interface User {
     sexo: string;
     siguiendo: string[];
     seguidores: string[];
+    notifications: Notification[];
 }

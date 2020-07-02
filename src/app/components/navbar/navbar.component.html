@@ -103,15 +103,14 @@
                 </form>
             </div>
             <div fxFlex align="end">
-                <span [matBadge]="notifications" matBadgeSize="small" matBadgeColor="warn"
+                <mat-icon [matBadge]="getNotificationsLength()" matBadgeSize="small" matBadgeColor="warn"
+                    [matBadgeHidden]="getNotificationsLength() === 0" matBadgePosition="after"
                     class="my-auto mx-4 text-none puntero" [tabindex]="this.tts.getEnabled()"
-                    (focus)="this.tts.play('Número de notificaciones notificaciones nuevas')" (click)="openDialog()"
-                    (keyup.enter)="openDialog()" [matBadgeHidden]="notifications === 0">
-                    <mat-icon style="transform: scale(1.4)">notifications</mat-icon>
-                </span>
+                    (focus)="this.tts.play(getNotificationsLength() + ' notificaciones nuevas')" (click)="openDialog()"
+                    (keyup.enter)="openDialog()">notifications</mat-icon>
                 <a class="my-auto mx-4 text-none" [routerLink]="['settings']" [tabindex]="this.tts.getEnabled()"
                     (focus)="this.tts.play('Configuración de la cuenta')">
-                    <mat-icon style="transform: scale(1.4)">settings</mat-icon>
+                    <mat-icon>settings</mat-icon>
                 </a>
             </div>
         </mat-toolbar>
@@ -147,13 +146,14 @@
                     </mat-form-field>
                 </form>
             </div>
-            <div fxFlex align="end">
-                <span [matBadge]="notifications" matBadgeSize="small" matBadgeColor="warn"
-                    class="my-auto mx-4 text-none puntero" [tabindex]="this.tts.getEnabled()"
-                    (focus)="this.tts.play('Número de notificaciones notificaciones nuevas')" (click)="openDialog()"
-                    (keyup.enter)="openDialog()" [matBadgeHidden]="notifications === 0">
-                    <mat-icon style="transform: scale(1.4)">notifications</mat-icon>
-                </span>
+            <div fxFlex align="center">
+                <mat-icon [matBadge]="getNotificationsLength()" matBadgeSize="small" matBadgeColor="warn"
+                    [matBadgeHidden]="getNotificationsLength() === 0" matBadgePosition="after"
+                    class="my-auto mx-auto text-none puntero" [tabindex]="this.tts.getEnabled()"
+                    (focus)="this.tts.play(getNotificationsLength() + ' notificaciones nuevas')" (click)="openDialog()"
+                    (keyup.enter)="openDialog()">
+                    notifications
+                </mat-icon>
             </div>
         </mat-toolbar>
     </mat-sidenav-content>

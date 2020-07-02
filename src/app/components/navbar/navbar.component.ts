@@ -17,12 +17,10 @@ import { FormControl } from '@angular/forms';
 })
 export class NavbarComponent implements OnInit {
 
-  // options = []; // Aqui se guardan los usuarios
   myControl = new FormControl();
   options: User[];
   filteredOptions: Observable<any>;
   show = false;
-  notifications = 5;
   active = false;
   user: User;
   loading = true;
@@ -90,14 +88,18 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(NotificationsdialogComponent);
-    dialogRef.afterClosed().subscribe((result) => {
+  async openDialog() {
+    const dialogRef = this.dialog.open(NotificationsdialogComponent, { data: { username: this.user.username } });
+  }
 
-      // Una vez que el usuario cierre el panel, nosotros borramos las notificaciones
-      console.log(result);
-
+  getNotificationsLength(){
+    let res = 0;
+    this.user.notifications.forEach(element => {
+      if (element.leido === false){
+        res++;
+      }
     });
+    return res;
   }
 
   navegarUsuario(sidenav: any, option: boolean) {
@@ -112,8 +114,8 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['adminhome']);
   }
 
-  obtainAlign(){
-    if (this.user.admin){
+  obtainAlign() {
+    if (this.user.admin) {
       console.log('centee');
       return 'center';
     }

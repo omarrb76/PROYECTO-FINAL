@@ -1,3 +1,4 @@
+import { Notification } from './../../models/notification';
 import { ListPersonsDialogComponent } from './../list-persons-dialog/list-persons-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { QrdialogComponent } from './../qrdialog/qrdialog.component';
@@ -76,9 +77,11 @@ export class ProfileComponent implements OnInit {
       this.myUser.siguiendo.splice(index, 1);
       index = this.user.seguidores.findIndex(element => element === this.myUser.username);
       this.user.seguidores.splice(index, 1);
+      await this.quitarNotificacion();
     } else {
       this.myUser.siguiendo.push(this.user.username);
       this.user.seguidores.push(this.myUser.username);
+      await this.nuevaNotificacion();
     }
     await this.firebase.actualizarSeguidores(this.user, this.myUser).then(res => {
       this.comprobarSiguiendo(this.user.username);
@@ -132,12 +135,32 @@ export class ProfileComponent implements OnInit {
       { data: { users: this.user.seguidores, accion: 'Seguidores de ' + this.user.username } });
   }
 
-  contarLikes(){
+  contarLikes() {
     let total = 0;
     this.posts.forEach(post => {
       total += post.likes.length;
     });
     return total;
+  }
+
+  async nuevaNotificacion() {
+    const notificacion: Notification = {
+      post: '',
+      username: this.myUser.username,
+      date: new Date(),
+      leido: false
+    };
+    this.user.notifications.push(notificacion);
+    await this.firebase.actualizarUsuario(this.user);
+  }
+
+  async quitarNotificacion() {
+    const index = this.user.notifications.findIndex(element => element.username === this.myUser.username
+      && element.post === '');
+    if (index > -1) {
+      this.user.notifications.splice(index, 1);
+    }
+    await this.firebase.actualizarUsuario(this.user);
   }
 
 }

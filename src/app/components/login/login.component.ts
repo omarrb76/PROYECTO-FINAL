@@ -140,7 +140,8 @@ export class LoginComponent implements OnInit {
             sexo: this.signupForm.value.sexo,
             date: new Date(),
             siguiendo: [],
-            seguidores: []
+            seguidores: [],
+            notifications: []
           };
 
           const res = this.firebase.crearNuevoUsuario(user, this.signupForm.value.password);

@@ -44,23 +44,6 @@ export class FeedComponent implements OnInit {
     });
   }
 
-  loadMorePosts() {
-    /* console.log(this.index);
-
-    let sum = 0;
-
-    for (let i = this.index; i < this.index + 5; i++) {
-      if (this.allPosts[i] !== undefined) {
-        this.posts.push(this.allPosts[i]);
-        sum++;
-      } else {
-        break;
-      }
-    }
-
-    this.index += sum; */
-  }
-
   async getAllPosts(){
     await this.firebase.getAllPosts(this.user.siguiendo, true).then((res: any) => this.allPosts = res);
     await this.firebase.getProfilePictures(this.user.siguiendo).then((res: any) => this.pictures = res);

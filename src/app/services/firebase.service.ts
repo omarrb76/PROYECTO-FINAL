@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Post } from '../models/post';
-import { pipe } from 'rxjs';
+import { Notification } from './../models/notification';
 
 @Injectable({
   providedIn: 'root'

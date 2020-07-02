@@ -1,14 +1,50 @@
-<h1 mat-dialog-title [tabindex]="this.tts.getEnabled()"
-(focus)="this.tts.play('Notificaciones')">
+<h1 mat-dialog-title [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Notificaciones')">
     Notificaciones
 </h1>
 <mat-dialog-content>
-    <p [tabindex]="this.tts.getEnabled()" (focus)="this.tts.play('Hola soy el contenido')">
-        Hola soy el contenido
-    </p>
+    <mat-spinner class="mx-auto my-auto" *ngIf="loading"></mat-spinner>
+    <div *ngIf="!loading && notifications.length !== 0">
+        <mat-card *ngFor="let notification of notifications" class="my-2 puntero profile-card text-center"
+            [class.nuevo]="!notification.leido" [tabindex]="this.tts.getEnabled()"
+            (focus)="this.tts.play(getNotificationDialogue(notification))"
+            (click)="goToProfile(notification.username, cerrar, notification)"
+            (keyup.enter)="goToProfile(notification.username, cerrar, notification)" align="center">
+            <div fxLayout="row" fxLayout.sm="column" align="center">
+                <div fxFlex>
+                    <div class="contenedor-card">
+                        <a><img [src]="getProfilePicture(notification.username)" alt="Foto de perfil"
+                                class="rounded-circle"></a>
+                    </div>
+                </div>
+                <div fxFlex *ngIf="getPostPicture(notification.post) !== ''">
+                    <div class="contenedor-card">
+                        <a>
+                            <img [src]="getPostPicture(notification.post)" alt="Foto de post">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <p>{{getNotificationDialogue(notification)}}</p>
+        </mat-card>
+    </div>
+    <div *ngIf="notifications.length === 0" [tabindex]="this.tts.getEnabled()"
+        (focus)="this.tts.play('No existen notificaciones nuevas')">
+        <p>No existen notificaciones nuevas</p>
+    </div>
+    <button hidden [mat-dialog-close]="null" #cerrar>Cerrar</button>
 </mat-dialog-content>
 <mat-dialog-actions align="center" class="mt-3">
-    <button mat-button [mat-dialog-close]="undefined" color="negro" (focus)="this.tts.play('Cerrar')">
+    <button class="mx-2 my-2" mat-button color="rojo" (focus)="this.tts.play('Borrar notificaciones')"
+        (click)="borrarNotifications()" *ngIf="notifications.length !== 0" [tabindex]="this.tts.getEnabled()">
+        Borrar
+    </button>
+    <button class="mx-2 my-2" mat-button color="gris" (focus)="this.tts.play('Marcar todo como leído')"
+        (click)="marcarTodoComoLeido()" *ngIf="notifications.length !== 0" [tabindex]="this.tts.getEnabled()">
+        Leído
+    </button>
+    <button class="mx-2 my-2" mat-button [mat-dialog-close]="undefined" color="negro" (focus)="this.tts.play('Cerrar')">
         Cerrar
     </button>
 </mat-dialog-actions>
+<button hidden [mat-dialog-close]="undefined" #close>Cerrar</button>
