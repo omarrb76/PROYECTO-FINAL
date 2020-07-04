@@ -47,6 +47,7 @@ import { ChartsModule } from 'ng2-charts';
 import { AdminGraficasComponent } from './admin/admin-graficas/admin-graficas.component';
 import { QrdialogComponent } from './components/qrdialog/qrdialog.component';
 import { ListPersonsDialogComponent } from './components/list-persons-dialog/list-persons-dialog.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { ListPersonsDialogComponent } from './components/list-persons-dialog/lis
     AngularFireAuthModule,
     AngularFireStorageModule,
     NgxQRCodeModule,
-    ChartsModule
+    ChartsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
