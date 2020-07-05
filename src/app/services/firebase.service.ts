@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { SnackbarService } from './snackbar.service';
 import { TexttospeechService } from './texttospeech.service';
 import { User } from './../models/user';
@@ -13,12 +14,15 @@ import { Notification } from './../models/notification';
 export class FirebaseService {
 
   user: User;
+  // ruta = 'https://proy-isc-6a-2020.web.app';
+  ruta = 'http://localhost:5000';
 
   constructor(
     private db: AngularFirestore,
     private auth: AngularFireAuth,
     private tts: TexttospeechService,
-    private snackBarService: SnackbarService
+    private snackBarService: SnackbarService,
+    private http: HttpClient
   ) { }
 
   setUser(user: User) { this.user = user; }
@@ -183,6 +187,17 @@ export class FirebaseService {
     }
     return new Promise((resolve, reject) => {
       resolve(allUsers);
+    });
+  }
+
+  apiAgregarUsuario(usr){
+    return this.http.post(this.ruta + '/api/agregarUsuario', usr).subscribe((res: any) => {
+      if (res.res) {
+        window.location.reload();
+      } else {
+        this.snackBarService.openSnackBar('Error al grabar en la base de datos', 'Aceptar');
+        this.tts.play('Error al grabar en la base de datos');
+      }
     });
   }
 

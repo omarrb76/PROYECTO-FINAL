@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class QrdialogComponent implements OnInit {
 
-  ruta = 'http://localhost:4200/user/';
+  ruta = 'https://proy-isc-6a-2020.web.app/user/';
   elementType = 'url';
   value = 'Techiediaries';
 
