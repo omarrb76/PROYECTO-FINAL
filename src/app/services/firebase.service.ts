@@ -14,8 +14,8 @@ import { Notification } from './../models/notification';
 export class FirebaseService {
 
   user: User;
-  // ruta = 'https://proy-isc-6a-2020.web.app';
-  ruta = 'http://localhost:5000';
+   ruta = 'https://proy-isc-6a-2020.web.app';
+  // ruta = 'http://localhost:5000';
 
   constructor(
     private db: AngularFirestore,

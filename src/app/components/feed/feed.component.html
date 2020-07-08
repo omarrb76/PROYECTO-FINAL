@@ -2,7 +2,7 @@
 
     <mat-spinner *ngIf="loadingPosts" class="mx-auto my-auto"></mat-spinner>
 
-    <div fxFlex *ngIf="!loadingPosts && this.posts.length < 1" class="text-center">
+    <div fxFlex *ngIf="!loadingPosts && this.posts.length === 0" class="text-center">
         <h1 class="my-auto"><strong [tabindex]="this.tts.getEnabled()"
                 (focus)="this.tts.play('No hay posts para mostrar, empieza a seguir a alguien')">
                 No hay posts para mostrar,
