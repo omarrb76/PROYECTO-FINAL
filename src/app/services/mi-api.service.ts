@@ -10,8 +10,8 @@ export class MiApiService {
 
   constructor(private httpClient: HttpClient) {}
 
-  // ruta = 'https://proy-isc-6a-2020.web.app';
-  ruta = 'http://localhost:5000';
+  ruta = 'https://proy-isc-6a-2020.web.app';
+  // ruta = 'http://localhost:5000';
 
   sendEmail(formulario: any){
     return this.httpClient.post(this.ruta + '/api/email', formulario);
